@@ -1,0 +1,262 @@
+html, body {
+    height: 100%;
+}
+.main {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+body {
+    display: flex;
+    font-family: Helvetica;
+}
+* {
+    margin: 0;
+}
+.sideBar {
+    /* height: 100vh; */
+    width: 25%;
+    background-color: #000;
+    color: #fff;
+    /* font-family: Helvetica; */
+}
+.top {
+    padding: 30px;
+}
+.top-text-2 {
+    display: flex;
+}
+.top-text-2 h3{
+    margin-left: 10px;
+}
+.top-text {
+    display: flex;
+    justify-content: space-between;
+}
+#search {
+    cursor: pointer;
+}
+.profile {
+    background: #202020;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+.profile-text {
+    margin-left: 15px;
+}
+.profile-main {
+    display: flex;
+    align-items: center;
+}
+#profile-img {
+    width: 48px;
+}
+#profile-more {
+    width: 20px;
+    cursor: pointer;
+}
+.profile-name {
+    font-size: 15px;
+}
+.profile-owner {
+    font-size: 12px;
+    color: #9B9B9B;
+}
+.tasks {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+}
+.numbers {
+    font-size: 20px;
+}
+.task-type {
+    font-size: 12px;
+    opacity: 0.5;
+}
+.menu-title {
+    font-size: 13px;
+    padding: 10px 10px 10px 20px;
+    color: #878787;
+}
+.menu-category {
+    padding: 10px 10px 10px 20px;
+}
+.menu-category p {
+    font-size: 15px;
+    cursor: pointer;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 35px 30px 10px 30px;
+}
+.header-intro {
+    font-size: 32px;
+    color: #131313;
+    display: flex;
+}
+.header-intro img {
+    cursor: pointer;
+}
+.header-intro p {
+    margin: 0px 10px 0px 10px;
+}
+#shape {
+    width: 40px;
+}
+#more-info {
+    width: 25px;
+}
+.shape-background {
+    height: 41px;
+    background-color: #FFC200;
+    border-radius: 20%;
+}
+.users img {
+    width: 30px;
+    margin-left: 5px;
+}
+.users {
+    display: flex;
+    align-items: center;
+}
+#share {
+    /* border-radius: 20%; */
+    border-radius: 15px;
+    border: none;
+    padding: 5px 15px 5px 15px;
+    background-color: #EAEAEA;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 15px;
+    height: 30px;
+}
+.chat-block {
+    display: flex;
+    position: relative;
+}
+.chat-block img{
+    width: 16px;
+    position: absolute;
+    left: 18px;
+    top: 8px;
+    cursor: pointer;
+
+}
+#chat {
+    background: #FFF8DD;
+    border-radius: 15px;
+    border: none;
+    margin-left: 15px;
+    height: 30px;
+    padding: 8px 10px 20px 30px;
+    font-size: 14px;
+    color: #FFC200;
+    cursor: pointer;
+    /* padding: 15px 5px 5px 35px; */
+}
+.nav {
+    display: flex;
+    margin-left: 15px;
+}
+.nav-elem {
+    padding: 15px;
+    color: #131313;
+    opacity: 70%;
+    cursor: pointer;
+}
+.main-page {
+    background-color: #F7F6F3;
+    flex-grow: 3;
+    padding-top: 30px;
+    /* height: 82%; */
+    /* padding: 30px 0 120px 0; */
+}
+.main-wrapper {
+    /* height: 18%; */
+}
+.activity {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px 30px 45px 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+.day {
+    opacity: 0.5;
+    font-size: 14px;
+    color: #131313;
+}
+.message-img {
+    background: #CEF9C6;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: relative;
+
+}
+.message-img img {
+    position: absolute;
+    top: 15px;
+    left: 14px;
+}
+.first-part {
+    display: flex;
+}
+.message {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.first-part p {
+    width: 460px;
+    font-size: 16px;
+    color: #131313;
+    line-height: 20px;
+    margin-left: 20px;
+}
+.time {
+    opacity: 0.7;
+    font-size: 14px;
+    color: #131313;
+}
+.chat-icon {
+    background: #FFF8DD;
+}
+.chat-icon img {
+    width: 12px;
+}
+.apendix {
+    width: 75%;
+    margin-top: 20px;
+    background: #F7F6F3;
+    border-radius: 10px;
+    padding: 20px 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.download-icon {
+    background: #E3EFFF;
+}
+.download-icon img{
+    top: 13px;
+    left: 12.5px;
+    width: 15px;
+}
+.images {
+    margin-top: 20px;
+    display: flex;
+    /* padding: 0 0 0 50px; */
+    margin-left: 60px;
+    
+}
+.images img{
+    border-radius: 8px;
+    margin-right: 10px;
+}
+.buttons {
+    display: flex;
+}

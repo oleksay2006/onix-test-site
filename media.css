@@ -1,0 +1,183 @@
+@media only screen and (max-width: 1024px) {
+    .first-part p {
+        width: 360px;
+        font-size: 15px;
+    }
+    .time {
+        font-size: 13px;
+    }
+    .apendix p {
+        font-size: 15px;
+    }
+    .activity {
+        padding: 30px 30px 20px 30px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .top h3 {
+        font-size: 16px;
+    }
+    .top {
+        padding: 20px;
+    }
+    .profile-name {
+        font-size: 13px;
+    }
+    .profile-owner {
+        font-size: 10px;
+    }
+    #profile-img {
+        width: 38px;
+    }
+    #profile-more {
+        width: 18px;
+    }
+    .profile-text {
+        margin-left: 10px;
+    }
+    .numbers {
+        font-size: 18px;
+    }
+    .task-type {
+        font-size: 11px;
+    }
+    .tasks {
+        padding: 25px 15px 25px 15px;
+    }
+    .menu-title {
+        font-size: 12px;
+    }
+    .menu-category p {
+        font-size: 14px;
+    }
+    .header-intro p {
+        font-size: 28px;
+    }
+    .photos img {
+        width: 25px;
+    }
+    #shape {
+        width: 35px;
+    }
+    .shape-background {
+        height: 36px;
+    }
+    .users {
+        display: block;
+    }
+    .buttons {
+        margin-top: 5px;
+    }
+    #share {
+        font-size: 13px;
+        padding: 4px 12px 4px 12px;
+        margin-left: 0;
+    }
+    #chat {
+        font-size: 13px;
+    }
+    .chat-block img {
+        width: 15px;
+        left: 19px;
+    }
+    #more-info {
+        width: 24px;
+        height: 37px;
+    }
+    .header-intro {
+        padding-top: 10px;
+    }
+    .header {
+        padding: 25px 30px 10px 30px;
+    }
+    .nav-elem {
+        font-size: 15px;
+    }
+    .day {
+        font-size: 13px;
+    }
+    .activity {
+        padding: 20px;
+        width: 85%;
+    }
+    .first-part p {
+        font-size: 15px;
+    }
+    .message {
+        margin-top: 25px;
+    }
+    .main-page {
+        padding-top: 15px;
+    }
+}
+@media only screen and (max-width: 640px) {
+    .top {
+        padding: 10px;
+    }
+    .top h3 {
+        font-size: 15px;
+        margin-left: 6px;
+    }
+    .top img {
+        width: 17px;
+    }
+    #search {
+        width: 16px;
+    }
+    .profile {
+        padding: 13px;
+    }
+    #profile-more {
+        width: 16px;
+    }
+    .profile-text {
+        margin-left: 8px;
+    }
+    .header {
+        padding: 20px 20px 10px 20px;
+    }
+    .users {
+       
+    }
+    .header-intro p {
+        font-size: 26px;
+    }
+    #chat {
+        margin-left: 10px;
+    }
+    .nav-elem {
+        padding: 10px 15px;
+    }
+    .day {
+        font-size: 12px;
+    }
+    .message-img {
+        width: 30px;
+        height: 30px;
+    }
+    .message-img img {
+        top: 11px;
+        left: 9.5px;
+    }
+    .first-part p {
+        margin-left: 10px;
+        font-size: 14px;
+        width: 310px;
+    }
+    .time {
+        font-size: 11px;
+    }
+    .apendix p {
+        font-size: 14px;
+    }
+    .download-icon img {
+        top: 9px;
+        left: 8px;
+    }
+    .images {
+        margin-left: 0px;
+    }
+    .images img {
+        width: 90px;
+    }
+}
