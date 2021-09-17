@@ -201,6 +201,9 @@
     .sideBar {
         display: none;
     }
+    .main {
+        width: 100%;
+    }
     .header {
         flex-direction: column;
     }
@@ -263,15 +266,15 @@
         width: 10px;
     }
     .first-part p {
-        font-size: 12px;
+        font-size: 13px;
         margin-left: 6px;
-        width: 250px;
+        width: 300px;
     }
     .apendix {
         padding: 15px 25px;
     }
     .apendix p {
-        font-size: 12px;
+        font-size: 13px;
     }
     .time {
         font-size: 10px;
