@@ -1,3 +1,13 @@
+@media only screen and (min-height: 713px) {
+    html, body {
+        height: 100%;
+    }
+}
+@media only screen and (max-height: 712px) {
+    html, body {
+        height: auto;
+    }
+}
 @media only screen and (max-width: 1024px) {
     .first-part p {
         width: 360px;
@@ -179,5 +189,97 @@
     }
     .images img {
         width: 90px;
+    }
+    html, body {
+        height: auto;
+    }
+    .sideBar {
+        height: auto;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .sideBar {
+        display: none;
+    }
+    .header {
+        flex-direction: column;
+    }
+    #shape {
+        width: 30px;
+    }
+    .shape-background {
+        height: 31px;
+    }
+    .header-intro p {
+        font-size: 25px;
+    }
+    #more-info {
+        width: 23px;
+        height: auto;
+    }
+    .photos img {
+        width: 23px;
+    }
+    #share {
+        font-size: 11px;
+        height: 25px;
+        padding: 0px 10px;
+    }
+    #chat {
+        font-size: 11px;
+        height: 25px;
+        padding: 5px 10px 4px 30px;
+    }
+    .chat-block img {
+        width: 14px;
+        left: 16px;
+        top: 6px;
+    }
+    .nav {
+        margin-left: 0px;
+    }
+    .users {
+        margin-top: 10px;
+    }
+    .users img {
+        margin-left: 3px;
+    }
+    .nav-elem {
+        padding: 10px 13px;
+    }
+    .activity {
+        padding: 15px 10px 15px 10px;
+    }
+    .day {
+        font-size: 10px;
+    }
+    .message-img {
+        width: 26px;
+        height: 26px;
+    }
+    .message-img img {
+        top: 10px;
+        left: 8.5px;
+        width: 10px;
+    }
+    .first-part p {
+        font-size: 12px;
+        margin-left: 6px;
+        width: 250px;
+    }
+    .apendix {
+        padding: 15px 25px;
+    }
+    .apendix p {
+        font-size: 12px;
+    }
+    .time {
+        font-size: 10px;
+    }
+    .message {
+        margin-top: 20px;
+    }
+    .images {
+        flex-wrap: wrap;
     }
 }
