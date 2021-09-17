@@ -299,4 +299,10 @@
     .download-icon img {
         top: 9px;
     }
+    
+    /*Опасненько снизу*/
+
+    html, body {
+        height: 100%; 
+    }
 }
