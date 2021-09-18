@@ -264,3 +264,21 @@ body {
 .buttons {
     display: flex;
 }
+
+/*Стилизация табов*/
+
+.tab {
+    display: none;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px 30px 45px 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+.tab.is-active {
+    display: block;
+}
+.nav-elem.is-active {
+    border-bottom: 2px solid #FFC200;
+}

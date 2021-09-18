@@ -11,7 +11,6 @@
 </head>
 
 <body>
-    <script src="main.js"></script>
 
     <section class='sideBar'>
         <div class="top">
@@ -82,15 +81,21 @@
                 </div>
             </header>
             <nav class='nav'>
-                <div class='nav-elem'>Tasks</div>
-                <div class='nav-elem'>Kanban</div>
-                <div class='nav-elem'>Activity</div>
-                <div class='nav-elem'>Calendar</div>
-                <div class='nav-elem'>Files</div>
+                <div class='nav-elem' data-tab-name='tab-1'>Tasks</div>
+                <div class='nav-elem' data-tab-name='tab-2'>Kanban</div>
+                <div class='nav-elem is-active' data-tab-name='tab-3'>Activity</div>
+                <div class='nav-elem' data-tab-name='tab-4'>Calendar</div>
+                <div class='nav-elem' data-tab-name='tab-5'>Files</div>
             </nav>
         </div>
         <div class='main-page'>
-            <div class='activity'>
+            <div class='tasks-tab tab tab-1'>
+                <p>Tasks</p>
+            </div>
+            <div class='kanban-tab tab tab-2'>
+                <p>Kanban</p>
+            </div>
+            <div class='activity tab tab-3 is-active'>
                 <p class='day'>TODAY</p>
                 <div class="message">
                     <div class="first-part">
@@ -134,9 +139,15 @@
                     <img src="images/beach-2.jpg" alt="">
                 </div>
             </div>
+            <div class='calendar-tab tab tab-4'>
+                <p>Calendar</p>
+            </div>
+            <div class='files-tab tab tab-5'>
+                <p>Files</p>
+            </div>
         </div>
     </section>
-
+    <script src="main.js"></script>
 </body>
 
 </html>

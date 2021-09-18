@@ -1,6 +1,25 @@
-// let height = (screen.width+'x'+screen.height);
-// console.log(height);
-// let header = document.querySelector('header');
-// let navigation = document.querySelector('nav');
-// let sum = header.height + navigation.height;
-// console.log(sum);
+let tab = function() {
+    let tabNav = document.querySelectorAll('.nav-elem');
+    let tabContent = document.querySelectorAll('.tab');
+    let tabName;
+    tabNav.forEach(item => {
+      item.addEventListener('click', selectTabNav)
+    })
+
+    function selectTabNav() {
+      tabNav.forEach(item => {
+          item.classList.remove('is-active');
+      })
+      this.classList.add('is-active');
+      tabName = this.getAttribute('data-tab-name');
+      selectTabContent(tabName);
+    }
+    function selectTabContent(tabName) {
+      tabContent.forEach(item => {
+        item.classList.contains(tabName)? item.classList.add('is-active'): item.classList.remove('is-active');
+      })
+    }
+
+}
+
+tab();
