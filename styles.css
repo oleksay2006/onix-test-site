@@ -280,5 +280,6 @@ body {
     display: block;
 }
 .nav-elem.is-active {
+    opacity: 100%;
     border-bottom: 2px solid #FFC200;
 }
