@@ -1,4 +1,4 @@
-@media only screen and (min-height: 713px) {
+/* @media only screen and (min-height: 713px) {
     html, body {
         height: 100%;
     }
@@ -7,7 +7,7 @@
     html, body {
         height: auto;
     }
-}
+} */
 @media only screen and (max-width: 1024px) {
     .first-part p {
         width: 360px;
@@ -24,6 +24,22 @@
     }
 }
 @media only screen and (max-width: 768px) {
+    /*
+        Стили для кнопки сайдбара
+    */
+    label #btn, label #cancel {
+        font-size: 25px;
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+    }
+    #check:checked ~ label #cancel {
+        margin-left: 24.2%;
+    }
+    /*Конец*/
+    .images {
+        margin-left: 0;
+    }
     .top h3 {
         font-size: 16px;
     }
@@ -166,8 +182,9 @@
         height: 30px;
     }
     .message-img img {
-        top: 11px;
-        left: 9.5px;
+        margin-top: 11px;
+        margin-left: 9px;
+        width: 14px;
     }
     .first-part p {
         margin-left: 10px;
@@ -181,8 +198,8 @@
         font-size: 14px;
     }
     .download-icon img {
-        top: 9px;
-        left: 8px;
+        margin-top: 10px;
+        margin-left: 8px;
     }
     .images {
         margin-left: 0px;
@@ -190,17 +207,14 @@
     .images img {
         width: 90px;
     }
-    html, body {
+    /* html, body {
         height: auto;
     }
     .sideBar {
         height: auto;
-    }
+    } */
 }
 @media only screen and (max-width: 480px) {
-    .sideBar {
-        display: none;
-    }
     .main {
         width: 100%;
     }
@@ -285,6 +299,27 @@
     .images {
         flex-wrap: wrap;
     }
+    /*Стилизация сайдбара*/
+    .sideBar {
+        width: 45%;
+        left: -45%;
+    }
+    #check:checked ~ .sideBar{
+        /* position: static; */
+        /* width: 40%; */
+        left: 0;
+        transition: all 1s ease;
+    }
+    #check:checked ~ .main{
+        width: 100%;
+    }
+    #check:checked ~ label #cancel {
+        margin-left: 45%;
+    }
+    #check:checked ~ label #btn{
+        margin-left: 45%;
+    }
+    /*Конец*/
 }
 @media only screen and (max-width: 400px) {
     .first-part p {
