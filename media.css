@@ -341,3 +341,21 @@
         height: 100%; 
     }
 }
+/*Фикс проблемы с иконками юзеров*/
+@media only screen and (max-width: 920px) {
+    .users {
+        display: block;
+    }
+    #share {
+        margin-left: 5px;
+    }
+    /* #more-info {
+        height: 40px;
+    } */
+    .header-intro {
+        align-items: center;
+    }
+    .images {
+        margin-left: 0px;
+    }
+}
