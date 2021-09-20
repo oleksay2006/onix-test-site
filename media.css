@@ -169,7 +169,7 @@
         font-size: 26px;
     }
     #chat {
-        margin-left: 10px;
+        margin-left: 0px;
     }
     .nav-elem {
         padding: 10px 15px;
@@ -245,7 +245,7 @@
     #chat {
         font-size: 11px;
         height: 25px;
-        padding: 5px 10px 4px 30px;
+        padding: 0px 10px 0px 10px;
     }
     .chat-block img {
         width: 14px;
@@ -258,7 +258,7 @@
     .users {
         margin-top: 10px;
     }
-    .users img {
+    .photos img {
         margin-left: 3px;
     }
     .nav-elem {

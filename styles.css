@@ -158,13 +158,14 @@ body {
 }
 .chat-block {
     display: flex;
-    position: relative;
+    border-radius: 15px;
+    margin-left: 10px;
+    background: #FFF8DD;
 }
 .chat-block img{
     width: 16px;
-    position: absolute;
-    left: 18px;
-    top: 8px;
+    margin-left: 10px;
+    margin-top: 0;
     cursor: pointer;
 
 }
@@ -172,9 +173,7 @@ body {
     background: #FFF8DD;
     border-radius: 15px;
     border: none;
-    margin-left: 15px;
-    height: 30px;
-    padding: 8px 10px 20px 30px;
+    padding: 1px 10px 1px 6px;
     font-size: 14px;
     color: #FFC200;
     cursor: pointer;
