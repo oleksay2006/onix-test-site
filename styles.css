@@ -185,8 +185,9 @@ body {
 }
 .nav-elem {
     padding: 15px;
-    color: #131313;
-    opacity: 70%;
+    /* color: #131313;
+    opacity: 70%; */
+    color: #A9A9A9;
     cursor: pointer;
 }
 .main-page {
@@ -302,7 +303,7 @@ body {
     display: block;
 }
 .nav-elem.is-active {
-    opacity: 100%;
+    color: #000000;
     border-bottom: 2px solid #FFC200;
 }
 
