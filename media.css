@@ -79,8 +79,8 @@
     .header-intro p {
         font-size: 28px;
     }
-    .photos img {
-        width: 25px;
+    .photos i {
+        font-size: 26px;
     }
     #shape {
         width: 35px;
@@ -102,9 +102,11 @@
     #chat {
         font-size: 13px;
     }
-    .chat-block img {
-        width: 15px;
-        left: 19px;
+    .chat-block i {
+        /* width: 15px;
+        left: 19px; */
+        margin-top: 6px;
+        font-size: 19px;
     }
     #more-info {
         width: 24px;
@@ -162,9 +164,6 @@
     .header {
         padding: 20px 20px 10px 20px;
     }
-    .users {
-       
-    }
     .header-intro p {
         font-size: 26px;
     }
@@ -181,10 +180,10 @@
         width: 30px;
         height: 30px;
     }
-    .message-img img {
-        margin-top: 11px;
-        margin-left: 9px;
-        width: 14px;
+    .message-img i {
+        margin-top: 10px;
+        margin-left: 8px;
+        font-size: 15px;
     }
     .first-part p {
         margin-left: 10px;
@@ -197,9 +196,9 @@
     .apendix p {
         font-size: 14px;
     }
-    .download-icon img {
-        margin-top: 10px;
-        margin-left: 8px;
+    .download-icon i {
+        margin-top: 8px;
+        margin-left: 7px;
     }
     .images {
         margin-left: 0px;
@@ -234,21 +233,24 @@
         width: 23px;
         height: auto;
     }
-    .photos img {
-        width: 23px;
+    .photos i {
+        /* width: 23px; */
+        font-size: 24px;
     }
     #share {
-        font-size: 11px;
+        font-size: 12px;
         height: 25px;
         padding: 0px 10px;
     }
     #chat {
-        font-size: 11px;
+        font-size: 12px;
         height: 25px;
         padding: 0px 10px 0px 10px;
     }
-    .chat-block img {
-        width: 14px;
+    .chat-block i {
+        /* width: 14px; */
+        font-size: 18px;
+        margin-top: 5px;
         left: 16px;
         top: 6px;
     }
@@ -274,10 +276,16 @@
         width: 26px;
         height: 26px;
     }
-    .message-img img {
-        top: 10px;
+    .message-img i {
+        /* top: 10px;
         left: 8.5px;
-        width: 10px;
+        width: 10px; */
+        margin-top: 8px;
+        margin-left: 7px;
+        font-size: 13px;
+    }
+    .download-icon i {
+        margin-left: 6px;
     }
     .first-part p {
         font-size: 13px;
@@ -362,5 +370,8 @@
     }
     .images {
         margin-left: 0px;
+    }
+    .buttons {
+        margin-top: 5px;
     }
 }

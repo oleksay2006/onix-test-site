@@ -137,8 +137,9 @@ body {
     background-color: #FFC200;
     border-radius: 20%;
 }
-.users img {
-    width: 30px;
+.users i {
+    /* width: 30px; */
+    font-size: 30px;
     margin-left: 5px;
 }
 .users {
@@ -162,10 +163,12 @@ body {
     margin-left: 10px;
     background: #FFF8DD;
 }
-.chat-block img{
-    width: 16px;
+.chat-block i{
+    /* width: 16px; */
+    font-size: 20px;
+    color: #FFC200;
     margin-left: 10px;
-    margin-top: 0;
+    margin-top: 4px;
     cursor: pointer;
 
 }
@@ -222,13 +225,13 @@ body {
     /* position: relative; */
 
 }
-.message-img img {
+.message-img i {
     /* position: absolute;
     top: 15px;
     left: 14px; */
-    margin-top: 15px;
+    margin-top: 13px;
     margin-left: 12px;
-    width: 15px;
+    font-size: 16px;
 }
 .first-part {
     display: flex;
@@ -268,10 +271,10 @@ body {
 .download-icon {
     background: #E3EFFF;
 }
-.download-icon img{
+.download-icon i{
     margin-top: 13px;
-    margin-left: 12px;
-    width: 15px;
+    margin-left: 10px;
+    /* width: 15px; */
 }
 .images {
     margin-top: 20px;
