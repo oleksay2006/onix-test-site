@@ -150,7 +150,8 @@
         width: 17px;
     }
     #search {
-        width: 16px;
+        /* width: 16px; */
+        font-size: 16px;
     }
     .profile {
         padding: 13px;
@@ -342,7 +343,12 @@
     .download-icon img {
         top: 9px;
     }
-    
+    .buttons #share {
+        margin-left: 0px;
+    }
+    .photos i {
+        margin-left: 0px;
+    }
     /*Опасненько снизу*/
 
     html, body {
