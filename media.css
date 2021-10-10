@@ -56,7 +56,8 @@
         width: 38px;
     }
     #profile-more {
-        width: 18px;
+        /* width: 18px; */
+        font-size: 19px;
     }
     .profile-text {
         margin-left: 10px;
@@ -109,8 +110,9 @@
         font-size: 19px;
     }
     #more-info {
-        width: 24px;
-        height: 37px;
+        /* width: 24px; */
+        font-size: 25px;
+        /* height: 37px; */
     }
     .header-intro {
         padding-top: 10px;
@@ -157,7 +159,8 @@
         padding: 13px;
     }
     #profile-more {
-        width: 16px;
+        /* width: 16px; */
+        font-size: 16px;
     }
     .profile-text {
         margin-left: 8px;
@@ -231,17 +234,20 @@
         font-size: 25px;
     }
     #more-info {
-        width: 23px;
-        height: auto;
+        /* width: 23px;
+        height: auto; */
+        font-size: 24px;
     }
     .photos i {
         /* width: 23px; */
         font-size: 24px;
+        margin-left: 0;
     }
-    #share {
+    .buttons #share {
         font-size: 12px;
         height: 25px;
         padding: 0px 10px;
+        margin-left: 0;
     }
     #chat {
         font-size: 12px;
@@ -379,5 +385,13 @@
     }
     .buttons {
         margin-top: 5px;
+    }
+}
+@media only screen and (max-width: 690px) {
+    .header {
+        flex-direction: column;
+    }
+    .users {
+        margin-top: 10px;
     }
 }
