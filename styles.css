@@ -1,6 +1,9 @@
-html, body {
-    height: 100%; /* тут*/
+html,
+body {
+    height: 100%;
+    /* тут*/
 }
+
 .main {
     width: 100%;
     display: flex;
@@ -8,6 +11,7 @@ html, body {
     transition: all 1s ease;
     margin-left: auto;
 }
+
 /*До сайдбара*/
 /* .main {
     width: 75%;
@@ -18,12 +22,15 @@ body {
     display: flex;
     font-family: Helvetica;
 }
+
 .wrapper {
     display: flex;
 }
+
 * {
     margin: 0;
 }
+
 .sideBar {
     /* height: auto; */
     height: 100%;
@@ -35,6 +42,7 @@ body {
     color: #fff;
     /* font-family: Helvetica; */
 }
+
 /*До сайдбара*/
 /*
     .sideBar {
@@ -46,19 +54,24 @@ body {
 .top {
     padding: 30px;
 }
+
 .top-text-2 {
     display: flex;
 }
-.top-text-2 h3{
+
+.top-text-2 h3 {
     margin-left: 10px;
 }
+
 .top-text {
     display: flex;
     justify-content: space-between;
 }
+
 #search {
     cursor: pointer;
 }
+
 .profile {
     background: #202020;
     padding: 16px;
@@ -66,90 +79,116 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+
 .profile-text {
     margin-left: 15px;
 }
+
 .profile-main {
     display: flex;
     align-items: center;
 }
+
 #profile-img {
     width: 48px;
 }
+
 #profile-more {
     /* width: 20px; */
     font-size: 20px;
     cursor: pointer;
 }
+
 .profile-name {
     font-size: 15px;
 }
+
 .profile-owner {
     font-size: 12px;
     color: #9B9B9B;
 }
+
 .tasks {
     display: flex;
     padding: 20px;
     justify-content: space-between;
 }
+
 .numbers {
     font-size: 20px;
 }
+
 .task-type {
     font-size: 12px;
     opacity: 0.5;
 }
+
 .menu-title {
     font-size: 13px;
     padding: 10px 10px 10px 20px;
     color: #878787;
 }
+
 .menu-category {
     padding: 10px 10px 10px 20px;
+    display: flex;
+    align-items: center;
 }
+
 .menu-category p {
     font-size: 15px;
     cursor: pointer;
+
+    /* height: 20px; */
 }
+
 .header {
     display: flex;
     justify-content: space-between;
     padding: 35px 30px 10px 30px;
 }
+
 .header-intro {
     font-size: 32px;
     color: #131313;
     display: flex;
     align-items: center;
 }
+
 .header-intro img {
     cursor: pointer;
 }
+
 .header-intro p {
     margin: 0px 10px 0px 10px;
 }
+
 #shape {
     width: 40px;
 }
+
 #more-info {
     /* width: 25px; */
     cursor: pointer;
 }
+
 .shape-background {
     height: 41px;
     background-color: #FFC200;
     border-radius: 20%;
 }
+
 .users i {
     /* width: 30px; */
     font-size: 30px;
     margin-left: 5px;
 }
+
 .users {
     display: flex;
     align-items: center;
 }
+
 #share {
     /* border-radius: 20%; */
     border-radius: 15px;
@@ -161,13 +200,15 @@ body {
     margin-left: 15px;
     height: 30px;
 }
+
 .chat-block {
     display: flex;
     border-radius: 15px;
     margin-left: 10px;
     background: #FFF8DD;
 }
-.chat-block i{
+
+.chat-block i {
     /* width: 16px; */
     font-size: 20px;
     color: #FFC200;
@@ -176,6 +217,7 @@ body {
     cursor: pointer;
 
 }
+
 #chat {
     background: #FFF8DD;
     border-radius: 15px;
@@ -186,10 +228,12 @@ body {
     cursor: pointer;
     /* padding: 15px 5px 5px 35px; */
 }
+
 .nav {
     display: flex;
     margin-left: 15px;
 }
+
 .nav-elem {
     padding: 15px;
     /* color: #131313;
@@ -197,6 +241,7 @@ body {
     color: #A9A9A9;
     cursor: pointer;
 }
+
 .main-page {
     background-color: #F7F6F3;
     flex-grow: 3;
@@ -205,9 +250,11 @@ body {
     /* height: 82%; */
     /* padding: 30px 0 120px 0; */
 }
+
 .main-wrapper {
     /* height: 18%; */
 }
+
 .activity {
     background: #FFFFFF;
     border-radius: 8px;
@@ -216,11 +263,13 @@ body {
     margin-right: auto;
     width: 70%;
 }
+
 .day {
     opacity: 0.5;
     font-size: 14px;
     color: #131313;
 }
+
 .message-img {
     background: #CEF9C6;
     border-radius: 50%;
@@ -229,6 +278,7 @@ body {
     /* position: relative; */
 
 }
+
 .message-img i {
     /* position: absolute;
     top: 15px;
@@ -237,14 +287,17 @@ body {
     margin-left: 12px;
     font-size: 16px;
 }
+
 .first-part {
     display: flex;
 }
+
 .message {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
 }
+
 .first-part p {
     width: 460px;
     font-size: 16px;
@@ -252,17 +305,21 @@ body {
     line-height: 20px;
     margin-left: 20px;
 }
+
 .time {
     opacity: 0.7;
     font-size: 14px;
     color: #131313;
 }
+
 .chat-icon {
     background: #FFF8DD;
 }
+
 .chat-icon img {
     width: 15px;
 }
+
 .apendix {
     width: 75%;
     margin-top: 20px;
@@ -272,25 +329,30 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
 .download-icon {
     background: #E3EFFF;
 }
-.download-icon i{
+
+.download-icon i {
     margin-top: 13px;
     margin-left: 10px;
     /* width: 15px; */
 }
+
 .images {
     margin-top: 20px;
     display: flex;
     /* padding: 0 0 0 50px; */
     margin-left: 60px;
-    
+
 }
-.images img{
+
+.images img {
     border-radius: 8px;
     margin-right: 10px;
 }
+
 .buttons {
     display: flex;
 }
@@ -306,9 +368,11 @@ body {
     margin-right: auto;
     width: 70%;
 }
+
 .tab.is-active {
     display: block;
 }
+
 .nav-elem.is-active {
     color: #000000;
     border-bottom: 2px solid #FFC200;
@@ -316,10 +380,12 @@ body {
 
 /*Стилизация сайдбара */
 
-#check{
+#check {
     display: none;
 }
-label #btn,label #cancel{
+
+label #btn,
+label #cancel {
     position: fixed;
     cursor: pointer;
     color: white;
@@ -328,7 +394,7 @@ label #btn,label #cancel{
     /* margin: 30% 30px 0 5px; */
     top: 50%;
     left: 10px;
-    
+
     font-size: 29px;
     background: #262626;
     height: 45px;
@@ -337,25 +403,114 @@ label #btn,label #cancel{
     line-height: 45px;
     transition: all 1s ease;
 }
-label #cancel{
+
+label #cancel {
     opacity: 0;
     visibility: hidden;
 }
-#check:checked ~ .sideBar{
+
+#check:checked~.sideBar {
     /* position: static; */
     left: 0;
     transition: all 1s ease;
 }
-#check:checked ~ .main{
+
+#check:checked~.main {
     width: 75%;
 }
-#check:checked ~ label #btn{
+
+#check:checked~label #btn {
     margin-left: 25%;
     opacity: 0;
     visibility: hidden;
 }
-#check:checked ~ label #cancel{
+
+#check:checked~label #cancel {
     margin-left: 25%;
     opacity: 1;
     visibility: visible;
+}
+
+/*Стилизация модалки*/
+
+.modal_wrapper {
+    padding: 20px;
+    width: 25vw;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.mainModal {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#boardName {
+    padding: 2.5px 1.5px 1px 3.5px;
+    margin-top: 5px;
+    border: 1.5px solid black;
+}
+
+.div_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.div_form p {
+    text-align: center;
+    font-size: 19px;
+}
+
+.modalButton {
+    background-color: #ffe4b5;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.first-button {
+    margin-right: 10px;
+}
+
+.second-button {
+    margin-left: 10px;
+}
+
+.modal-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.completed,
+.opened {
+    cursor: pointer;
+}
+
+.notifications {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FFC200;
+    margin-left: 15px;
+    text-align: center;
+    color: #131313;
+    font-size: 15px;
+}
+
+.notifications p {
+    margin-top: 2px;
+}
+
+.hidden {
+    display: none;
 }

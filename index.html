@@ -2,169 +2,193 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="media.css">
-    <title>Onix-test</title>
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
-    <script src="https://kit.fontawesome.com/0b524d2717.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="media.css">
+  <title>Onix-test</title>
+  <!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
+  <script src="https://kit.fontawesome.com/0b524d2717.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <input type="checkbox" id="check">
-    <label for="check">
-        <i class="fas fa-bars" id="btn"></i>
-        <i class="fas fa-times" id="cancel"></i>
-        <!-- <img id='btn' src="assets/left-arrow.svg" alt=""> -->
-    </label>
-    <section class='sideBar'>
-        <div class="top">
-            <div class='top-text'>
-                <div class='top-text-2'>
-                    <img src="assets/Logo@3x.svg" alt="logo3">
-                    <h3>PROJECTUS</h3>
-                </div>
-                <!-- <img src="assets/Search@3x.svg" alt="search" id='search'> -->
-                <i class="fas fa-search" id="search"></i>
-            </div>
+  <input type="checkbox" id="check">
+  <label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+    <!-- <img id='btn' src="assets/left-arrow.svg" alt=""> -->
+  </label>
+  <section class='sideBar'>
+    <div class="top">
+      <div class='top-text'>
+        <div class='top-text-2'>
+          <img src="assets/Logo@3x.svg" alt="logo3">
+          <h3>PROJECTUS</h3>
         </div>
-        <div class="profile">
-            <div class='profile-main'>
-                <img src="assets/profile.svg" alt="profile photo" id='profile-img'>
-                <div class='profile-text'>
-                    <p class='profile-name'>Jean Gonzales</p>
-                    <p class='profile-owner'>Product Owner</p>
-                </div>
-            </div>
-            <!-- <img src="assets/more.svg" alt="more" id='profile-more'> -->
-            <i class="fas fa-ellipsis-h" id='profile-more'></i>
+        <!-- <img src="assets/Search@3x.svg" alt="search" id='search'> -->
+        <i class="fas fa-search" id="search"></i>
+      </div>
+    </div>
+    <div class="profile">
+      <div class='profile-main'>
+        <img src="assets/profile.svg" alt="profile photo" id='profile-img'>
+        <div class='profile-text'>
+          <p class='profile-name'>Jean Gonzales</p>
+          <p class='profile-owner'>Product Owner</p>
         </div>
-        <div class='tasks'>
-            <div class="completed">
-                <p class='numbers'>372</p>
-                <p class='task-type'>Completed Tasks</p>
-            </div>
-            <div class="opened">
-                <p class='numbers'>11</p>
-                <p class='task-type'>Opened Tasks</p>
-            </div>
+      </div>
+      <!-- <img src="assets/more.svg" alt="more" id='profile-more'> -->
+      <i class="fas fa-ellipsis-h" id='profile-more'></i>
+    </div>
+    <div class='tasks'>
+      <div class="completed">
+        <p class='numbers completed_nums'>372</p>
+        <p class='task-type'>Completed Tasks</p>
+      </div>
+      <div class="opened">
+        <p class='numbers opened_nums'>11</p>
+        <p class='task-type'>Opened Tasks</p>
+      </div>
+    </div>
+    <div class="menu">
+      <p class='menu-title'>MENU</p>
+      <div class='menu-category'>
+        <p>Home</p>
+      </div>
+      <div class='menu-category'>
+        <p>My Tasks</p>
+      </div>
+      <div class='menu-category'>
+        <p>Notifications</p>
+        <div class="notifications hidden">
+          <p class='notifications_text'>2</p>
         </div>
-        <div class="menu">
-            <p class='menu-title'>MENU</p>
-            <div class='menu-category'>
-                <p>Home</p>
-            </div>
-            <div class='menu-category'>
-                <p>My Tasks</p>
-            </div>
-            <div class='menu-category'>
-                <p>Notifications</p>
-            </div>
+      </div>
+    </div>
+  </section>
+  <section class='main'>
+    <div class='main-wrapper'>
+      <header class='header'>
+        <div class='header-intro'>
+          <div class="shape-background">
+            <img src="assets/Shapes@2x.png" alt="shape" id='shape'>
+          </div>
+          <p>Website Redesign</p>
+          <!-- <img src="assets/more-2.svg" alt="more info" id='more-info'> -->
+          <i class="fas fa-info-circle" id="more-info"></i>
         </div>
-    </section>
-    <section class='main'>
-        <div class='main-wrapper'>
-            <header class='header'>
-                <div class='header-intro'>
-                    <div class="shape-background">
-                        <img src="assets/Shapes@2x.png" alt="shape" id='shape'>
-                    </div>
-                    <p>Website Redesign</p>
-                    <!-- <img src="assets/more-2.svg" alt="more info" id='more-info'> -->
-                    <i class="fas fa-info-circle" id="more-info"></i>
-                </div>
-                <div class='users'>
-                    <div class="photos">
-                        <!-- <img src="assets/user_for_header.svg" alt="">
+        <div class='users'>
+          <div class="photos">
+            <!-- <img src="assets/user_for_header.svg" alt="">
                         <img src="assets/user_for_header.svg" alt="">
                         <img src="assets/user_for_header.svg" alt=""> -->
-                        <i class="fas fa-user-circle"></i>
-                        <i class="fas fa-user-circle"></i>
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="buttons">
-                        <input type="button" value="Share" id="share">
-                        <div class="chat-block">
-                            <!-- <img src="assets/Combined Shape@1x.svg" alt=""> -->
-                            <i class="fas fa-comments"></i>
-                            <input type="button" value="Chat" id="chat">
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <nav class='nav'>
-                <div class='nav-elem' data-tab-name='tab-1'>Tasks</div>
-                <div class='nav-elem' data-tab-name='tab-2'>Kanban</div>
-                <div class='nav-elem is-active' data-tab-name='tab-3'>Activity</div>
-                <div class='nav-elem' data-tab-name='tab-4'>Calendar</div>
-                <div class='nav-elem' data-tab-name='tab-5'>Files</div>
-            </nav>
+            <i class="fas fa-user-circle"></i>
+            <i class="fas fa-user-circle"></i>
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="buttons">
+            <input type="button" value="Share" id="share">
+            <div class="chat-block">
+              <!-- <img src="assets/Combined Shape@1x.svg" alt=""> -->
+              <i class="fas fa-comments"></i>
+              <input type="button" value="Chat" id="chat">
+            </div>
+          </div>
         </div>
-        <div class='main-page'>
-            <div class='tasks-tab tab tab-1'>
-                <p>Tasks</p>
+      </header>
+      <nav class='nav'>
+        <div class='nav-elem' data-tab-name='tab-1'>Tasks</div>
+        <div class='nav-elem' data-tab-name='tab-2'>Kanban</div>
+        <div class='nav-elem is-active' data-tab-name='tab-3'>Activity</div>
+        <div class='nav-elem' data-tab-name='tab-4'>Calendar</div>
+        <div class='nav-elem' data-tab-name='tab-5'>Files</div>
+      </nav>
+    </div>
+    <div class='main-page'>
+      <div class='tasks-tab tab tab-1'>
+        <p>Tasks</p>
+      </div>
+      <div class='kanban-tab tab tab-2'>
+        <p>Kanban</p>
+      </div>
+      <div class='activity tab tab-3 is-active'>
+        <p class='day'>TODAY</p>
+        <div class="message">
+          <div class="first-part">
+            <div class="message-img">
+              <!-- <img src="assets/Icon@3x.svg" alt=""> -->
+              <i class="fas fa-check"></i>
             </div>
-            <div class='kanban-tab tab tab-2'>
-                <p>Kanban</p>
-            </div>
-            <div class='activity tab tab-3 is-active'>
-                <p class='day'>TODAY</p>
-                <div class="message">
-                    <div class="first-part">
-                        <div class="message-img">
-                            <!-- <img src="assets/Icon@3x.svg" alt=""> -->
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <p>Darika Samak mark as done Listing on Product Hunt so that we can reach as many potential
-                            users</p>
-                    </div>
-                    <p class='time'>8:40 PM</p>
-                </div>
-                <div class="message">
-                    <div class="first-part">
-                        <div class="message-img chat-icon">
-                            <!-- <img src="assets/chat-2.svg" alt=""> -->
-                            <i class="fas fa-comment-alt"></i>
-                        </div>
-                        <p>Emilee Simchenko commented on Account for teams and personal in bottom style</p>
-                    </div>
-                    <p class='time'>7:32 PM</p>
-                </div>
-                <div class="apendix">
-                    <p>During a project build, it is necessary to evaluate the product design and development
-                        against
-                        project requirements and outcomes</p>
-                </div>
-                <div class="message">
-                    <div class="first-part">
-                        <div class="message-img download-icon">
-                            <!-- <img src="assets/down-arrow.svg" alt=""> -->
-                            <i class="fas fa-cloud-download-alt"></i>
-                        </div>
-                        <p>Darika Samak uploaded 4 files on An option to search in current projects or in all
-                            projects
-                        </p>
-                    </div>
-                    <p class='time'>6:02 PM</p>
-                </div>
-                <div class="images">
-                    <img src="images/town.jpg" alt="">
-                    <img src="images/beach.jpg" alt="">
-                    <img src="images/fiord.jpg" alt="">
-                    <img src="images/beach-2.jpg" alt="">
-                </div>
-            </div>
-            <div class='calendar-tab tab tab-4'>
-                <p>Calendar</p>
-            </div>
-            <div class='files-tab tab tab-5'>
-                <p>Files</p>
-            </div>
+            <p>Darika Samak mark as done Listing on Product Hunt so that we can reach as many potential
+              users</p>
+          </div>
+          <p class='time'>8:40 PM</p>
         </div>
-    </section>
-    <script src="main.js"></script>
+        <div class="message">
+          <div class="first-part">
+            <div class="message-img chat-icon">
+              <!-- <img src="assets/chat-2.svg" alt=""> -->
+              <i class="fas fa-comment-alt"></i>
+            </div>
+            <p>Emilee Simchenko commented on Account for teams and personal in bottom style</p>
+          </div>
+          <p class='time'>7:32 PM</p>
+        </div>
+        <div class="apendix">
+          <p>During a project build, it is necessary to evaluate the product design and development
+            against
+            project requirements and outcomes</p>
+        </div>
+        <div class="message">
+          <div class="first-part">
+            <div class="message-img download-icon">
+              <!-- <img src="assets/down-arrow.svg" alt=""> -->
+              <i class="fas fa-cloud-download-alt"></i>
+            </div>
+            <p>Darika Samak uploaded 4 files on An option to search in current projects or in all
+              projects
+            </p>
+          </div>
+          <p class='time'>6:02 PM</p>
+        </div>
+        <div class="images">
+          <img src="images/town.jpg" id='town' alt="">
+          <img src="images/beach.jpg" id='beach' alt="">
+          <img src="images/fiord.jpg" id='fiord' alt="">
+          <img src="images/beach-2.jpg" id='beach_2' alt="">
+        </div>
+      </div>
+      <div class='calendar-tab tab tab-4'>
+        <p>Calendar</p>
+      </div>
+      <div class='files-tab tab tab-5'>
+        <p>Files</p>
+      </div>
+    </div>
+  </section>
+  <div class="mainModal hidden" ref="modal_wrapper">
+    <div class="modal_wrapper">
+      <div class="modal">
+        <div class="div_form">
+          <label for="boardName">
+            <p class='good'>Are you sure you want to change the number of tasks?</p>
+            <p class='bad hidden'>No opened tasks!</p>
+          </label>
+          <!-- <input type="text" id="boardName" placeholder="Пишите название здесь" v-model="title" /> -->
+          <div class='modal-buttons'>
+            <button type="button" class='modalButton first-button'>
+              Yes
+            </button>
+            <button type="button" class='modalButton second-button'>
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
 </body>
 
 </html>

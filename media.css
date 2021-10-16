@@ -13,203 +13,275 @@
         width: 360px;
         font-size: 15px;
     }
+
     .time {
         font-size: 13px;
     }
+
     .apendix p {
         font-size: 15px;
     }
+
     .activity {
         padding: 30px 30px 20px 30px;
     }
+
+    .modal_wrapper {
+        width: 30vw;
+    }
 }
+
 @media only screen and (max-width: 768px) {
+
     /*
         Стили для кнопки сайдбара
     */
-    label #btn, label #cancel {
+    label #btn,
+    label #cancel {
         font-size: 25px;
         height: 40px;
         width: 40px;
         line-height: 40px;
     }
-    #check:checked ~ label #cancel {
+
+    #check:checked~label #cancel {
         margin-left: 24.2%;
     }
+
     /*Конец*/
     .images {
         margin-left: 0;
     }
+
     .top h3 {
         font-size: 16px;
     }
+
     .top {
         padding: 20px;
     }
+
     .profile-name {
         font-size: 13px;
     }
+
     .profile-owner {
         font-size: 10px;
     }
+
     #profile-img {
         width: 38px;
     }
+
     #profile-more {
         /* width: 18px; */
         font-size: 19px;
     }
+
     .profile-text {
         margin-left: 10px;
     }
+
     .numbers {
         font-size: 18px;
     }
+
     .task-type {
         font-size: 11px;
     }
+
     .tasks {
         padding: 25px 15px 25px 15px;
     }
+
     .menu-title {
         font-size: 12px;
     }
+
     .menu-category p {
         font-size: 14px;
     }
+
+    .notifications {
+        width: 19px;
+        height: 19px;
+    }
+
     .header-intro p {
         font-size: 28px;
     }
+
     .photos i {
         font-size: 26px;
     }
+
     #shape {
         width: 35px;
     }
+
     .shape-background {
         height: 36px;
     }
+
     .users {
         display: block;
     }
+
     .buttons {
         margin-top: 5px;
     }
+
     #share {
         font-size: 13px;
         padding: 4px 12px 4px 12px;
         margin-left: 0;
     }
+
     #chat {
         font-size: 13px;
     }
+
     .chat-block i {
         /* width: 15px;
         left: 19px; */
         margin-top: 6px;
         font-size: 19px;
     }
+
     #more-info {
         /* width: 24px; */
         font-size: 25px;
         /* height: 37px; */
     }
+
     .header-intro {
         padding-top: 10px;
     }
+
     .header {
         padding: 25px 30px 10px 30px;
     }
+
     .nav-elem {
         font-size: 15px;
     }
+
     .day {
         font-size: 13px;
     }
+
     .activity {
         padding: 20px;
         width: 85%;
     }
+
     .first-part p {
         font-size: 15px;
     }
+
     .message {
         margin-top: 25px;
     }
+
     .main-page {
         padding-top: 15px;
     }
+
+    .modal_wrapper {
+        width: 40vw;
+    }
 }
+
 @media only screen and (max-width: 640px) {
     .top {
         padding: 10px;
     }
+
     .top h3 {
         font-size: 15px;
         margin-left: 6px;
     }
+
     .top img {
         width: 17px;
     }
+
     #search {
         /* width: 16px; */
         font-size: 16px;
     }
+
     .profile {
         padding: 13px;
     }
+
     #profile-more {
         /* width: 16px; */
         font-size: 16px;
     }
+
     .profile-text {
         margin-left: 8px;
     }
+
     .header {
         padding: 20px 20px 10px 20px;
     }
+
     .header-intro p {
         font-size: 26px;
     }
+
     #chat {
         margin-left: 0px;
     }
+
     .nav-elem {
         padding: 10px 15px;
     }
+
     .day {
         font-size: 12px;
     }
+
     .message-img {
         width: 30px;
         height: 30px;
     }
+
     .message-img i {
         margin-top: 10px;
         margin-left: 8px;
         font-size: 15px;
     }
+
     .first-part p {
         margin-left: 10px;
         font-size: 14px;
         width: 310px;
     }
+
     .time {
         font-size: 11px;
     }
+
     .apendix p {
         font-size: 14px;
     }
+
     .download-icon i {
         margin-top: 8px;
         margin-left: 7px;
     }
+
     .images {
         margin-left: 0px;
     }
+
     .images img {
         width: 90px;
     }
+
     /* html, body {
         height: auto;
     }
@@ -217,43 +289,53 @@
         height: auto;
     } */
 }
+
 @media only screen and (max-width: 480px) {
     .main {
         width: 100%;
     }
+
     .header {
         flex-direction: column;
     }
+
     #shape {
         width: 30px;
     }
+
     .shape-background {
         height: 31px;
     }
+
     .header-intro p {
         font-size: 25px;
     }
+
     #more-info {
         /* width: 23px;
         height: auto; */
         font-size: 24px;
     }
+
     .photos i {
         /* width: 23px; */
         font-size: 24px;
         margin-left: 0;
     }
+
     .buttons #share {
         font-size: 12px;
         height: 25px;
         padding: 0px 10px;
         margin-left: 0;
     }
+
     #chat {
         font-size: 12px;
         height: 25px;
         padding: 0px 10px 0px 10px;
     }
+
     .chat-block i {
         /* width: 14px; */
         font-size: 18px;
@@ -261,28 +343,36 @@
         left: 16px;
         top: 6px;
     }
+
     .nav {
         margin-left: 0px;
     }
+
     .users {
         margin-top: 10px;
     }
+
     .photos img {
         margin-left: 3px;
     }
+
     .nav-elem {
         padding: 10px 13px;
     }
+
     .activity {
         padding: 15px 10px 15px 10px;
     }
+
     .day {
         font-size: 10px;
     }
+
     .message-img {
         width: 26px;
         height: 26px;
     }
+
     .message-img i {
         /* top: 10px;
         left: 8.5px;
@@ -291,106 +381,139 @@
         margin-left: 7px;
         font-size: 13px;
     }
+
     .download-icon i {
         margin-left: 6px;
     }
+
     .first-part p {
         font-size: 13px;
         margin-left: 6px;
         width: 300px;
     }
+
     .apendix {
         padding: 15px 25px;
     }
+
     .apendix p {
         font-size: 13px;
     }
+
     .time {
         font-size: 10px;
     }
+
     .message {
         margin-top: 20px;
     }
+
     .images {
         flex-wrap: wrap;
     }
+
     /*Стилизация сайдбара*/
     .sideBar {
         width: 45%;
         left: -45%;
     }
-    #check:checked ~ .sideBar{
+
+    #check:checked~.sideBar {
         /* position: static; */
         /* width: 40%; */
         left: 0;
         transition: all 1s ease;
     }
-    #check:checked ~ .main{
+
+    #check:checked~.main {
         width: 100%;
     }
-    #check:checked ~ label #cancel {
+
+    #check:checked~label #cancel {
         margin-left: 45%;
     }
-    #check:checked ~ label #btn{
+
+    #check:checked~label #btn {
         margin-left: 45%;
     }
+
     /*Конец*/
 }
+
 @media only screen and (max-width: 400px) {
+    .modal_wrapper {
+        width: 50vw;
+    }
+
     .first-part p {
         width: 260px;
     }
+
     .images {
         margin: 15px auto 0px 70px;
     }
+
     .images img {
         margin-top: 5px;
     }
+
     .download-icon img {
         top: 9px;
     }
+
     .buttons #share {
         margin-left: 0px;
     }
+
     .photos i {
         margin-left: 0px;
     }
+
     /*Опасненько снизу*/
 
-    html, body {
-        height: 100%; 
+    html,
+    body {
+        height: 100%;
     }
 }
+
 @media only screen and (max-width: 425px) {
-    .images img{
+    .images img {
         margin-top: 5px;
     }
 }
+
 /*Фикс проблемы с иконками юзеров*/
 @media only screen and (max-width: 920px) {
     .users {
         display: block;
     }
+
     #share {
         margin-left: 5px;
     }
+
     /* #more-info {
         height: 40px;
     } */
     .header-intro {
         align-items: center;
     }
+
     .images {
         margin-left: 0px;
     }
+
     .buttons {
         margin-top: 5px;
     }
 }
+
 @media only screen and (max-width: 690px) {
     .header {
         flex-direction: column;
     }
+
     .users {
         margin-top: 10px;
     }
