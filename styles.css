@@ -505,6 +505,9 @@ label #cancel {
     text-align: center;
     color: #131313;
     font-size: 15px;
+
+    position: absolute;
+    left: 100px;
 }
 
 .notifications p {
