@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "51a4f80cbebbb5057cea",
-    "url": "/vue3-internatur/css/app.5f7d09b5.css"
+    "revision": "6c8958aa27677108af27",
+    "url": "/vue3-internatur/css/app.77b72069.css"
   },
   {
     "revision": "0e6e01089d4327013cb51feaf39e56ab",
@@ -28,16 +28,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vue3-internatur/img/town.663f17ff.jpg"
   },
   {
-    "revision": "cd46b4056aef5df8dd155ab8c90f39f4",
+    "revision": "a2d8a4e0daa9194f6860f8daba73bdcf",
     "url": "/vue3-internatur/index.html"
   },
   {
-    "revision": "51a4f80cbebbb5057cea",
-    "url": "/vue3-internatur/js/app.f73719bf.js"
+    "revision": "6c8958aa27677108af27",
+    "url": "/vue3-internatur/js/app.0bc51504.js"
   },
   {
-    "revision": "42b6ce242fe9221919d3",
-    "url": "/vue3-internatur/js/chunk-vendors.f5f58ef7.js"
+    "revision": "223484dfe1215fd2be55",
+    "url": "/vue3-internatur/js/chunk-vendors.c04d444c.js"
   },
   {
     "revision": "4ba9e09663be3a1f81b3be13fa116e4b",
