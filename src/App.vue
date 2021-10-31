@@ -1,8 +1,10 @@
-<template>
-  <div id="app">
-    <Home />
-    <!-- <router-view /> -->
-  </div>
+<template lang="pug">
+#app
+  Home/
+  //- <div id="app">
+  //-   <Home />
+  //-   <!-- <router-view /> -->
+  //- </div>
 </template>
 <script>
 import Home from "@/views/Home.vue";

@@ -1,32 +1,48 @@
-<template>
-  <header class="header">
-    <div class="header-intro">
-      <div class="shape-background">
-        <img src="@/assets/Shapes@2x.png" alt="shape" id="shape" />
-      </div>
-      <p>Website Redesign</p>
-      <fa icon="info-circle" id="more-info" />
-      <!-- <i class="fas fa-info-circle" id="more-info"></i> -->
-    </div>
-    <div class="users">
-      <div class="photos">
-        <fa icon="user-circle" class="users-fa" />
-        <fa icon="user-circle" class="users-fa" />
-        <fa icon="user-circle" class="users-fa" />
-        <!-- <i class="fas fa-user-circle"></i>
-        <i class="fas fa-user-circle"></i>
-        <i class="fas fa-user-circle"></i> -->
-      </div>
-      <div class="buttons">
-        <input type="button" value="Share" id="share" />
-        <div class="chat-block">
-          <fa icon="comments" class="chat-block-fa" />
-          <!-- <i class="fas fa-comments"></i> -->
-          <input type="button" value="Chat" id="chat" />
-        </div>
-      </div>
-    </div>
-  </header>
+<template lang="pug">
+header.header
+  .header-intro
+    .shape-background
+      img#shape(src="@/assets/Shapes@2x.png", alt="shape")
+    p Website Redesign
+    fa#more-info(icon="info-circle")
+  .users
+    .photos
+      fa.users-fa(icon="user-circle")
+      fa.users-fa(icon="user-circle")
+      fa.users-fa(icon="user-circle")
+    .buttons
+      input#share(type="button", value="Share")
+      .chat-block
+        fa.chat-block-fa(icon="comments")
+        input#chat(type="button", value="Chat")
+//- <header class="header">
+//-   <div class="header-intro">
+//-     <div class="shape-background">
+//-       <img src="@/assets/Shapes@2x.png" alt="shape" id="shape" />
+//-     </div>
+//-     p Website Redesign
+//-     <fa icon="info-circle" id="more-info" />
+//-     !-- <i class="fas fa-info-circle" id="more-info" 
+//-   </div>
+//-   <div class="users">
+//-     <div class="photos">
+//-       <fa icon="user-circle" class="users-fa" />
+//-       <fa icon="user-circle" class="users-fa" />
+//-       <fa icon="user-circle" class="users-fa" />
+//-       !-- <i class="fas fa-user-circle" 
+//-       i class="fas fa-user-circle" 
+//-       i class="fas fa-user-circle" 
+//-     </div>
+//-     <div class="buttons">
+//-       <input type="button" value="Share" id="share" />
+//-       <div class="chat-block">
+//-         <fa icon="comments" class="chat-block-fa" />
+//-         !-- <i class="fas fa-comments" 
+//-         <input type="button" value="Chat" id="chat" />
+//-       </div>
+//-     </div>
+//-   </div>
+//- </header>
 </template>
 <script>
 export default {
