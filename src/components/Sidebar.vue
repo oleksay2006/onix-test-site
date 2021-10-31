@@ -99,12 +99,16 @@ div
   //-   </section>
   //- </div>
 </template>
-<script>
-export default {
+<script lang='ts'>
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Sidebar",
   methods: {
     resizeMain() {
       this.$emit("resizeMain");
+      let num: number = 12;
+      console.log(num);
     },
   },
   data() {
@@ -112,7 +116,7 @@ export default {
       profile_name: "Jean Gonzales",
     };
   },
-};
+});
 </script>
 <style>
 .hidden {
