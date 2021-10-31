@@ -14,7 +14,6 @@ import Sidebar from "@/components/Sidebar.vue";
 // import Header from "@/components/Header.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import Tabs from "@/components/Tabs.vue";
-
 export default {
   name: "Home",
   components: {
@@ -48,7 +47,6 @@ export default {
     let fiord = document.querySelector("#fiord");
     let beach_2 = document.querySelector("#beach_2");
     let images = [town, beach, fiord, beach_2];
-
     images.forEach((item) => {
       item.addEventListener("click", () => {
         notifications.classList.remove("hidden");
@@ -63,7 +61,6 @@ export default {
 .first-part-task {
   display: block;
 }
-
 .first-part-task p {
   width: 460px;
   font-size: 16px;
@@ -71,7 +68,6 @@ export default {
   line-height: 20px;
   margin-top: 10px;
 }
-
 .task {
   border: 1px solid #d3d3d3;
   padding: 15px;
@@ -97,7 +93,6 @@ export default {
   display: flex;
   margin-left: 15px;
 }
-
 .nav-elem {
   padding: 15px;
   /* color: #131313;
@@ -105,7 +100,6 @@ export default {
   color: #a9a9a9;
   cursor: pointer;
 }
-
 .main-page {
   background-color: #f7f6f3;
   flex-grow: 3;
@@ -114,11 +108,9 @@ export default {
   /* height: 82%; */
   /* padding: 30px 0 120px 0; */
 }
-
 .main-wrapper {
   /* height: 18%; */
 }
-
 .activity {
   background: #ffffff;
   border-radius: 8px;
@@ -127,13 +119,11 @@ export default {
   margin-right: auto;
   width: 70%;
 }
-
 .day {
   opacity: 0.5;
   font-size: 14px;
   color: #131313;
 }
-
 .message-img {
   background: #cef9c6;
   border-radius: 50%;
@@ -141,7 +131,6 @@ export default {
   height: 40px;
   /* position: relative; */
 }
-
 .message-img-fa {
   /* position: absolute;
     top: 15px;
@@ -150,17 +139,14 @@ export default {
   margin-left: 12px;
   font-size: 16px;
 }
-
 .first-part {
   display: flex;
 }
-
 .message {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
 }
-
 .first-part p {
   width: 460px;
   font-size: 16px;
@@ -168,21 +154,17 @@ export default {
   line-height: 20px;
   margin-left: 20px;
 }
-
 .time {
   opacity: 0.7;
   font-size: 14px;
   color: #131313;
 }
-
 .chat-icon {
   background: #fff8dd;
 }
-
 .chat-icon img {
   width: 15px;
 }
-
 .apendix {
   width: 75%;
   margin-top: 20px;
@@ -192,35 +174,28 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
 .download-icon {
   background: #e3efff;
 }
-
 .download-icon-fa {
   margin-top: 13px;
   margin-left: 10px;
   /* width: 15px; */
 }
-
 .images {
   margin-top: 20px;
   display: flex;
   /* padding: 0 0 0 50px; */
   margin-left: 60px;
 }
-
 .images img {
   border-radius: 8px;
   margin-right: 10px;
 }
-
 .buttons {
   display: flex;
 }
-
 /*Стилизация табов*/
-
 .tab {
   display: none;
   background: #ffffff;
@@ -230,16 +205,13 @@ export default {
   margin-right: auto;
   width: 70%;
 }
-
 .tab.is-active {
   display: block;
 }
-
 .nav-elem.is-active {
   color: #000000;
   border-bottom: 2px solid #ffc200;
 }
-
 @media only screen and (max-width: 1024px) {
   .first-part p {
     width: 360px;
@@ -252,11 +224,9 @@ export default {
   .time {
     font-size: 13px;
   }
-
   .apendix p {
     font-size: 15px;
   }
-
   .activity {
     padding: 30px 30px 20px 30px;
   }
@@ -265,24 +235,19 @@ export default {
   .header-intro {
     padding-top: 10px;
   }
-
   .header {
     padding: 25px 30px 10px 30px;
   }
-
   .nav-elem {
     font-size: 15px;
   }
-
   .day {
     font-size: 13px;
   }
-
   .activity {
     padding: 20px;
     width: 85%;
   }
-
   .first-part p {
     font-size: 15px;
   }
@@ -290,15 +255,12 @@ export default {
     font-size: 15px;
     width: 300px;
   }
-
   .message {
     margin-top: 25px;
   }
-
   .main-page {
     padding-top: 15px;
   }
-
   .modal_wrapper {
     width: 40vw;
   }
@@ -313,22 +275,18 @@ export default {
   .nav-elem {
     padding: 10px 15px;
   }
-
   .day {
     font-size: 12px;
   }
-
   .message-img {
     width: 30px;
     height: 30px;
   }
-
   .message-img-fa {
     margin-top: 9px;
     margin-left: 8px;
     font-size: 15px;
   }
-
   .first-part p {
     margin-left: 10px;
     font-size: 14px;
@@ -339,24 +297,19 @@ export default {
     font-size: 14px;
     width: 240px;
   }
-
   .time {
     font-size: 11px;
   }
-
   .apendix p {
     font-size: 14px;
   }
-
   .download-icon-fa {
     margin-top: 8px;
     margin-left: 6px;
   }
-
   .images {
     margin-left: 0px;
   }
-
   .images img {
     width: 90px;
   }
@@ -368,32 +321,25 @@ export default {
   .nav {
     margin-left: 0px;
   }
-
   .users {
     margin-top: 10px;
   }
-
   .photos img {
     margin-left: 3px;
   }
-
   .nav-elem {
     padding: 10px 13px;
   }
-
   .activity {
     padding: 15px 10px 15px 10px;
   }
-
   .day {
     font-size: 10px;
   }
-
   .message-img {
     width: 26px;
     height: 26px;
   }
-
   .message-img-fa {
     /* top: 10px;
         left: 8.5px;
@@ -402,13 +348,11 @@ export default {
     margin-left: 7px;
     font-size: 13px;
   }
-
   .download-icon-fa {
     margin-top: 7px;
     margin-left: 5px;
     font-size: 13px;
   }
-
   .first-part p {
     font-size: 13px;
     margin-left: 6px;
@@ -419,23 +363,18 @@ export default {
     margin-left: 0px;
     width: 250px;
   }
-
   .apendix {
     padding: 15px 25px;
   }
-
   .apendix p {
     font-size: 13px;
   }
-
   .time {
     font-size: 10px;
   }
-
   .message {
     margin-top: 20px;
   }
-
   .images {
     flex-wrap: wrap;
   }
@@ -451,11 +390,9 @@ export default {
     /* margin: 15px auto 0px 70px; */
     margin: 15px 0 0 0;
   }
-
   .images img {
     margin-top: 5px;
   }
-
   .download-icon img {
     top: 9px;
   }
