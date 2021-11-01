@@ -9,52 +9,52 @@
   //-   <ModalWindow />
   //- </div>
 </template>
-<script>
+<script lang="ts">
 import Sidebar from "@/components/Sidebar.vue";
-// import Header from "@/components/Header.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import Tabs from "@/components/Tabs.vue";
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Home",
   components: {
     Sidebar,
-    // Header,
     ModalWindow,
     Tabs,
   },
   methods: {
     resizeMain() {
-      let main = document.querySelector(".main");
+      let main = document.querySelector<HTMLElement>(".main");
       let test = main.style.width;
       if (window.matchMedia("(max-width: 480px)").matches) {
         main.style.width = "100%";
-        console.log("Yuuhuuu");
       } else {
         if (test == "75%") {
           main.style.width = "100%";
         } else {
           main.style.width = "75%";
         }
-        console.log("Br");
       }
     },
   },
   mounted() {
-    let notifications = document.querySelector(".notifications");
-    let notifications_text = document.querySelector(".notifications_text");
-    let town = document.querySelector("#town");
-    let beach = document.querySelector("#beach");
-    let fiord = document.querySelector("#fiord");
-    let beach_2 = document.querySelector("#beach_2");
-    let images = [town, beach, fiord, beach_2];
+    let notifications: Element = document.querySelector(".notifications");
+    let notifications_text: Element = document.querySelector(
+      ".notifications_text"
+    );
+    let town: Element = document.querySelector("#town");
+    let beach: Element = document.querySelector("#beach");
+    let fiord: Element = document.querySelector("#fiord");
+    let beach_2: Element = document.querySelector("#beach_2");
+    let images: Array<Element> = [town, beach, fiord, beach_2];
     images.forEach((item) => {
       item.addEventListener("click", () => {
         notifications.classList.remove("hidden");
-        notifications_text.innerHTML = images.indexOf(item);
+        notifications_text.innerHTML = String(images.indexOf(item));
       });
     });
   },
-};
+});
 </script>
 <style>
 /* Tasks page styles*/

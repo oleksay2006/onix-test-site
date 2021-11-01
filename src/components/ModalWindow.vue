@@ -28,8 +28,10 @@
 //-   </div>
 //- </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "ModalWindow",
   components: {},
   mounted() {
@@ -41,11 +43,11 @@ export default {
     let num_2 = document.querySelector(".opened_nums");
     let good = document.querySelector(".good");
     let bad = document.querySelector(".bad");
-    let tasks = 372;
-    let opened_tasks = 11;
+    let tasks: number = 372;
+    let opened_tasks: number = 11;
 
-    num_1.innerHTML = tasks;
-    num_2.innerHTML = opened_tasks;
+    num_1.innerHTML = String(tasks);
+    num_2.innerHTML = String(opened_tasks);
 
     completedTask.addEventListener("click", () => {
       modal.classList.remove("hidden");
@@ -68,8 +70,8 @@ export default {
       if (opened_tasks > 0) {
         tasks += 1;
         opened_tasks -= 1;
-        num_1.innerHTML = tasks;
-        num_2.innerHTML = opened_tasks;
+        num_1.innerHTML = String(tasks);
+        num_2.innerHTML = String(opened_tasks);
         modal.classList.add("hidden");
       }
     });
@@ -77,7 +79,7 @@ export default {
       modal.classList.add("hidden");
     });
   },
-};
+});
 </script>
 <style scoped>
 .modal_wrapper {

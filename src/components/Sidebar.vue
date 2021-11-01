@@ -99,7 +99,7 @@ div
   //-   </section>
   //- </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -107,8 +107,6 @@ export default defineComponent({
   methods: {
     resizeMain() {
       this.$emit("resizeMain");
-      let num: number = 12;
-      console.log(num);
     },
   },
   data() {

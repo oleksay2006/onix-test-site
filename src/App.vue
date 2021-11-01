@@ -6,14 +6,15 @@
   //-   <!-- <router-view /> -->
   //- </div>
 </template>
-<script>
+<script lang="ts">
 import Home from "@/views/Home.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
     Home,
   },
-};
+});
 </script>
 
 <style>
