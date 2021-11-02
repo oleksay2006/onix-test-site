@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ac2b63aedeff45931e85",
-    "url": "/onix-test-site/css/app.d63394e3.css"
+    "revision": "f26639503fc6c9533255",
+    "url": "/onix-test-site/css/app.45bd1e25.css"
   },
   {
     "revision": "0e6e01089d4327013cb51feaf39e56ab",
@@ -28,12 +28,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/onix-test-site/img/town.663f17ff.jpg"
   },
   {
-    "revision": "b00c67c004e2ba2403ffb585a4843ba9",
+    "revision": "888c518ce0624eb214a0a5a51d5932eb",
     "url": "/onix-test-site/index.html"
   },
   {
-    "revision": "ac2b63aedeff45931e85",
-    "url": "/onix-test-site/js/app.1a255eeb.js"
+    "revision": "f26639503fc6c9533255",
+    "url": "/onix-test-site/js/app.3fa646db.js"
   },
   {
     "revision": "77f32bda97f07aa75778",
