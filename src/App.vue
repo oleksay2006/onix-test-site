@@ -1,10 +1,6 @@
 <template lang="pug">
 #app
   Home/
-  //- <div id="app">
-  //-   <Home />
-  //-   <!-- <router-view /> -->
-  //- </div>
 </template>
 <script lang="ts">
 import Home from "@/views/Home.vue";

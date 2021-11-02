@@ -3,11 +3,6 @@
   Sidebar(v-on:resizeMain="resizeMain")
   Tabs/
   ModalWindow/
-  //- <div class="root-div">
-  //-   <Sidebar v-on:resizeMain="resizeMain" />
-  //-   <Tabs />
-  //-   <ModalWindow />
-  //- </div>
 </template>
 <script lang="ts">
 import Sidebar from "@/components/Sidebar.vue";

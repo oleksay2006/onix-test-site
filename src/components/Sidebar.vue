@@ -35,69 +35,6 @@ div
         p Notifications
         .notifications.hidden
           p.notifications_text 0
-
-  //- <div>
-  //-   <input type="checkbox" id="check" v-on:change="resizeMain" />
-  //-   <label for="check">
-  //-     <!-- <i class="fas fa-bars" id="btn"></i> -->
-  //-     <fa icon="bars" id="btn" />
-  //-     <fa icon="times" id="cancel" />
-  //-     <!-- <img id='btn' src="assets/left-arrow.svg" alt=""> -->
-  //-   </label>
-  //-   <section class="sideBar">
-  //-     <div class="top">
-  //-       <div class="top-text">
-  //-         <div class="top-text-2">
-  //-           <img src="@/assets/Logo@3x.svg" alt="logo3" />
-  //-           <h3>PROJECTUS</h3>
-  //-         </div>
-  //-         <fa icon="search" id="search" />
-  //-         <!-- <i class="fas fa-search" id="search"></i> -->
-  //-       </div>
-  //-     </div>
-
-  //-     <div class="profile">
-  //-       <div class="profile-main">
-  //-         <img
-  //-           src="@/assets/profile.svg"
-  //-           alt="profile photo"
-  //-           id="profile-img"
-  //-         />
-  //-         <div class="profile-text">
-  //-           <p class="profile-name">{{ this.profile_name }}</p>
-  //-           <p class="profile-owner">Product Owner</p>
-  //-         </div>
-  //-       </div>
-  //-       <fa icon="ellipsis-h" id="profile-more" />
-  //-       <!-- <i class="fas fa-ellipsis-h" id="profile-more"></i> -->
-  //-     </div>
-  //-     <div class="tasks">
-  //-       <div class="completed">
-  //-         <p class="numbers completed_nums">372</p>
-  //-         <p class="task-type">Completed Tasks</p>
-  //-       </div>
-  //-       <div class="opened">
-  //-         <p class="numbers opened_nums">11</p>
-  //-         <p class="task-type">Opened Tasks</p>
-  //-       </div>
-  //-     </div>
-  //-     <div class="menu">
-  //-       <p class="menu-title">MENU</p>
-  //-       <div class="menu-category">
-  //-         <p>Home</p>
-  //-       </div>
-  //-       <div class="menu-category">
-  //-         <p>My Tasks</p>
-  //-       </div>
-  //-       <div class="menu-category">
-  //-         <p>Notifications</p>
-  //-         <div class="notifications hidden">
-  //-           <p class="notifications_text">2</p>
-  //-         </div>
-  //-       </div>
-  //-     </div>
-  //-   </section>
-  //- </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";

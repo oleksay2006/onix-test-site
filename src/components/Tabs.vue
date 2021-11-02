@@ -57,7 +57,6 @@ section.main
 <script lang="ts">
 import Header from "@/components/Header.vue";
 import { defineComponent } from "vue";
-// import { taskInterface } from "@/interfaces/task.interface";
 import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
@@ -66,13 +65,7 @@ export default defineComponent({
     Header,
   },
   data() {
-    return {
-      tasks: {
-        first: {},
-        second: {},
-        third: {},
-      },
-    };
+    return {};
   },
   mounted() {
     this.SET_TASKS();

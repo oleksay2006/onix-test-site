@@ -17,7 +17,6 @@ export default createStore({
         time: "13:30 PM",
       };
       state.tasks.first = task;
-      console.log(state.tasks.first);
 
       const task_2: taskInterface = {
         title: "Task 2",
@@ -25,7 +24,6 @@ export default createStore({
         time: "09:00 PM",
       };
       state.tasks.second = task_2;
-      console.log(state.tasks.second);
 
       const task_3: taskInterface = {
         title: "Task 3",
@@ -33,7 +31,6 @@ export default createStore({
         time: "19:25 PM",
       };
       state.tasks.third = task_3;
-      console.log(state.tasks.third);
     },
   },
   actions: {

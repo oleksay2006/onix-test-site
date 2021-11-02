@@ -9,24 +9,6 @@
         .modal-buttons
           button.modalButton.first-button(type="button") Yes
           button.modalButton.second-button(type="button") No
-//- <div class="mainModal hidden" ref="modal_wrapper">
-//-   <div class="modal_wrapper">
-//-     <div class="modal">
-//-       <div class="div_form">
-//-         <label for="boardName">
-//-           <p class="good">
-//-             Are you sure you want to change the number of tasks?
-//-           </p>
-//-           <p class="bad hidden">No opened tasks!</p>
-//-         </label>
-//-         <div class="modal-buttons">
-//-           <button type="button" class="modalButton first-button">Yes</button>
-//-           <button type="button" class="modalButton second-button">No</button>
-//-         </div>
-//-       </div>
-//-     </div>
-//-   </div>
-//- </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
