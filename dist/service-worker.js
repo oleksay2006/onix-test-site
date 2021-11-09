@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/onix-test-site/precache-manifest.b4f829941d3f32b7992e30aa1801220b.js"
+  "/onix-test-site/precache-manifest.37e16850b90d0f6d0eca77b7547a8004.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vue3-internatur"});
