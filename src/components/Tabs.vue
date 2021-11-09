@@ -9,53 +9,19 @@ section.main
       .nav-elem(data-tab-name="tab-4") Calendar
       .nav-elem(data-tab-name="tab-5") Files
   .main-page
-    .tasks-tab.tab.tab-1
-      p.day TASK LIST
-      .message.task(
-        v-for="task in TASKS",
-        v-bind:key="task.title",
-        v-bind:task_data="task"
-      )
-        .first-part-task
-          h3 {{ task.title }}
-          p {{ task.text }}
-        p.time Выполнить до {{ task.time }}
-    .kanban-tab.tab.tab-2
-      p Kanban
-    .activity.tab.tab-3.is-active
-      p.day TODAY
-      .message
-        .first-part
-          .message-img
-            fa.message-img-fa(icon="check")
-          p Darika Samak mark as done Listing on Product Hunt so that we can reach as many potential users
-        p.time 8:40 PM
-      .message
-        .first-part
-          .message-img.chat-icon
-            fa.message-img-fa(icon="comment-alt")
-          p Emilee Simchenko commented on Account for teams and personal in bottom style
-        p.time 7:32 PM
-      .apendix
-        p During a project build, it is necessary to evaluate the product design and development against project requirements and outcomes
-      .message
-        .first-part
-          .message-img.download-icon
-            fa.download-icon-fa(icon="cloud-download-alt")
-          p Darika Samak uploaded 4 files on An option to search in current projects or in all projects
-        p.time 6:02 PM
-      .images
-        img#town(src="@/assets/town.jpg")
-        img#beach(src="@/assets/beach.jpg")
-        img#fiord(src="@/assets/fiord.jpg")
-        img#beach_2(src="@/assets/beach-2.jpg")
-    .calendar-tab.tab.tab-4
-      p Calendar
-    .files-tab.tab.tab-5
-      p Files
+    Tasks/
+    Kanban/
+    Activity/
+    Calendar/
+    Files/
 </template>
 <script lang="ts">
 import Header from "@/components/Header.vue";
+import Tasks from "@/components/Tasks.vue";
+import Kanban from "@/components/Kanban.vue";
+import Activity from "@/components/Activity.vue";
+import Calendar from "@/components/Calendar.vue";
+import Files from "@/components/Files.vue";
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 
@@ -63,6 +29,11 @@ export default defineComponent({
   name: "Tabs",
   components: {
     Header,
+    Tasks,
+    Kanban,
+    Activity,
+    Calendar,
+    Files,
   },
   data() {
     return {};
