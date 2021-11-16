@@ -30,11 +30,11 @@ div
       .menu-category
         p Home
       .menu-category
-        p My Tasks
+        router-link(to="/") My Tasks
       .menu-category
         p Notifications
         .notifications.hidden
-          p.notifications_text 0
+          p.notifications_text
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -165,9 +165,11 @@ export default defineComponent({
   align-items: center;
 }
 
-.menu-category p {
+.menu-category a {
+  color: #fff;
   font-size: 15px;
   cursor: pointer;
+  text-decoration: none;
 
   /* height: 20px; */
 }
@@ -284,7 +286,7 @@ label #cancel {
   .menu-title {
     font-size: 12px;
   }
-  .menu-category p {
+  .menu-category a {
     font-size: 14px;
   }
   .notifications {

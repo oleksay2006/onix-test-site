@@ -1,14 +1,22 @@
 <template lang="pug">
 #app
-  Home/
+  component(:is="layout")
+    router-view/
 </template>
 <script lang="ts">
-import Home from "@/views/Home.vue";
 import { defineComponent } from "vue";
+import EmptyLayout from "@/layouts/EmptyLayout.vue";
+import MainLayout from "@/layouts/MainLayout.vue";
 
 export default defineComponent({
   components: {
-    Home,
+    EmptyLayout,
+    MainLayout,
+  },
+  computed: {
+    layout() {
+      return `${this.$route.meta.layout || "empty"}-layout`;
+    },
   },
 });
 </script>

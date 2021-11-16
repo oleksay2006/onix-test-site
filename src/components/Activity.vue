@@ -32,5 +32,22 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Activity",
+  mounted() {
+    let notifications: Element = document.querySelector(".notifications");
+    let notifications_text: Element = document.querySelector(
+      ".notifications_text"
+    );
+    let town: Element = document.querySelector("#town");
+    let beach: Element = document.querySelector("#beach");
+    let fiord: Element = document.querySelector("#fiord");
+    let beach_2: Element = document.querySelector("#beach_2");
+    let images: Array<Element> = [town, beach, fiord, beach_2];
+    images.forEach((item) => {
+      item.addEventListener("click", () => {
+        notifications.classList.remove("hidden");
+        notifications_text.innerHTML = String(images.indexOf(item));
+      });
+    });
+  },
 });
 </script>

@@ -3,17 +3,13 @@ section.main
   .main-wrapper
     Header/
     nav.nav
-      .nav-elem(data-tab-name="tab-1", @click="setTask") Tasks
-      .nav-elem(data-tab-name="tab-2") Kanban
-      .nav-elem.is-active(data-tab-name="tab-3") Activity
-      .nav-elem(data-tab-name="tab-4") Calendar
-      .nav-elem(data-tab-name="tab-5") Files
+      router-link.nav-elem.is-active(data-tab-name="tab-1", to="/") Tasks
+      router-link.nav-elem(data-tab-name="tab-2", to="/kanban") Kanban
+      router-link.nav-elem(data-tab-name="tab-3", to="/activity") Activity
+      router-link.nav-elem(data-tab-name="tab-4", to="/calendar") Calendar
+      router-link.nav-elem(data-tab-name="tab-5", to="/files") Files
   .main-page
-    Tasks/
-    Kanban/
-    Activity/
-    Calendar/
-    Files/
+    router-view/
 </template>
 <script lang="ts">
 import Header from "@/components/Header.vue";
@@ -42,31 +38,20 @@ export default defineComponent({
     this.SET_TASKS();
     let tab = function () {
       let tabNav = document.querySelectorAll(".nav-elem");
-      let tabContent = document.querySelectorAll(".tab");
-      let tabName;
       tabNav.forEach((item) => {
         item.addEventListener("click", selectTabNav);
       });
-
       function selectTabNav() {
         tabNav.forEach((item) => {
           item.classList.remove("is-active");
         });
         this.classList.add("is-active");
-        tabName = this.getAttribute("data-tab-name");
-        selectTabContent(tabName);
-      }
-      function selectTabContent(tabName) {
-        tabContent.forEach((item) => {
-          item.classList.contains(tabName)
-            ? item.classList.add("is-active")
-            : item.classList.remove("is-active");
-        });
       }
     };
 
     tab();
   },
+
   methods: {
     ...mapActions(["SET_TASKS"]),
   },
