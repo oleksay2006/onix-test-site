@@ -1,7 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "55f731af36ffbb5cec52",
-    "url": "/onix-test-site/css/app.45bd1e25.css"
+    "revision": "8e4620cbe77893ae5ec0",
+    "url": "/onix-test-site/css/app.36d5d44f.css"
+  },
+  {
+    "revision": "df537873781ffb48eac4",
+    "url": "/onix-test-site/css/chunk-1b594e26.9e0e8e3f.css"
   },
   {
     "revision": "0e6e01089d4327013cb51feaf39e56ab",
@@ -28,16 +32,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/onix-test-site/img/town.663f17ff.jpg"
   },
   {
-    "revision": "5991b28ba825dc1c9cbd9253a5eb2971",
+    "revision": "cb704560df71fdaaa1a09193afd84930",
     "url": "/onix-test-site/index.html"
   },
   {
-    "revision": "55f731af36ffbb5cec52",
-    "url": "/onix-test-site/js/app.600960bf.js"
+    "revision": "8e4620cbe77893ae5ec0",
+    "url": "/onix-test-site/js/app.e4951c78.js"
   },
   {
-    "revision": "77f32bda97f07aa75778",
-    "url": "/onix-test-site/js/chunk-vendors.3264cbf7.js"
+    "revision": "df537873781ffb48eac4",
+    "url": "/onix-test-site/js/chunk-1b594e26.0403c8c8.js"
+  },
+  {
+    "revision": "a65b1c92f87fef5a4c51",
+    "url": "/onix-test-site/js/chunk-vendors.d376a9e0.js"
   },
   {
     "revision": "4ba9e09663be3a1f81b3be13fa116e4b",
