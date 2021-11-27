@@ -1,6 +1,6 @@
 <template lang="pug">
 .kanban-tab.tab.tab-2
-  p Kanban
+  p Coming soon
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";

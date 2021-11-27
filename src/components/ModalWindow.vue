@@ -21,6 +21,9 @@ export default defineComponent({
     let modalButton_Yes = document.querySelector(".first-button");
     let modalButton_No = document.querySelector(".second-button");
     let completedTask = document.querySelector(".completed");
+
+    // let addNew = document.querySelector(".add-new");
+
     let num_1 = document.querySelector(".completed_nums");
     let num_2 = document.querySelector(".opened_nums");
     let good = document.querySelector(".good");
@@ -30,6 +33,10 @@ export default defineComponent({
 
     num_1.innerHTML = String(tasks);
     num_2.innerHTML = String(opened_tasks);
+
+    // addNew.addEventListener("click", () => {
+    //   modal.classList.remove("hidden");
+    // });
 
     completedTask.addEventListener("click", () => {
       modal.classList.remove("hidden");

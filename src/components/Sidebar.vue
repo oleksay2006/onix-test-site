@@ -30,7 +30,7 @@ div
       .menu-category
         p Home
       .menu-category
-        router-link(to="/") My Tasks
+        router-link(to="/tasks") My Tasks
       .menu-category
         p Notifications
         .notifications.hidden

@@ -1,13 +1,13 @@
 <template lang="pug">
 .root-div
   Sidebar(v-on:resizeMain="resizeMain")
-  Tabs/
+  Header/
   ModalWindow/
 </template>
 <script lang="ts">
 import Sidebar from "@/components/Sidebar.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
-import Tabs from "@/components/Tabs.vue";
+import Header from "@/components/Header.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -15,25 +15,62 @@ export default defineComponent({
   components: {
     Sidebar,
     ModalWindow,
-    Tabs,
+    Header,
   },
   methods: {
     resizeMain() {
-      let main = document.querySelector<HTMLElement>(".main");
+      const main = document.querySelector<HTMLElement>(".main");
       let test = main.style.width;
       if (window.matchMedia("(max-width: 480px)").matches) {
         main.style.width = "100%";
       } else {
         if (test == "75%") {
           main.style.width = "100%";
+          if (
+            window.matchMedia("(max-width: 1024px)").matches &&
+            !window.matchMedia("(max-width: 768px)").matches
+          ) {
+            const close_window =
+              document.querySelector<HTMLElement>(".close-window");
+            // const check_square =
+            //   document.querySelector<HTMLElement>(".check-square");
+            const third_task =
+              document.querySelector<HTMLElement>(".third-part-task");
+            const controls = document.querySelector<HTMLElement>(".controls");
+            // check_square.style.fontSize = "35px";
+            controls.style.flexDirection = "column";
+            controls.style.marginTop = "0px";
+            third_task.style.marginTop = "0px";
+            close_window.style.marginLeft = "0px";
+            close_window.style.fontSize = "30px";
+          }
+          if (window.matchMedia("(max-width: 640px)").matches) {
+            const second_task =
+              document.querySelector<HTMLElement>(".second-part-task");
+            second_task.style.marginTop = "0px";
+          }
         } else {
+          if (window.matchMedia("(max-width: 1024px)").matches) {
+            const close_window =
+              document.querySelector<HTMLElement>(".close-window");
+            const third_task =
+              document.querySelector<HTMLElement>(".third-part-task");
+            const controls = document.querySelector<HTMLElement>(".controls");
+            controls.style.flexDirection = "row";
+            controls.style.marginTop = "20px";
+            third_task.style.marginTop = "10px";
+            close_window.style.marginLeft = "10px";
+            close_window.style.fontSize = "33px";
+          }
+          if (window.matchMedia("(max-width: 640px)").matches) {
+            const second_task =
+              document.querySelector<HTMLElement>(".second-part-task");
+            second_task.style.marginTop = "10px";
+          }
           main.style.width = "75%";
         }
       }
     },
-  },
-  mounted() {
-    this.$router.push("/");
   },
 });
 </script>
@@ -183,12 +220,17 @@ export default defineComponent({
   padding: 30px;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: 75%;
+  /* width: 70%; */
 }
 /* .tab.is-active {
   display: block;
 } */
-.nav-elem.is-active {
+/* .nav-elem.is-active {
+  color: #000000;
+  border-bottom: 2px solid #ffc200;
+} */
+.router-link-active {
   color: #000000;
   border-bottom: 2px solid #ffc200;
 }

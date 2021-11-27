@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+// import Vuelidate from 'vuelidate'
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
@@ -12,4 +13,5 @@ createApp(App)
   .component("fa", FontAwesomeIcon)
   .use(store)
   .use(router)
+  // .use(Vuelidate)
   .mount("#app");

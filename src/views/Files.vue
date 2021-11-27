@@ -1,11 +1,11 @@
 <template lang="pug">
-.calendar-tab.tab.tab-4
-  p Calendar
+.files-tab.tab.tab-5
+  p Coming soon
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Calendar",
+  name: "Files",
 });
 </script>

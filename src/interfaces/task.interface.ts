@@ -1,5 +1,6 @@
 export interface taskInterface {
-  title: String;
-  text: String;
-  time: String;
+  title: String,
+  text: String,
+  time: String,
+  // id?: Number,
 }
