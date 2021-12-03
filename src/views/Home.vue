@@ -19,7 +19,7 @@ export default defineComponent({
   },
   methods: {
     resizeMain() {
-      let main = document.querySelector<HTMLElement>(".main");
+      const main = document.querySelector<HTMLElement>(".main");
       let test = main.style.width;
       if (window.matchMedia("(max-width: 480px)").matches) {
         main.style.width = "100%";
@@ -33,15 +33,15 @@ export default defineComponent({
     },
   },
   mounted() {
-    let notifications: Element = document.querySelector(".notifications");
+    const notifications: Element = document.querySelector(".notifications");
     let notifications_text: Element = document.querySelector(
       ".notifications_text"
     );
-    let town: Element = document.querySelector("#town");
-    let beach: Element = document.querySelector("#beach");
-    let fiord: Element = document.querySelector("#fiord");
-    let beach_2: Element = document.querySelector("#beach_2");
-    let images: Array<Element> = [town, beach, fiord, beach_2];
+    const town: Element = document.querySelector("#town");
+    const beach: Element = document.querySelector("#beach");
+    const fiord: Element = document.querySelector("#fiord");
+    const beach_2: Element = document.querySelector("#beach_2");
+    const images: Array<Element> = [town, beach, fiord, beach_2];
     images.forEach((item) => {
       item.addEventListener("click", () => {
         notifications.classList.remove("hidden");

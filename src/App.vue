@@ -1,7 +1,8 @@
 <template lang="pug">
 #app
-  component(:is="layout")
-    router-view/
+  router-view/
+  //- component(:is="layout")
+  //-   router-view/
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -17,6 +18,9 @@ export default defineComponent({
     layout() {
       return `${this.$route.meta.layout || "empty"}-layout`;
     },
+  },
+  mounted() {
+    this.$router.push("tasks");
   },
 });
 </script>
