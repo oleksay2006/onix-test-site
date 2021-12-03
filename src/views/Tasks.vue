@@ -30,11 +30,13 @@
   .message.task(
     v-for="(task, index) in TASKS",
     v-bind:key="index",
-    v-bind:task_data="task"
+    v-bind:task_data="task",
+    :class="{ new_animation: task.new }",
+    :load="removeAnimation(task)"
   )
     .first-part-task
-      h3 {{ task.title }}
-      p {{ task.text }}
+      h3.title {{ task.title }}
+      p.text {{ task.text }}
     p.time Выполнить до {{ task.time }}
     fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.id)")
 </template>
@@ -71,21 +73,24 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
+    removeAnimation(task) {
+      setTimeout(() => {
+        task.new = false;
+      }, 2000);
+    },
     showNew() {
       const newForm = document.querySelector(".new");
       newForm.classList.remove("hidden");
-
-      // const main = document.querySelector<HTMLElement>(".main");
-      // let width = main.style.width;
-      // if (window.matchMedia("(max-width: 1024px)").matches && width == "75%") {
-      //   const third_task =
-      //     document.querySelector<HTMLElement>(".third-part-task");
-      //   third_task.style.marginTop = "10px";
-      // }
     },
     removeNew() {
       const newForm = document.querySelector(".new");
       newForm.classList.add("hidden");
+      let messages = document.querySelectorAll(".message");
+      messages.forEach((element) => {
+        if (element.classList.contains("new_animation")) {
+          element.classList.remove("new_animation");
+        }
+      });
     },
     addNew() {
       const newCard = {
@@ -93,6 +98,8 @@ export default defineComponent({
         text: this.description,
         time: this.time,
         id: Date.now(),
+        new: true,
+        class: "new_task",
       };
       this.CREATE_NEW_TASK(newCard);
       this.title = "";
@@ -117,32 +124,96 @@ export default defineComponent({
     ...mapGetters(["TASKS"]),
   },
   mounted() {
-    // this.SET_TASKS();
-    console.log(this.TASKS);
-    // const main = document.querySelector<HTMLElement>(".main");
-    // let width = main.style.width;
-    // if (window.matchMedia("(max-width: 1024px)").matches && width == "75%") {
-    //   const third_task =
-    //     document.querySelector<HTMLElement>(".third-part-task");
-    //   const controls = document.querySelector<HTMLElement>(".controls");
-    //   controls.style.flexDirection = "row";
-    //   third_task.style.marginTop = "10px";
-    // }
+    let messages = document.querySelectorAll(".message");
+    messages.forEach((element) => {
+      if (element.classList.contains("new_animation")) {
+        element.classList.remove("new_animation");
+      }
+    });
 
-    // const main = document.querySelector<HTMLElement>(".main");
-    // const controls = document.querySelector<HTMLElement>(".controls");
-    // const close_window = document.querySelector<HTMLElement>(".close-window");
-    // let width = main.style.width;
-    // if (width == "75%") {
-    //   third_task.style.marginTop = "10px";
-    //   controls.style.flexDirection = "initial";
-    //   close_window.style.marginLeft = "10px";
-    //   console.log("hey");
-    // }
+    let titles = document.querySelectorAll(".title");
+    // let p = document.querySelectorAll(".text");
+    let num = 0;
+    titles.forEach((element) => {
+      setTimeout(() => {
+        element.classList.add("animation");
+        console.log(element);
+      }, num);
+
+      num += 500;
+    });
+    // let num_2 = 0;
+    // p.forEach((element) => {
+    //   setTimeout(() => {
+    //     element.classList.add("animation_2");
+    //   }, num_2);
+    //   num_2 += 500;
+    // });
+    // console.log(titles);
   },
 });
 </script>
 <style scoped>
+/* .title {
+  font-size: 19px;
+  animation-name: font;
+  animation-duration: 1s;
+} */
+.animation {
+  animation-name: font;
+  animation-duration: 1s;
+}
+.animation_2 {
+  animation-name: font_2;
+  animation-duration: 1s;
+}
+.new_animation {
+  animation-name: task;
+  animation-duration: 1s;
+}
+/* .message:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.message:nth-child(4) {
+  animation-delay: 1s;
+}
+.message:nth-child(5) {
+  animation-delay: 1.5s;
+} */
+
+@keyframes font {
+  0% {
+    font-size: 19px;
+  }
+  50% {
+    font-size: 24px;
+  }
+}
+@keyframes task {
+  0% {
+    background-color: #fff;
+  }
+  25% {
+    background-color: gray;
+  }
+  50% {
+    background-color: #fff;
+  }
+  75% {
+    background-color: gray;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+/* @keyframes font_2 {
+  0% {
+    font-size: 16px;
+  }
+  50% {
+    font-size: 18px;
+  }
+} */
 .invalid {
   border: 1px solid red !important;
   display: block;
@@ -214,6 +285,14 @@ export default defineComponent({
   }
   .tasks-tab {
     width: 80%;
+  }
+  @keyframes font {
+    0% {
+      font-size: 19px;
+    }
+    50% {
+      font-size: 22px;
+    }
   }
 }
 @media only screen and (max-width: 480px) {
