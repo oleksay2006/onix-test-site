@@ -19,18 +19,18 @@ div
           p.profile-owner Product Owner
       fa#profile-more(icon="ellipsis-h")
     .tasks
-      .completed
-        p.numbers.completed_nums 372
+      .completed(@click="showModal")
+        p.numbers.completed_nums {{ completedTasks }}
         p.task-type Completed Tasks
       .opened
-        p.numbers.opened_nums 11
+        p.numbers.opened_nums {{ openedTasks }}
         p.task-type Opened Tasks
     .menu
       p.menu-title MENU
       .menu-category
         p Home
       .menu-category
-        router-link(to="/tasks") My Tasks
+        router-link(:to="{ name: 'tasks' }") My Tasks
       .menu-category
         p Notifications
         .notifications.hidden
@@ -38,18 +38,42 @@ div
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapState, mapMutations } from "vuex";
 
 export default defineComponent({
   name: "Sidebar",
   methods: {
+    ...mapMutations(["SHOW_MODAL", "HIDE_MODAL"]),
     resizeMain() {
       this.$emit("resizeMain");
+    },
+    showModal() {
+      if (this.openedTasks > 0) {
+        this.SHOW_MODAL();
+      } else if (this.openedTasks == 0) {
+        this.SHOW_MODAL();
+        let good = document.querySelector(".good");
+        let bad = document.querySelector(".bad");
+        let modalButtons = document.querySelector(".modal-buttons");
+        good.classList.add("hidden");
+        bad.classList.remove("hidden");
+        modalButtons.classList.add("hidden");
+        setTimeout(() => {
+          this.HIDE_MODAL();
+          good.classList.remove("hidden");
+          bad.classList.add("hidden");
+          modalButtons.classList.remove("hidden");
+        }, 2000);
+      }
     },
   },
   data() {
     return {
       profile_name: "Jean Gonzales",
     };
+  },
+  computed: {
+    ...mapState(["completedTasks", "openedTasks", "modal"]),
   },
 });
 </script>
@@ -68,15 +92,6 @@ export default defineComponent({
   color: #fff;
   /* font-family: Helvetica; */
 }
-
-/*До сайдбара*/
-/*
-    .sideBar {
-    width: 25%;
-    background-color: #000;
-    color: #fff;
-    }
-*/
 .top {
   padding: 30px;
 }
@@ -170,8 +185,6 @@ export default defineComponent({
   font-size: 15px;
   cursor: pointer;
   text-decoration: none;
-
-  /* height: 20px; */
 }
 
 #check {
@@ -185,7 +198,6 @@ label #cancel {
   color: white;
   border-radius: 5px;
   border: 1px solid #262626;
-  /* margin: 30% 30px 0 5px; */
   top: 50%;
   left: 10px;
   background: #262626;
@@ -203,7 +215,6 @@ label #cancel {
 }
 
 #check:checked ~ .sideBar {
-  /* position: static; */
   left: 0;
   transition: all 1s ease;
 }
@@ -333,8 +344,6 @@ label #cancel {
   }
 
   #check:checked ~ .sideBar {
-    /* position: static; */
-    /* width: 40%; */
     left: 0;
     transition: all 1s ease;
   }

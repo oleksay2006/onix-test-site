@@ -1,5 +1,5 @@
 <template lang="pug">
-.mainModal.hidden(ref="modal_wrapper")
+.mainModal(ref="modal_wrapper", v-show="modal")
   .modal_wrapper
     .modal
       .div_form
@@ -7,67 +7,34 @@
           p.good Are you sure you want to change the number of tasks?
           p.bad.hidden No opened tasks!
         .modal-buttons
-          button.modalButton.first-button(type="button") Yes
-          button.modalButton.second-button(type="button") No
+          button.modalButton.first-button(
+            type="button",
+            @click="changeNumber()"
+          ) Yes
+          button.modalButton.second-button(type="button", @click="hideModal()") No
 </template>
 <script lang="ts">
+import { mapState, mapMutations } from "vuex";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ModalWindow",
   components: {},
-  mounted() {
-    let modal = document.querySelector(".mainModal");
-    let modalButton_Yes = document.querySelector(".first-button");
-    let modalButton_No = document.querySelector(".second-button");
-    let completedTask = document.querySelector(".completed");
-
-    // let addNew = document.querySelector(".add-new");
-
-    let num_1 = document.querySelector(".completed_nums");
-    let num_2 = document.querySelector(".opened_nums");
-    let good = document.querySelector(".good");
-    let bad = document.querySelector(".bad");
-    let tasks: number = 372;
-    let opened_tasks: number = 11;
-
-    num_1.innerHTML = String(tasks);
-    num_2.innerHTML = String(opened_tasks);
-
-    // addNew.addEventListener("click", () => {
-    //   modal.classList.remove("hidden");
-    // });
-
-    completedTask.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-      if (opened_tasks == 0) {
-        good.classList.add("hidden");
-        bad.classList.remove("hidden");
-        modalButton_Yes.classList.add("hidden");
-        modalButton_No.classList.add("hidden");
-        setTimeout(() => {
-          modal.classList.add("hidden");
-          good.classList.remove("hidden");
-          bad.classList.add("hidden");
-          modalButton_Yes.classList.remove("hidden");
-          modalButton_No.classList.remove("hidden");
-        }, 2000);
-      }
-    });
-
-    modalButton_Yes.addEventListener("click", () => {
-      if (opened_tasks > 0) {
-        tasks += 1;
-        opened_tasks -= 1;
-        num_1.innerHTML = String(tasks);
-        num_2.innerHTML = String(opened_tasks);
-        modal.classList.add("hidden");
-      }
-    });
-    modalButton_No.addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
+  computed: {
+    ...mapState(["modal", "openedTasks"]),
   },
+  methods: {
+    ...mapMutations(["HIDE_MODAL", "CHANGE_NUMBER_OF_TASKS"]),
+    hideModal() {
+      this.HIDE_MODAL();
+    },
+    changeNumber() {
+      if (this.openedTasks > 0) {
+        this.CHANGE_NUMBER_OF_TASKS();
+      }
+    },
+  },
+  mounted() {},
 });
 </script>
 <style scoped>

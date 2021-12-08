@@ -2,33 +2,38 @@
 .tasks-tab.tab.tab-1
   .list
     p.day TASK LIST
-    .add-new(v-on:click="showNew")
+    .add-new(v-on:click="showNew()")
       p Add new task +
-  .message.task.new.hidden
+  .message.task.new(v-show="isShow")
     .first-part-task
       h3 Название задачи
       input.new-input.new-title(
         placeholder="Введите название задачи",
-        v-model="title"
+        v-model="title",
+        :class="{ invalid: v$.title.$error }"
       )
-      //- :class="{ invalid: $v.title.$dirty && !$v.title.required }"
+      span.helper(v-if="v$.title.$error") Это обязательное поле
     .second-part-task
       h3 Описание задачи
       input.new-input.new-description(
         placeholder="Введите описание задачи",
-        v-model="description"
+        v-model="description",
+        :class="{ invalid: v$.title.$error }"
       )
+      span.helper(v-if="v$.description.$error") Это обязательное поле
     .third-part-task
       h3 Время выполнения задачи
       input.new-input.new-description(
         placeholder="Введите время",
-        v-model="time"
+        v-model="time",
+        :class="{ invalid: v$.title.$error }"
       )
+      span.helper(v-if="v$.time.$error") Это обязательное поле
     .controls
-      fa.check-square(icon="check-square", v-on:click="addNew")
-      fa.close-window(icon="window-close", v-on:click="removeNew")
+      fa.check-square(icon="check-square", v-on:click="addNew()")
+      fa.close-window(icon="window-close", v-on:click="removeNew()")
   .message.task(
-    v-for="(task, index) in TASKS",
+    v-for="(task, index) in tasks",
     v-bind:key="index",
     v-bind:task_data="task",
     :class="{ new_animation: task.new }",
@@ -42,28 +47,22 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
-// import { required } from "vuelidate/lib/validators";
+import { taskInterface } from "@/interfaces/task.interface";
 import { required } from "@vuelidate/validators";
 
 export default defineComponent({
   name: "Tasks",
-  setup() {
-    return { v$: useVuelidate() };
-  },
   data() {
     return {
+      v$: useVuelidate(),
       title: "",
       description: "",
       time: "",
+      isShow: false,
     };
   },
-  // validations: {
-  //   title: { required },
-  //   description: { required },
-  //   time: { required },
-  // },
   validations() {
     return {
       title: { required },
@@ -79,49 +78,34 @@ export default defineComponent({
       }, 2000);
     },
     showNew() {
-      const newForm = document.querySelector(".new");
-      newForm.classList.remove("hidden");
+      this.isShow = true;
     },
     removeNew() {
-      const newForm = document.querySelector(".new");
-      newForm.classList.add("hidden");
-      let messages = document.querySelectorAll(".message");
-      messages.forEach((element) => {
-        if (element.classList.contains("new_animation")) {
-          element.classList.remove("new_animation");
-        }
-      });
+      this.isShow = false;
     },
     addNew() {
-      const newCard = {
-        title: this.title,
-        text: this.description,
-        time: this.time,
-        id: Date.now(),
-        new: true,
-        class: "new_task",
-      };
-      this.CREATE_NEW_TASK(newCard);
-      this.title = "";
-      this.description = "";
-      this.time = "";
-      const newForm = document.querySelector(".new");
-      newForm.classList.add("hidden");
-
-      // if (this.$v.$invalid) {
-      //   this.$v.$touch();
-      //   return;
-      // }
-      // this.v$.$touch();
-      // if (this.v$.$error) return;
-      // alert("Form is valid");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        const newCard: taskInterface = {
+          title: this.title,
+          text: this.description,
+          time: this.time,
+          id: Date.now(),
+          new: true,
+        };
+        this.CREATE_NEW_TASK(newCard);
+        this.title = "";
+        this.description = "";
+        this.time = "";
+        this.removeNew();
+      }
     },
     deleteTask(id) {
       this.DELETE_TASK(id);
     },
   },
   computed: {
-    ...mapGetters(["TASKS"]),
+    ...mapState(["tasks"]),
   },
   mounted() {
     let messages = document.querySelectorAll(".message");
@@ -132,7 +116,6 @@ export default defineComponent({
     });
 
     let titles = document.querySelectorAll(".title");
-    // let p = document.querySelectorAll(".text");
     let num = 0;
     titles.forEach((element) => {
       setTimeout(() => {
@@ -142,23 +125,15 @@ export default defineComponent({
 
       num += 500;
     });
-    // let num_2 = 0;
-    // p.forEach((element) => {
-    //   setTimeout(() => {
-    //     element.classList.add("animation_2");
-    //   }, num_2);
-    //   num_2 += 500;
-    // });
-    // console.log(titles);
   },
 });
 </script>
 <style scoped>
-/* .title {
-  font-size: 19px;
-  animation-name: font;
-  animation-duration: 1s;
-} */
+.helper {
+  margin-top: 3px;
+  font-size: 13px;
+  color: red;
+}
 .animation {
   animation-name: font;
   animation-duration: 1s;
@@ -171,15 +146,6 @@ export default defineComponent({
   animation-name: task;
   animation-duration: 1s;
 }
-/* .message:nth-child(3) {
-  animation-delay: 0.5s;
-}
-.message:nth-child(4) {
-  animation-delay: 1s;
-}
-.message:nth-child(5) {
-  animation-delay: 1.5s;
-} */
 
 @keyframes font {
   0% {

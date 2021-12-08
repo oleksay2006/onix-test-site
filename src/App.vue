@@ -1,28 +1,11 @@
 <template lang="pug">
 #app
   router-view/
-  //- component(:is="layout")
-  //-   router-view/
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import MainLayout from "@/layouts/MainLayout.vue";
 
-export default defineComponent({
-  components: {
-    EmptyLayout,
-    MainLayout,
-  },
-  computed: {
-    layout() {
-      return `${this.$route.meta.layout || "empty"}-layout`;
-    },
-  },
-  mounted() {
-    this.$router.push("tasks");
-  },
-});
+export default defineComponent({});
 </script>
 
 <style>
@@ -39,8 +22,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-  /* text-align: center;
-  color: #2c3e50; */
 }
 
 #nav {

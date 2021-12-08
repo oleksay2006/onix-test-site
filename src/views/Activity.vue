@@ -22,32 +22,34 @@
       p Darika Samak uploaded 4 files on An option to search in current projects or in all projects
     p.time 6:02 PM
   .images
-    img#town(src="@/assets/town.jpg")
-    img#beach(src="@/assets/beach.jpg")
-    img#fiord(src="@/assets/fiord.jpg")
-    img#beach_2(src="@/assets/beach-2.jpg")
+    img(
+      v-for="(img, index) in images",
+      v-bind:key="index",
+      :src="getImgUrl(img.source)",
+      @click="showIndex(index)"
+    )
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapState } from "vuex";
 
 export default defineComponent({
   name: "Activity",
-  mounted() {
-    const notifications: Element = document.querySelector(".notifications");
-    let notifications_text: Element = document.querySelector(
-      ".notifications_text"
-    );
-    const town: Element = document.querySelector("#town");
-    const beach: Element = document.querySelector("#beach");
-    const fiord: Element = document.querySelector("#fiord");
-    const beach_2: Element = document.querySelector("#beach_2");
-    const images: Array<Element> = [town, beach, fiord, beach_2];
-    images.forEach((item) => {
-      item.addEventListener("click", () => {
-        notifications.classList.remove("hidden");
-        notifications_text.innerHTML = String(images.indexOf(item));
-      });
-    });
+  computed: {
+    ...mapState(["images"]),
+  },
+  methods: {
+    showIndex(index) {
+      const notifications: Element = document.querySelector(".notifications");
+      let notifications_text: Element = document.querySelector(
+        ".notifications_text"
+      );
+      notifications.classList.remove("hidden");
+      notifications_text.innerHTML = String(index);
+    },
+    getImgUrl(pic) {
+      return require("../assets/" + pic);
+    },
   },
 });
 </script>
