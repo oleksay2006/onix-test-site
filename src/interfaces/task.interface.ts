@@ -3,5 +3,5 @@ export interface taskInterface {
   text: String;
   time: String;
   id: Number;
-  new: Boolean;
+  isNew: Boolean;
 }

@@ -34,19 +34,19 @@
       fa.close-window(icon="window-close", v-on:click="removeNew()")
   .message.task(
     v-for="(task, index) in tasks",
-    v-bind:key="index",
+    :key="'task-' + index",
     v-bind:task_data="task",
-    :class="{ new_animation: task.new }",
+    :class="{ new_animation: task.isNew }",
     :load="removeAnimation(task)"
   )
     .first-part-task
-      h3.title {{ task.title }}
+      h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.title }}
       p.text {{ task.text }}
     p.time Выполнить до {{ task.time }}
     fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.id)")
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { ref, defineComponent, onMounted } from "vue";
 import { mapActions, mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { taskInterface } from "@/interfaces/task.interface";
@@ -54,6 +54,25 @@ import { required } from "@vuelidate/validators";
 
 export default defineComponent({
   name: "Tasks",
+  setup() {
+    // Before the component is mounted, the value
+    // of the ref is `[]` which is the default
+    let num = 0;
+    const divs = ref([]);
+    onMounted(() => {
+      divs.value.forEach((element) => {
+        setTimeout(() => {
+          element.classList.add("animation");
+          console.log(element);
+        }, num);
+        num += 500;
+      });
+    });
+    return {
+      divs,
+      close,
+    };
+  },
   data() {
     return {
       v$: useVuelidate(),
@@ -74,7 +93,7 @@ export default defineComponent({
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
     removeAnimation(task) {
       setTimeout(() => {
-        task.new = false;
+        task.isNew = false;
       }, 2000);
     },
     showNew() {
@@ -91,7 +110,7 @@ export default defineComponent({
           text: this.description,
           time: this.time,
           id: Date.now(),
-          new: true,
+          isNew: true,
         };
         this.CREATE_NEW_TASK(newCard);
         this.title = "";
@@ -107,25 +126,7 @@ export default defineComponent({
   computed: {
     ...mapState(["tasks"]),
   },
-  mounted() {
-    let messages = document.querySelectorAll(".message");
-    messages.forEach((element) => {
-      if (element.classList.contains("new_animation")) {
-        element.classList.remove("new_animation");
-      }
-    });
-
-    let titles = document.querySelectorAll(".title");
-    let num = 0;
-    titles.forEach((element) => {
-      setTimeout(() => {
-        element.classList.add("animation");
-        console.log(element);
-      }, num);
-
-      num += 500;
-    });
-  },
+  mounted() {},
 });
 </script>
 <style scoped>

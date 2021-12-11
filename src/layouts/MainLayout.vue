@@ -1,6 +1,6 @@
 <template lang="pug">
 .root-div
-  Sidebar(v-on:resizeMain="resizeMain")
+  Sidebar(v-on:resizeMain="resizeMain", v-on:change="change")
   Header/
   ModalWindow/
 </template>
@@ -9,15 +9,28 @@ import Sidebar from "@/components/Sidebar.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import Header from "@/components/Header.vue";
 import { defineComponent } from "vue";
+import { mapState } from "vuex";
 
 export default defineComponent({
   name: "Home",
+  computed: {
+    ...mapState(["openedTasks"]),
+  },
+  data() {
+    return {
+      modal: false as boolean,
+    };
+  },
   components: {
     Sidebar,
     ModalWindow,
     Header,
   },
   methods: {
+    change() {
+      this.modal = true;
+      console.log(this.modal);
+    },
     resizeMain() {
       const main = document.querySelector<HTMLElement>(".main");
       let test = main.style.width;

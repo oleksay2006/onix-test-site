@@ -4,9 +4,9 @@
     .modal
       .div_form
         label(for="boardName")
-          p.good Are you sure you want to change the number of tasks?
-          p.bad.hidden No opened tasks!
-        .modal-buttons
+          p.good(v-if="this.openedTasks > 0") Are you sure you want to change the number of tasks?
+          p.bad(v-if="this.openedTasks == 0") No opened tasks!
+        .modal-buttons(v-if="this.openedTasks > 0")
           button.modalButton.first-button(
             type="button",
             @click="changeNumber()"
@@ -14,17 +14,22 @@
           button.modalButton.second-button(type="button", @click="hideModal()") No
 </template>
 <script lang="ts">
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ModalWindow",
+  data() {
+    return {
+      // props: ["modal"],
+    };
+  },
   components: {},
   computed: {
     ...mapState(["modal", "openedTasks"]),
   },
   methods: {
-    ...mapMutations(["HIDE_MODAL", "CHANGE_NUMBER_OF_TASKS"]),
+    ...mapActions(["HIDE_MODAL", "CHANGE_NUMBER_OF_TASKS"]),
     hideModal() {
       this.HIDE_MODAL();
     },
@@ -34,7 +39,9 @@ export default defineComponent({
       }
     },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.modal);
+  },
 });
 </script>
 <style scoped>

@@ -19,7 +19,7 @@ div
           p.profile-owner Product Owner
       fa#profile-more(icon="ellipsis-h")
     .tasks
-      .completed(@click="showModal")
+      .completed(@click="showModal(), Change()")
         p.numbers.completed_nums {{ completedTasks }}
         p.task-type Completed Tasks
       .opened
@@ -34,35 +34,27 @@ div
       .menu-category
         p Notifications
         .notifications.hidden
-          p.notifications_text
+          p.notifications_text {{ img_index }}
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default defineComponent({
   name: "Sidebar",
   methods: {
-    ...mapMutations(["SHOW_MODAL", "HIDE_MODAL"]),
+    ...mapActions(["SHOW_MODAL", "HIDE_MODAL"]),
     resizeMain() {
       this.$emit("resizeMain");
     },
+    Change() {
+      this.$emit("change");
+    },
     showModal() {
-      if (this.openedTasks > 0) {
-        this.SHOW_MODAL();
-      } else if (this.openedTasks == 0) {
-        this.SHOW_MODAL();
-        let good = document.querySelector(".good");
-        let bad = document.querySelector(".bad");
-        let modalButtons = document.querySelector(".modal-buttons");
-        good.classList.add("hidden");
-        bad.classList.remove("hidden");
-        modalButtons.classList.add("hidden");
+      this.SHOW_MODAL();
+      if (this.openedTasks == 0) {
         setTimeout(() => {
           this.HIDE_MODAL();
-          good.classList.remove("hidden");
-          bad.classList.add("hidden");
-          modalButtons.classList.remove("hidden");
         }, 2000);
       }
     },
@@ -73,7 +65,7 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(["completedTasks", "openedTasks", "modal"]),
+    ...mapState(["completedTasks", "openedTasks", "modal", "img_index"]),
   },
 });
 </script>

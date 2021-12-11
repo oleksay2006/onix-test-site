@@ -24,28 +24,42 @@
   .images
     img(
       v-for="(img, index) in images",
-      v-bind:key="index",
+      :key="'image-' + index",
       :src="getImgUrl(img.source)",
       @click="showIndex(index)"
     )
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default defineComponent({
   name: "Activity",
-  computed: {
-    ...mapState(["images"]),
+  data() {
+    return {
+      images: [
+        {
+          source: "town.jpg",
+        },
+        {
+          source: "beach.jpg",
+        },
+        {
+          source: "fiord.jpg",
+        },
+        {
+          source: "beach-2.jpg",
+        },
+      ] as Array<object>,
+    };
   },
+  computed: {},
   methods: {
+    ...mapActions(["Image_index"]),
     showIndex(index) {
       const notifications: Element = document.querySelector(".notifications");
-      let notifications_text: Element = document.querySelector(
-        ".notifications_text"
-      );
+      this.Image_index(index);
       notifications.classList.remove("hidden");
-      notifications_text.innerHTML = String(index);
     },
     getImgUrl(pic) {
       return require("../assets/" + pic);
