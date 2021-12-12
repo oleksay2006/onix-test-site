@@ -4,4 +4,5 @@ export interface taskInterface {
   time: String;
   id: Number;
   isNew: Boolean;
+  status: String;
 }

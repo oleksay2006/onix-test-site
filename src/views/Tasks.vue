@@ -51,9 +51,13 @@ import { mapActions, mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { taskInterface } from "@/interfaces/task.interface";
 import { required } from "@vuelidate/validators";
+import Status from "@/enums/StatusEnum";
 
 export default defineComponent({
   name: "Tasks",
+  enums: {
+    Status,
+  },
   setup() {
     // Before the component is mounted, the value
     // of the ref is `[]` which is the default
@@ -111,6 +115,7 @@ export default defineComponent({
           time: this.time,
           id: Date.now(),
           isNew: true,
+          status: Status.toDo,
         };
         this.CREATE_NEW_TASK(newCard);
         this.title = "";

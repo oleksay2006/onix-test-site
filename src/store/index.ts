@@ -14,6 +14,7 @@ export default createStore({
         time: "13:30 PM",
         id: 0,
         isNew: false,
+        status: 'in-progress'
       },
       {
         title: "Task 2",
@@ -21,6 +22,7 @@ export default createStore({
         time: "09:00 PM",
         id: 1,
         isNew: false,
+        status: 'in-progress'
       },
       {
         title: "Task 3",
@@ -28,6 +30,7 @@ export default createStore({
         time: "19:25 PM",
         id: 2,
         isNew: false,
+        status: 'to-do'
       },
     ] as taskInterface[],
   },
