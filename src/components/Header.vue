@@ -18,11 +18,11 @@ section.main
             fa.chat-block-fa(icon="comments")
             input#chat(type="button", value="Chat")
     nav.nav
-      router-link.nav-elem(data-tab-name="tab-1", to="/tasks") Tasks
-      router-link.nav-elem(data-tab-name="tab-2", to="/kanban") Kanban
-      router-link.nav-elem(data-tab-name="tab-3", to="/activity") Activity
-      router-link.nav-elem(data-tab-name="tab-4", to="/calendar") Calendar
-      router-link.nav-elem(data-tab-name="tab-5", to="/files") Files
+      router-link.nav-elem(data-tab-name="tab-1", :to="{ name: 'tasks' }") Tasks
+      router-link.nav-elem(data-tab-name="tab-2", :to="{ name: 'kanban' }") Kanban
+      router-link.nav-elem(data-tab-name="tab-3", :to="{ name: 'activity' }") Activity
+      router-link.nav-elem(data-tab-name="tab-4", :to="{ name: 'calendar' }") Calendar
+      router-link.nav-elem(data-tab-name="tab-5", :to="{ name: 'files' }") Files
   .main-page
     router-view/
 </template>

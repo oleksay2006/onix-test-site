@@ -19,37 +19,53 @@ div
           p.profile-owner Product Owner
       fa#profile-more(icon="ellipsis-h")
     .tasks
-      .completed
-        p.numbers.completed_nums 372
+      .completed(@click="showModal(), Change()")
+        p.numbers.completed_nums {{ completedTasks }}
         p.task-type Completed Tasks
       .opened
-        p.numbers.opened_nums 11
+        p.numbers.opened_nums {{ openedTasks }}
         p.task-type Opened Tasks
     .menu
       p.menu-title MENU
       .menu-category
         p Home
       .menu-category
-        router-link(to="/tasks") My Tasks
+        router-link(:to="{ name: 'tasks' }") My Tasks
       .menu-category
         p Notifications
         .notifications.hidden
-          p.notifications_text
+          p.notifications_text {{ img_index }}
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapState, mapActions } from "vuex";
 
 export default defineComponent({
   name: "Sidebar",
   methods: {
+    ...mapActions(["SHOW_MODAL", "HIDE_MODAL"]),
     resizeMain() {
       this.$emit("resizeMain");
+    },
+    Change() {
+      this.$emit("change");
+    },
+    showModal() {
+      this.SHOW_MODAL();
+      if (this.openedTasks == 0) {
+        setTimeout(() => {
+          this.HIDE_MODAL();
+        }, 2000);
+      }
     },
   },
   data() {
     return {
       profile_name: "Jean Gonzales",
     };
+  },
+  computed: {
+    ...mapState(["completedTasks", "openedTasks", "modal", "img_index"]),
   },
 });
 </script>
@@ -68,15 +84,6 @@ export default defineComponent({
   color: #fff;
   /* font-family: Helvetica; */
 }
-
-/*До сайдбара*/
-/*
-    .sideBar {
-    width: 25%;
-    background-color: #000;
-    color: #fff;
-    }
-*/
 .top {
   padding: 30px;
 }
@@ -170,8 +177,6 @@ export default defineComponent({
   font-size: 15px;
   cursor: pointer;
   text-decoration: none;
-
-  /* height: 20px; */
 }
 
 #check {
@@ -185,7 +190,6 @@ label #cancel {
   color: white;
   border-radius: 5px;
   border: 1px solid #262626;
-  /* margin: 30% 30px 0 5px; */
   top: 50%;
   left: 10px;
   background: #262626;
@@ -203,7 +207,6 @@ label #cancel {
 }
 
 #check:checked ~ .sideBar {
-  /* position: static; */
   left: 0;
   transition: all 1s ease;
 }
@@ -333,8 +336,6 @@ label #cancel {
   }
 
   #check:checked ~ .sideBar {
-    /* position: static; */
-    /* width: 40%; */
     left: 0;
     transition: all 1s ease;
   }

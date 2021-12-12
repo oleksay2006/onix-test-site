@@ -1,89 +1,79 @@
 import { createStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
-import { faTasks } from "@fortawesome/free-solid-svg-icons";
 
 export default createStore({
   state: {
-    // tasks: {
-    //   task: {},
-    //   task_2: {},
-    //   task_3: {},
-    // },
+    img_index: 0 as number,
+    modal: false as boolean,
+    completedTasks: 372 as number,
+    openedTasks: 11 as number,
     tasks: [
       {
         title: "Task 1",
         text: "Go to the shop",
         time: "13:30 PM",
         id: 0,
+        isNew: false,
       },
       {
         title: "Task 2",
         text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
         time: "09:00 PM",
         id: 1,
+        isNew: false,
       },
       {
         title: "Task 3",
         text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
         time: "19:25 PM",
         id: 2,
-      }
-    ]
+        isNew: false,
+      },
+    ] as taskInterface[],
   },
   mutations: {
-    // SET_TASKS_TO_STATE: (state) => {
-    //   const task: taskInterface = {
-    //     title: "Task 1",
-    //     text: "Go to the shop",
-    //     time: "13:30 PM",
-    //     // id: 0,
-    //   };
-    //   // state.tasks.task = task;
-    //   state.tasks.push(task)
-
-    //   const task_2: taskInterface = {
-    //     title: "Task 2",
-    //     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-    //     time: "09:00 PM",
-    //     // id: 1,
-    //   };
-    //   // state.tasks.task_2 = task_2;
-    //   state.tasks.push(task_2)
-
-    //   const task_3: taskInterface = {
-    //     title: "Task 3",
-    //     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-    //     time: "19:25 PM",
-    //     // id: 2,
-    //   };
-    //   // state.tasks.task_3 = task_3;
-    //   state.tasks.push(task_3)
-
-    //   console.log(state.tasks)
-    //   // state.tasks[Object.keys(state.tasks).length + 1] = newCard
-    //   // console.log(newCard)
-    //   // obj[newNum] = newVal;
-    // },
     SET_NEW_TASK: (state, newCard) => {
-      state.tasks.push(newCard)
-      // state.tasks = Object.assign(state.tasks, newCard);
+      state.tasks.push(newCard);
 
-      console.log(state.tasks)
+      console.log(state.tasks);
     },
     DELETE_TASK: (state, id) => {
       state.tasks = state.tasks.filter((t) => t.id !== id);
-    }
+    },
+    CHANGE_NUMBER_OF_TASKS: (state) => {
+      state.completedTasks += 1;
+      state.openedTasks -= 1;
+      state.modal = false;
+    },
+    SHOW_MODAL: (state) => {
+      state.modal = true;
+    },
+    HIDE_MODAL: (state) => {
+      state.modal = false;
+    },
+    Change_index: (state, index) => {
+      state.img_index = index;
+    },
   },
   actions: {
-    // SET_TASKS({ commit }) {
-    //   commit("SET_TASKS_TO_STATE");
-    // },
+    SHOW_MODAL({ commit }) {
+      commit("SHOW_MODAL");
+    },
+    HIDE_MODAL({ commit }) {
+      commit("HIDE_MODAL");
+    },
+    CHANGE_NUMBER_OF_TASKS({ commit }) {
+      commit("CHANGE_NUMBER_OF_TASKS");
+    },
+    Image_index({ commit }, index) {
+      commit("Change_index", index);
+    },
     CREATE_NEW_TASK({ commit }, newCard) {
       commit("SET_NEW_TASK", newCard);
     },
     DELETE_TASK({ commit }, id) {
-      commit("DELETE_TASK", id)
-    }
+      commit("DELETE_TASK", id);
+    },
   },
   getters: {
     TASKS(state) {

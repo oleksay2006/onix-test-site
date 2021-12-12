@@ -4,72 +4,41 @@ const routes = [
   {
     path: "/",
     component: () => import("../layouts/MainLayout.vue"),
+    redirect: "tasks",
     children: [
       {
         path: "tasks",
+        name: "tasks",
         component: () => import("../views/Tasks.vue"),
       },
       {
         path: "kanban",
+        name: "kanban",
         component: () => import("../views/Kanban.vue"),
       },
       {
         path: "activity",
+        name: "activity",
         component: () => import("../views/Activity.vue"),
       },
       {
         path: "calendar",
+        name: "calendar",
         component: () => import("../views/Calendar.vue"),
       },
       {
         path: "files",
+        name: "files",
         component: () => import("../views/Files.vue"),
       },
     ],
   },
-
-  // {
-  //   path: "/",
-  //   name: "Tasks",
-  //   meta: { layout: "main" },
-  //   component: () => import("../views/Tasks.vue"),
-  // },
-  // {
-  //   path: "/kanban",
-  //   name: "Kanban",
-  //   meta: { layout: "main" },
-  //   component: () => import("../views/Kanban.vue"),
-  // },
-  // {
-  //   path: "/activity",
-  //   name: "Activity",
-  //   meta: { layout: "main" },
-  //   component: () => import("../views/Activity.vue"),
-  // },
-  // {
-  //   path: "/calendar",
-  //   name: "Calendar",
-  //   meta: { layout: "main" },
-  //   component: () => import("../views/Calendar.vue"),
-  // },
-  // {
-  //   path: "/files",
-  //   name: "Files",
-  //   meta: { layout: "main" },
-  //   component: () => import("../views/Files.vue"),
-  // },
   {
-    // path: "/:pathMatch(.*)*",
     path: "/:pathMatch(.*)",
     name: "404",
     meta: { layout: "empty" },
     component: () => import("../views/NotFound.vue"),
   },
-
-  // {
-  //   path: '*',
-  //   redirect: '/404'
-  // }
 ];
 
 const router = createRouter({

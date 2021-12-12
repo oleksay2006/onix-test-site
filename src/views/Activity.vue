@@ -22,32 +22,48 @@
       p Darika Samak uploaded 4 files on An option to search in current projects or in all projects
     p.time 6:02 PM
   .images
-    img#town(src="@/assets/town.jpg")
-    img#beach(src="@/assets/beach.jpg")
-    img#fiord(src="@/assets/fiord.jpg")
-    img#beach_2(src="@/assets/beach-2.jpg")
+    img(
+      v-for="(img, index) in images",
+      :key="'image-' + index",
+      :src="getImgUrl(img.source)",
+      @click="showIndex(index)"
+    )
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapActions } from "vuex";
 
 export default defineComponent({
   name: "Activity",
-  mounted() {
-    const notifications: Element = document.querySelector(".notifications");
-    let notifications_text: Element = document.querySelector(
-      ".notifications_text"
-    );
-    const town: Element = document.querySelector("#town");
-    const beach: Element = document.querySelector("#beach");
-    const fiord: Element = document.querySelector("#fiord");
-    const beach_2: Element = document.querySelector("#beach_2");
-    const images: Array<Element> = [town, beach, fiord, beach_2];
-    images.forEach((item) => {
-      item.addEventListener("click", () => {
-        notifications.classList.remove("hidden");
-        notifications_text.innerHTML = String(images.indexOf(item));
-      });
-    });
+  data() {
+    return {
+      images: [
+        {
+          source: "town.jpg",
+        },
+        {
+          source: "beach.jpg",
+        },
+        {
+          source: "fiord.jpg",
+        },
+        {
+          source: "beach-2.jpg",
+        },
+      ] as Array<object>,
+    };
+  },
+  computed: {},
+  methods: {
+    ...mapActions(["Image_index"]),
+    showIndex(index) {
+      const notifications: Element = document.querySelector(".notifications");
+      this.Image_index(index);
+      notifications.classList.remove("hidden");
+    },
+    getImgUrl(pic) {
+      return require("../assets/" + pic);
+    },
   },
 });
 </script>

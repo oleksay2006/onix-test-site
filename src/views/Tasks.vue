@@ -2,66 +2,86 @@
 .tasks-tab.tab.tab-1
   .list
     p.day TASK LIST
-    .add-new(v-on:click="showNew")
+    .add-new(v-on:click="showNew()")
       p Add new task +
-  .message.task.new.hidden
+  .message.task.new(v-show="isShow")
     .first-part-task
       h3 Название задачи
       input.new-input.new-title(
         placeholder="Введите название задачи",
-        v-model="title"
+        v-model="title",
+        :class="{ invalid: v$.title.$error }"
       )
-      //- :class="{ invalid: $v.title.$dirty && !$v.title.required }"
+      span.helper(v-if="v$.title.$error") Это обязательное поле
     .second-part-task
       h3 Описание задачи
       input.new-input.new-description(
         placeholder="Введите описание задачи",
-        v-model="description"
+        v-model="description",
+        :class="{ invalid: v$.title.$error }"
       )
+      span.helper(v-if="v$.description.$error") Это обязательное поле
     .third-part-task
       h3 Время выполнения задачи
       input.new-input.new-description(
         placeholder="Введите время",
-        v-model="time"
+        v-model="time",
+        :class="{ invalid: v$.title.$error }"
       )
+      span.helper(v-if="v$.time.$error") Это обязательное поле
     .controls
-      fa.check-square(icon="check-square", v-on:click="addNew")
-      fa.close-window(icon="window-close", v-on:click="removeNew")
+      fa.check-square(icon="check-square", v-on:click="addNew()")
+      fa.close-window(icon="window-close", v-on:click="removeNew()")
   .message.task(
-    v-for="(task, index) in TASKS",
-    v-bind:key="index",
-    v-bind:task_data="task"
+    v-for="(task, index) in tasks",
+    :key="'task-' + index",
+    v-bind:task_data="task",
+    :class="{ new_animation: task.isNew }",
+    :load="removeAnimation(task)"
   )
     .first-part-task
-      h3 {{ task.title }}
-      p {{ task.text }}
+      h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.title }}
+      p.text {{ task.text }}
     p.time Выполнить до {{ task.time }}
     fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.id)")
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { ref, defineComponent, onMounted } from "vue";
+import { mapActions, mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
-// import { required } from "vuelidate/lib/validators";
+import { taskInterface } from "@/interfaces/task.interface";
 import { required } from "@vuelidate/validators";
 
 export default defineComponent({
   name: "Tasks",
   setup() {
-    return { v$: useVuelidate() };
+    // Before the component is mounted, the value
+    // of the ref is `[]` which is the default
+    let num = 0;
+    const divs = ref([]);
+    onMounted(() => {
+      divs.value.forEach((element) => {
+        setTimeout(() => {
+          element.classList.add("animation");
+          console.log(element);
+        }, num);
+        num += 500;
+      });
+    });
+    return {
+      divs,
+      close,
+    };
   },
   data() {
     return {
+      v$: useVuelidate(),
       title: "",
       description: "",
       time: "",
+      isShow: false,
     };
   },
-  // validations: {
-  //   title: { required },
-  //   description: { required },
-  //   time: { required },
-  // },
   validations() {
     return {
       title: { required },
@@ -71,78 +91,96 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
+    removeAnimation(task) {
+      setTimeout(() => {
+        task.isNew = false;
+      }, 2000);
+    },
     showNew() {
-      const newForm = document.querySelector(".new");
-      newForm.classList.remove("hidden");
-
-      // const main = document.querySelector<HTMLElement>(".main");
-      // let width = main.style.width;
-      // if (window.matchMedia("(max-width: 1024px)").matches && width == "75%") {
-      //   const third_task =
-      //     document.querySelector<HTMLElement>(".third-part-task");
-      //   third_task.style.marginTop = "10px";
-      // }
+      this.isShow = true;
     },
     removeNew() {
-      const newForm = document.querySelector(".new");
-      newForm.classList.add("hidden");
+      this.isShow = false;
     },
     addNew() {
-      const newCard = {
-        title: this.title,
-        text: this.description,
-        time: this.time,
-        id: Date.now(),
-      };
-      this.CREATE_NEW_TASK(newCard);
-      this.title = "";
-      this.description = "";
-      this.time = "";
-      const newForm = document.querySelector(".new");
-      newForm.classList.add("hidden");
-
-      // if (this.$v.$invalid) {
-      //   this.$v.$touch();
-      //   return;
-      // }
-      // this.v$.$touch();
-      // if (this.v$.$error) return;
-      // alert("Form is valid");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        const newCard: taskInterface = {
+          title: this.title,
+          text: this.description,
+          time: this.time,
+          id: Date.now(),
+          isNew: true,
+        };
+        this.CREATE_NEW_TASK(newCard);
+        this.title = "";
+        this.description = "";
+        this.time = "";
+        this.removeNew();
+      }
     },
     deleteTask(id) {
       this.DELETE_TASK(id);
     },
   },
   computed: {
-    ...mapGetters(["TASKS"]),
+    ...mapState(["tasks"]),
   },
-  mounted() {
-    // this.SET_TASKS();
-    console.log(this.TASKS);
-    // const main = document.querySelector<HTMLElement>(".main");
-    // let width = main.style.width;
-    // if (window.matchMedia("(max-width: 1024px)").matches && width == "75%") {
-    //   const third_task =
-    //     document.querySelector<HTMLElement>(".third-part-task");
-    //   const controls = document.querySelector<HTMLElement>(".controls");
-    //   controls.style.flexDirection = "row";
-    //   third_task.style.marginTop = "10px";
-    // }
-
-    // const main = document.querySelector<HTMLElement>(".main");
-    // const controls = document.querySelector<HTMLElement>(".controls");
-    // const close_window = document.querySelector<HTMLElement>(".close-window");
-    // let width = main.style.width;
-    // if (width == "75%") {
-    //   third_task.style.marginTop = "10px";
-    //   controls.style.flexDirection = "initial";
-    //   close_window.style.marginLeft = "10px";
-    //   console.log("hey");
-    // }
-  },
+  mounted() {},
 });
 </script>
 <style scoped>
+.helper {
+  margin-top: 3px;
+  font-size: 13px;
+  color: red;
+}
+.animation {
+  animation-name: font;
+  animation-duration: 1s;
+}
+.animation_2 {
+  animation-name: font_2;
+  animation-duration: 1s;
+}
+.new_animation {
+  animation-name: task;
+  animation-duration: 1s;
+}
+
+@keyframes font {
+  0% {
+    font-size: 19px;
+  }
+  50% {
+    font-size: 24px;
+  }
+}
+@keyframes task {
+  0% {
+    background-color: #fff;
+  }
+  25% {
+    background-color: gray;
+  }
+  50% {
+    background-color: #fff;
+  }
+  75% {
+    background-color: gray;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+/* @keyframes font_2 {
+  0% {
+    font-size: 16px;
+  }
+  50% {
+    font-size: 18px;
+  }
+} */
 .invalid {
   border: 1px solid red !important;
   display: block;
@@ -214,6 +252,14 @@ export default defineComponent({
   }
   .tasks-tab {
     width: 80%;
+  }
+  @keyframes font {
+    0% {
+      font-size: 19px;
+    }
+    50% {
+      font-size: 22px;
+    }
   }
 }
 @media only screen and (max-width: 480px) {
