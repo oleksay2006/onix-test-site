@@ -39,7 +39,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { mapState, useStore } from "vuex";
+import { mapActions, mapState, useStore } from "vuex";
 import Status from "@/enums/StatusEnum";
 
 export default defineComponent({
@@ -65,7 +65,12 @@ export default defineComponent({
         (task) => task.status == taskStatus && task.id == taskId
       );
       if (task.status !== "done") {
-        task.status = status;
+        let taskData = {
+          status: status,
+          id: task.id,
+        };
+        store.dispatch("Change_status", taskData);
+        // task.status = status;
       } else {
         alert("You done this task, y cant make another status for this");
       }
@@ -80,6 +85,9 @@ export default defineComponent({
   },
   computed: {
     ...mapState(["tasks"]),
+  },
+  methods: {
+    ...mapActions(["Change_status"]),
   },
 });
 </script>

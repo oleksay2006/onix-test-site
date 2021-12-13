@@ -14,7 +14,7 @@ export default createStore({
         time: "13:30 PM",
         id: 0,
         isNew: false,
-        status: 'in-progress'
+        status: "in-progress",
       },
       {
         title: "Task 2",
@@ -22,7 +22,7 @@ export default createStore({
         time: "09:00 PM",
         id: 1,
         isNew: false,
-        status: 'in-progress'
+        status: "in-progress",
       },
       {
         title: "Task 3",
@@ -30,11 +30,16 @@ export default createStore({
         time: "19:25 PM",
         id: 2,
         isNew: false,
-        status: 'to-do'
+        status: "to-do",
       },
     ] as taskInterface[],
   },
   mutations: {
+    Change_status: (state, taskData) => {
+      console.log(taskData.status);
+      const task = state.tasks.find((task) => task.id == taskData.id)
+      task.status = taskData.status
+    },
     SET_NEW_TASK: (state, newCard) => {
       state.tasks.push(newCard);
 
@@ -59,6 +64,9 @@ export default createStore({
     },
   },
   actions: {
+    Change_status({ commit }, taskData) {
+      commit('Change_status', taskData)
+    },
     SHOW_MODAL({ commit }) {
       commit("SHOW_MODAL");
     },
