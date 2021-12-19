@@ -55,10 +55,10 @@ export default defineComponent({
   },
   computed: {},
   methods: {
-    ...mapActions(["Image_index"]),
+    ...mapActions(["IMAGE_INDEX"]),
     showIndex(index) {
       const notifications: Element = document.querySelector(".notifications");
-      this.Image_index(index);
+      this.IMAGE_INDEX(index);
       notifications.classList.remove("hidden");
     },
     getImgUrl(pic) {

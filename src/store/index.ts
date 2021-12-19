@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
+import Status from "@/enums/StatusEnum";
 
 export default createStore({
   state: {
@@ -14,7 +15,7 @@ export default createStore({
         time: "13:30 PM",
         id: 0,
         isNew: false,
-        status: "in-progress",
+        status: Status.inProgress,
       },
       {
         title: "Task 2",
@@ -22,7 +23,7 @@ export default createStore({
         time: "09:00 PM",
         id: 1,
         isNew: false,
-        status: "in-progress",
+        status: Status.inProgress,
       },
       {
         title: "Task 3",
@@ -30,15 +31,20 @@ export default createStore({
         time: "19:25 PM",
         id: 2,
         isNew: false,
-        status: "to-do",
+        status: Status.toDo,
       },
     ] as taskInterface[],
   },
   mutations: {
-    Change_status: (state, taskData) => {
-      console.log(taskData.status);
-      const task = state.tasks.find((task) => task.id == taskData.id)
-      task.status = taskData.status
+    CHANGE_TASK: (state, changedTask) => {
+      const task = state.tasks.find((task) => task.id == changedTask.id);
+      task.title = changedTask.title;
+      task.text = changedTask.text;
+      task.time = changedTask.time;
+    },
+    CHANGE_STATUS: (state, taskData) => {
+      const task = state.tasks.find((task) => task.id == taskData.id);
+      task.status = taskData.status;
     },
     SET_NEW_TASK: (state, newCard) => {
       state.tasks.push(newCard);
@@ -59,13 +65,16 @@ export default createStore({
     HIDE_MODAL: (state) => {
       state.modal = false;
     },
-    Change_index: (state, index) => {
+    CHANGE_INDEX: (state, index) => {
       state.img_index = index;
     },
   },
   actions: {
-    Change_status({ commit }, taskData) {
-      commit('Change_status', taskData)
+    CHANGE_TASK({ commit }, changedTask) {
+      commit("CHANGE_TASK", changedTask);
+    },
+    CHANGE_STATUS({ commit }, taskData) {
+      commit("CHANGE_STATUS", taskData);
     },
     SHOW_MODAL({ commit }) {
       commit("SHOW_MODAL");
@@ -76,8 +85,8 @@ export default createStore({
     CHANGE_NUMBER_OF_TASKS({ commit }) {
       commit("CHANGE_NUMBER_OF_TASKS");
     },
-    Image_index({ commit }, index) {
-      commit("Change_index", index);
+    IMAGE_INDEX({ commit }, index) {
+      commit("CHANGE_INDEX", index);
     },
     CREATE_NEW_TASK({ commit }, newCard) {
       commit("SET_NEW_TASK", newCard);

@@ -4,40 +4,18 @@
     p.day TASK LIST
     .add-new(v-on:click="showNew()")
       p Add new task +
-  .message.task.new(v-show="isShow")
-    .first-part-task
-      h3 Название задачи
-      input.new-input.new-title(
-        placeholder="Введите название задачи",
-        v-model="title",
-        :class="{ invalid: v$.title.$error }"
-      )
-      span.helper(v-if="v$.title.$error") Это обязательное поле
-    .second-part-task
-      h3 Описание задачи
-      input.new-input.new-description(
-        placeholder="Введите описание задачи",
-        v-model="description",
-        :class="{ invalid: v$.title.$error }"
-      )
-      span.helper(v-if="v$.description.$error") Это обязательное поле
-    .third-part-task
-      h3 Время выполнения задачи
-      input.new-input.new-description(
-        placeholder="Введите время",
-        v-model="time",
-        :class="{ invalid: v$.title.$error }"
-      )
-      span.helper(v-if="v$.time.$error") Это обязательное поле
-    .controls
-      fa.check-square(icon="check-square", v-on:click="addNew()")
-      fa.close-window(icon="window-close", v-on:click="removeNew()")
+  AddTaskModal(v-show="isShow", v-on:removeNew="removeNew()")
+  TaskDetailsModal(
+    v-show="isShowChange",
+    v-on:removeEditTask="removeEditTask",
+    v-bind:currentTask="currentTask"
+  )
   .message.task(
     v-for="(task, index) in tasks",
     :key="'task-' + index",
-    v-bind:task_data="task",
     :class="{ new_animation: task.isNew }",
-    :load="removeAnimation(task)"
+    :load="removeAnimation(task)",
+    v-on:click="showChange(task)"
   )
     .first-part-task
       h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.title }}
@@ -49,14 +27,15 @@
 import { ref, defineComponent, onMounted } from "vue";
 import { mapActions, mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
-import { taskInterface } from "@/interfaces/task.interface";
-import { required } from "@vuelidate/validators";
 import Status from "@/enums/StatusEnum";
+import AddTaskModal from "@/components/AddTaskModal.vue";
+import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 
 export default defineComponent({
   name: "Tasks",
-  enums: {
-    Status,
+  components: {
+    AddTaskModal,
+    TaskDetailsModal,
   },
   setup() {
     // Before the component is mounted, the value
@@ -84,13 +63,9 @@ export default defineComponent({
       description: "",
       time: "",
       isShow: false,
-    };
-  },
-  validations() {
-    return {
-      title: { required },
-      description: { required },
-      time: { required },
+      isShowChange: false,
+      currentTask: {},
+      Status,
     };
   },
   methods: {
@@ -102,27 +77,17 @@ export default defineComponent({
     },
     showNew() {
       this.isShow = true;
+      console.log(this.isShow);
+    },
+    showChange(task) {
+      this.currentTask = task;
+      this.isShowChange = true;
+    },
+    removeEditTask() {
+      this.isShowChange = false;
     },
     removeNew() {
       this.isShow = false;
-    },
-    addNew() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        const newCard: taskInterface = {
-          title: this.title,
-          text: this.description,
-          time: this.time,
-          id: Date.now(),
-          isNew: true,
-          status: Status.toDo,
-        };
-        this.CREATE_NEW_TASK(newCard);
-        this.title = "";
-        this.description = "";
-        this.time = "";
-        this.removeNew();
-      }
     },
     deleteTask(id) {
       this.DELETE_TASK(id);
@@ -131,7 +96,9 @@ export default defineComponent({
   computed: {
     ...mapState(["tasks"]),
   },
-  mounted() {},
+  mounted() {
+    console.log(this.currentTask);
+  },
 });
 </script>
 <style scoped>
