@@ -37,7 +37,8 @@
             type="date",
             name="trip-start",
             min="2021-12-21",
-            max="2022-12-31"
+            max="2022-12-31",
+            :class="{ invalid: v$.time.$error }"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .controls
