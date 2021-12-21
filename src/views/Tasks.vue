@@ -203,10 +203,6 @@ export default defineComponent({
   cursor: pointer;
   padding: 10px;
 }
-.add-new p {
-  /* margin-top: 8px; */
-  /* color: #fff; */
-}
 @media only screen and (max-width: 768px) {
   .new {
     flex-wrap: wrap;

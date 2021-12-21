@@ -16,15 +16,23 @@
           input.new-input.new-description(
             placeholder="Введите описание задачи",
             v-model="description",
-            :class="{ invalid: v$.title.$error }"
+            :class="{ invalid: v$.description.$error }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
         .third-part-task
-          h3 Время выполнения задачи
-          input.new-input.new-description(
-            placeholder="Введите время",
-            v-model="time",
-            :class="{ invalid: v$.title.$error }"
+          h3 Дата выполнения задачи
+          //- input.new-input.new-description(
+          //-   placeholder="Введите время",
+          //-   v-model="time",
+          //-   :class="{ invalid: v$.title.$error }"
+          //- )
+          input.dateInput(
+            v-model="v$.time.$model",
+            type="date",
+            name="trip-start",
+            min="2021-12-21",
+            max="2022-12-31",
+            :class="{ invalid: v$.time.$error }"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .controls
@@ -56,7 +64,6 @@ export default defineComponent({
       time: { required },
     };
   },
-  components: {},
   computed: {
     ...mapState([]),
   },
@@ -87,6 +94,12 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.dateInput {
+  border-radius: 5px;
+  padding: 4px 13px;
+  border: 1px solid #cfd8dc;
+  margin-top: 10px;
+}
 .trash-alt {
   font-size: 20px;
   color: DarkGrey;

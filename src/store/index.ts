@@ -12,7 +12,7 @@ export default createStore({
       {
         title: "Task 1",
         text: "Go to the shop",
-        time: "13:30 PM",
+        time: "2022-06-07",
         id: 0,
         isNew: false,
         status: Status.inProgress,
@@ -20,7 +20,7 @@ export default createStore({
       {
         title: "Task 2",
         text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-        time: "09:00 PM",
+        time: "2021-12-31",
         id: 1,
         isNew: false,
         status: Status.inProgress,
@@ -28,7 +28,7 @@ export default createStore({
       {
         title: "Task 3",
         text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-        time: "19:25 PM",
+        time: "2022-01-01",
         id: 2,
         isNew: false,
         status: Status.toDo,

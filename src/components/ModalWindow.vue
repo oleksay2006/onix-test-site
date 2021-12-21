@@ -24,7 +24,6 @@ export default defineComponent({
       // props: ["modal"],
     };
   },
-  components: {},
   computed: {
     ...mapState(["modal", "openedTasks"]),
   },

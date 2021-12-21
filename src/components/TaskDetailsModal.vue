@@ -3,20 +3,21 @@
   .modal_wrapper
     .modal
       .div_form
-        .message.task(v-show="NotEdit")
+        .message.task(v-if="NotEdit")
           .first-part-task
             h3.title {{ this.currentTask.title }}
             p.text {{ this.currentTask.text }}
           p.time Выполнить до {{ this.currentTask.time }}
-        .first-part-task(v-show="WantEdit")
-          h3 Описание задачи
+        .first-part-task(v-if="WantEdit")
+          //- v-show="WantEdit"
+          h3 Название задачи
           textarea.new-input.new-title(
             placeholder="Введите название задачи",
             v-model="v$.title.$model",
             :class="{ invalid: v$.title.$error }"
           )
           span.helper(v-if="v$.title.$error") Это обязательное поле
-        .second-part-task(v-show="WantEdit")
+        .second-part-task(v-if="WantEdit")
           h3 Описание задачи
           textarea.new-input.new-description(
             placeholder="Введите описание задачи",
@@ -24,12 +25,19 @@
             :class="{ invalid: v$.description.$error }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
-        .third-part-task(v-show="WantEdit")
-          h3 Время задачи
-          textarea.new-input.new-description(
-            placeholder="Введите время",
+        .third-part-task(v-if="WantEdit")
+          h3.taskTime Дата выполнения задачи
+          //- textarea.new-input.new-description(
+          //-   placeholder="Введите время",
+          //-   v-model="v$.time.$model",
+          //-   :class="{ invalid: v$.time.$error }"
+          //- )
+          input.dateInput(
             v-model="v$.time.$model",
-            :class="{ invalid: v$.time.$error }"
+            type="date",
+            name="trip-start",
+            min="2021-12-21",
+            max="2022-12-31"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .controls
@@ -45,14 +53,13 @@
 import { mapState, mapActions } from "vuex";
 import { defineComponent } from "vue";
 import { required } from "@vuelidate/validators";
-// import { taskInterface } from "@/interfaces/task.interface";
-// import Status from "@/enums/StatusEnum";
+import Status from "@/enums/StatusEnum";
 import useVuelidate from "@vuelidate/core";
 
 export default defineComponent({
   name: "TaskDetailsModal",
   mounted() {
-    console.log(this.$v);
+    console.log(this.v$);
   },
   setup() {
     return { v$: useVuelidate() };
@@ -65,6 +72,7 @@ export default defineComponent({
       WantEdit: false,
       NotEdit: true,
       WantSave: true,
+      Status,
     };
   },
   props: ["currentTask"],
@@ -75,7 +83,6 @@ export default defineComponent({
       time: { required },
     };
   },
-  components: {},
   computed: {
     ...mapState([]),
   },
@@ -105,22 +112,8 @@ export default defineComponent({
           time: this.time,
           id: this.currentTask.id,
         };
-        console.log("New task data: ", changedTask);
         this.CHANGE_TASK(changedTask);
         this.removeEditTask();
-        // const newCard: taskInterface = {
-        //   title: this.title,
-        //   text: this.description,
-        //   time: this.time,
-        //   id: Date.now(),
-        //   isNew: true,
-        //   status: Status.toDo,
-        // };
-        // this.CREATE_NEW_TASK(newCard);
-        // this.title = "";
-        // this.description = "";
-        // this.time = "";
-        // this.$emit("removeNew");
       } else {
         this.v$.$dirty = false;
         console.log(this.v$);
@@ -130,6 +123,15 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.dateInput {
+  width: 351px;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #cfd8dc;
+}
+.taskTime {
+  margin-bottom: 10px;
+}
 textarea {
   min-width: 345px;
   max-width: 300px;

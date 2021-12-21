@@ -1,11 +1,5 @@
 <template lang="pug">
 .message.task(:class="{ new_animation: task.isNew }")
-  //- TaskDetailsModal(
-  //-   v-show="isShowChange",
-  //-   :task="task",
-  //-   :key="'taskChange-' + task.id",
-  //-   v-on:removeEditTask="removeEditTask()"
-  //- )
   .first-part-task
     h3.title {{ task.title }}
     p.text {{ task.text }}
@@ -18,36 +12,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "TaskMesssage",
-  // setup() {
-  //   // Before the component is mounted, the value
-  //   // of the ref is `[]` which is the default
-  //   let num = 0;
-  //   const divs = ref([]);
-  //   onMounted(() => {
-  //     divs.value.forEach((element) => {
-  //       console.log("???");
-  //       setTimeout(() => {
-  //         element.classList.add("animation");
-  //         console.log("Ooops: ", element.className);
-  //       }, num);
-  //       num += 500;
-  //     });
-  //   });
-  //   return {
-  //     divs,
-  //     close,
-  //   };
-  // },
   props: ["task"],
-  methods: {
-    removeAnimation(task) {
-      // setTimeout(() => {
-      //   task.isNew = false;
-      // }, 2000);
-      console.log(task);
-    },
-  },
-  mounted() {},
 });
 </script>
 <style scoped>

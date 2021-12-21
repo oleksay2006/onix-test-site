@@ -55,6 +55,7 @@ import { defineComponent, computed } from "vue";
 import { mapActions, mapState, useStore } from "vuex";
 import Status from "@/enums/StatusEnum";
 import TaskCard from "@/components/TaskCard.vue";
+import { taskInterface } from "@/interfaces/task.interface";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 
 export default defineComponent({
@@ -67,7 +68,7 @@ export default defineComponent({
     return {
       Status,
       isShowChange: false,
-      currentTask: {},
+      currentTask: {} as taskInterface,
     };
   },
   setup() {
@@ -90,7 +91,7 @@ export default defineComponent({
       const task = tasks.value.find(
         (task) => task.status == taskStatus && task.id == taskId
       );
-      if (task.status !== "done") {
+      if (task.status !== Status.done) {
         let taskData = {
           status: status,
           id: task.id,
@@ -109,13 +110,13 @@ export default defineComponent({
   computed: {
     ...mapState(["tasks"]),
     toDoTasks: function () {
-      return this.tasks.filter((t) => t.status == "to-do");
+      return this.tasks.filter((t) => t.status == Status.toDo);
     },
     inProgress: function () {
-      return this.tasks.filter((t) => t.status == "in-progress");
+      return this.tasks.filter((t) => t.status == Status.inProgress);
     },
     done: function () {
-      return this.tasks.filter((t) => t.status == "done");
+      return this.tasks.filter((t) => t.status == Status.done);
     },
   },
   methods: {
