@@ -42,13 +42,17 @@
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .controls
-          a.edit.Button(href="#", v-on:click="Edit()", v-show="NotEdit") Edit
+          a.edit.Button(
+            href="#",
+            v-on:click.prevent="Edit()",
+            v-show="NotEdit"
+          ) Edit
           a.save.Button(
             href="#",
-            v-on:click="changeTask()",
+            v-on:click.prevent="changeTask()",
             v-if="v$.title.$dirty || v$.description.$dirty || v$.time.$dirty"
           ) Save
-          a.cancel.Button(href="#", v-on:click="removeEditTask()") Cancel
+          a.cancel.Button(href="#", v-on:click.prevent="removeEditTask()") Cancel
 </template>
 <script lang="ts">
 import { mapState, mapActions } from "vuex";
