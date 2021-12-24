@@ -41,6 +41,7 @@ export default createStore({
       task.title = changedTask.title;
       task.text = changedTask.text;
       task.time = changedTask.time;
+      task.status = changedTask.status;
     },
     CHANGE_STATUS: (state, taskData) => {
       const task = state.tasks.find((task) => task.id == taskData.id);

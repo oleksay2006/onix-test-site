@@ -14,7 +14,7 @@
           textarea.new-input.new-title(
             placeholder="Введите название задачи",
             v-model="v$.title.$model",
-            :class="{ invalid: v$.title.$error }"
+            :class="{ invalid: v$.title.$error, isDone: this.currentTask.status == 'done' }"
           )
           span.helper(v-if="v$.title.$error") Это обязательное поле
         .second-part-task(v-if="WantEdit")
@@ -22,37 +22,43 @@
           textarea.new-input.new-description(
             placeholder="Введите описание задачи",
             v-model="v$.description.$model",
-            :class="{ invalid: v$.description.$error }"
+            :class="{ invalid: v$.description.$error, isDone: this.currentTask.status == 'done' }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
         .third-part-task(v-if="WantEdit")
           h3.taskTime Дата выполнения задачи
-          //- textarea.new-input.new-description(
-          //-   placeholder="Введите время",
-          //-   v-model="v$.time.$model",
-          //-   :class="{ invalid: v$.time.$error }"
-          //- )
           input.dateInput(
             v-model="v$.time.$model",
             type="date",
             name="trip-start",
             min="2021-12-21",
             max="2022-12-31",
-            :class="{ invalid: v$.time.$error }"
+            :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
-        .controls
+        .fourth-part-task(v-if="WantEdit")
+          h3 Статус задачи
+          span.custom-dropdown.big
+            select(
+              v-model="v$.select.$model",
+              :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
+            )
+              option {{ Status.toDo }}
+              option {{ Status.inProgress }}
+              option {{ Status.done }}
+        .controls(:class="{ editControls: WantEdit }")
           a.edit.Button(
             href="#",
             v-on:click.prevent="Edit()",
             v-show="NotEdit"
           ) Edit
+          a.cancel.Button(href="#", v-on:click.prevent="removeEditTask()") Cancel
           a.save.Button(
             href="#",
             v-on:click.prevent="changeTask()",
-            v-if="v$.title.$dirty || v$.description.$dirty || v$.time.$dirty"
+            v-if="v$.title.$dirty || v$.description.$dirty || v$.time.$dirty || v$.select.$dirty",
+            :class="{ editSaveButton: WantEdit }"
           ) Save
-          a.cancel.Button(href="#", v-on:click.prevent="removeEditTask()") Cancel
 </template>
 <script lang="ts">
 import { mapState, mapActions } from "vuex";
@@ -63,9 +69,6 @@ import useVuelidate from "@vuelidate/core";
 
 export default defineComponent({
   name: "TaskDetailsModal",
-  mounted() {
-    console.log(this.v$);
-  },
   setup() {
     return { v$: useVuelidate() };
   },
@@ -77,6 +80,7 @@ export default defineComponent({
       WantEdit: false,
       NotEdit: true,
       WantSave: true,
+      select: "",
       Status,
     };
   },
@@ -86,6 +90,7 @@ export default defineComponent({
       title: { required },
       description: { required },
       time: { required },
+      select: { required },
     };
   },
   computed: {
@@ -97,8 +102,14 @@ export default defineComponent({
       this.title = this.currentTask.title;
       this.description = this.currentTask.text;
       this.time = this.currentTask.time;
+      this.select = this.currentTask.status;
       this.NotEdit = false;
       this.WantEdit = true;
+      setTimeout(() => {
+        if (this.currentTask.status == Status.done) {
+          alert("You can't edit this task, because it's done");
+        }
+      }, 100);
     },
     removeEditTask() {
       this.$emit("removeEditTask");
@@ -107,6 +118,8 @@ export default defineComponent({
       this.v$.title.$dirty = false;
       this.v$.description.$dirty = false;
       this.v$.time.$dirty = false;
+      this.v$.select.$dirty = false;
+      console.log(this.select);
     },
     changeTask() {
       this.v$.$validate();
@@ -116,6 +129,7 @@ export default defineComponent({
           text: this.description,
           time: this.time,
           id: this.currentTask.id,
+          status: this.select,
         };
         this.CHANGE_TASK(changedTask);
         this.removeEditTask();
@@ -128,6 +142,59 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.isDone {
+  resize: none;
+  pointer-events: none;
+}
+/***********************************************/
+.big {
+  font-size: 1.2em;
+}
+
+/* Custom dropdown */
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10px; /* demo only */
+}
+
+.custom-dropdown select {
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  font-size: 16px;
+  padding: 10px 50px 10px 10px;
+  padding-right: 2.5em;
+  border: 1px solid #cfd8dc;
+  margin: 0;
+  border-radius: 5px;
+  text-indent: 0.01px;
+  text-overflow: "";
+  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+}
+
+.custom-dropdown select[disabled] {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.custom-dropdown select[disabled]::after {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.custom-dropdown::before {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.custom-dropdown::after {
+  color: rgba(0, 0, 0, 0.4);
+}
+/***********************************************/
+.fourth-part-task {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
 .dateInput {
   width: 351px;
   border-radius: 5px;
@@ -148,6 +215,9 @@ textarea {
 .save {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.editSaveButton {
+  margin: 0 15px 0 0;
 }
 .save:hover {
   background: #2ee59d;
@@ -199,10 +269,17 @@ textarea {
 .new {
   flex-wrap: wrap;
 }
+.editControls {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  flex-direction: row-reverse !important;
+  margin-top: 10px;
+}
 .controls {
-  align-items: center;
   display: flex;
+  align-items: flex-end;
   flex-direction: column;
+  /* margin-top: 15px; */
 }
 .check-square {
   cursor: pointer;
@@ -300,10 +377,13 @@ textarea {
 }
 
 .div_form {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
 }
 
 .modalButton {
