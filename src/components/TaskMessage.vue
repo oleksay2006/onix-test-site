@@ -4,7 +4,7 @@
     h3.title {{ task.title }}
     p.text {{ task.text }}
   p.time Выполнить до {{ task.time }}
-  fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.id)")
+  fa.trash-alt(ref="del", icon="trash-alt", v-on:click="deleteTask(task.id)")
 </template>
 <script lang="ts">
 // import { ref, defineComponent, onMounted } from "vue";

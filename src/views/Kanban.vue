@@ -5,13 +5,62 @@
     v-on:removeEditTask="removeEditTask",
     v-bind:currentTask="currentTask"
   )
-  table
-    tr(
+  //- table
+  //-   tr(
+  //-     @drop="onDrop($event, Status.toDo)",
+  //-     @dragenter.prevent,
+  //-     @dragover.prevent
+  //-   )
+  //-     th.toDo To Do
+  //-       p.numberOfTasks Number of tasks: {{ toDoTasks.length }}
+  //-     TaskCard(
+  //-       v-for="(task, index) in toDoTasks",
+  //-       :key="'todo_task-' + index",
+  //-       draggable="true",
+  //-       @dragstart="startDrag($event, task)",
+  //-       :task="task",
+  //-       v-on:click="showChange(task)"
+  //-     )
+  //-   tr(
+  //-     @drop="onDrop($event, Status.inProgress)",
+  //-     @dragenter.prevent,
+  //-     @dragover.prevent
+  //-   )
+  //-     th In progress
+  //-       p.numberOfTasks Number of tasks: {{ inProgress.length }}
+  //-     TaskCard(
+  //-       v-for="(task, index) in inProgress",
+  //-       :key="'inProgress_task-' + index",
+  //-       draggable="true",
+  //-       @dragstart="startDrag($event, task)",
+  //-       :task="task",
+  //-       v-on:click="showChange(task)"
+  //-     )
+  //-   tr(
+  //-     @drop="onDrop($event, Status.done)",
+  //-     @dragenter.prevent,
+  //-     @dragover.prevent
+  //-   )
+  //-     th.done Done
+  //-       p.numberOfTasks Number of tasks: {{ done.length }}
+  //-     TaskCard(
+  //-       v-for="(task, index) in done",
+  //-       :key="'done_task-' + index",
+  //-       draggable="true",
+  //-       @dragstart="startDrag($event, task)",
+  //-       :task="task",
+  //-       v-on:click="showChange(task)"
+  //-     )
+  //-     //- v-show="task.status == this.Status.done",
+
+  .table
+    .toDoHeadDiv.head(
       @drop="onDrop($event, Status.toDo)",
       @dragenter.prevent,
       @dragover.prevent
     )
-      th.toDo To Do
+      .div_th.toDo To-Do
+        p.numberOfTasks Number of tasks: {{ toDoTasks.length }}
       TaskCard(
         v-for="(task, index) in toDoTasks",
         :key="'todo_task-' + index",
@@ -20,12 +69,14 @@
         :task="task",
         v-on:click="showChange(task)"
       )
-    tr(
+    hr
+    .inProgressHeadDiv.head(
       @drop="onDrop($event, Status.inProgress)",
       @dragenter.prevent,
       @dragover.prevent
     )
-      th In progress
+      .div_th.inProgress In progress
+        p.numberOfTasks Number of tasks: {{ inProgress.length }}
       TaskCard(
         v-for="(task, index) in inProgress",
         :key="'inProgress_task-' + index",
@@ -34,12 +85,14 @@
         :task="task",
         v-on:click="showChange(task)"
       )
-    tr(
+    hr
+    .doneHeadDiv.head(
       @drop="onDrop($event, Status.done)",
       @dragenter.prevent,
       @dragover.prevent
     )
-      th.done Done
+      .div_th.done Done
+        p.numberOfTasks Number of tasks: {{ done.length }}
       TaskCard(
         v-for="(task, index) in done",
         :key="'done_task-' + index",
@@ -48,7 +101,6 @@
         :task="task",
         v-on:click="showChange(task)"
       )
-      //- v-show="task.status == this.Status.done",
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
@@ -132,9 +184,42 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.taskCard {
-  padding: 5px 40px;
-  border-radius: 10px;
+.table {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+.toDo,
+.inProgress,
+.done {
+  font-size: 17px;
+  font-weight: bold;
+}
+.inProgressHeadDiv,
+.doneHeadDiv {
+  margin-top: 20px;
+}
+.div_th {
+  background: #ffe4b5;
+  color: #000;
+  padding: 10px 40px;
+  border-style: solid;
+  border-width: 0 4px 4px 0;
+  border-color: white;
+}
+hr {
+  margin-top: 16px;
+  border-top: 5px dotted #ffe4b5;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+}
+.head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.numberOfTasks {
+  font-size: 13px;
+  font-weight: normal;
 }
 .done {
   border-radius: 0 0 0 10px;
@@ -165,5 +250,37 @@ td {
 th:first-child,
 td:first-child {
   text-align: left;
+}
+@media only screen and (max-width: 768px) {
+  th,
+  td:first-child {
+    padding: 10px 20px;
+  }
+  .kanban-tab {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .div_th {
+    padding: 10px 20px;
+  }
+  .taskCard {
+    padding: 12px 20px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .kanban-tab {
+    padding: 20px;
+  }
+  .div_th {
+    padding: 5px 15px;
+    font-size: 16px;
+  }
+  .taskCard {
+    padding: 8.2px 20px;
+  }
+  .taskCard {
+    font-size: 15px;
+  }
 }
 </style>

@@ -41,7 +41,7 @@
           span.custom-dropdown.big
             select(
               v-model="v$.select.$model",
-              :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
+              :class="{ isDone: this.currentTask.status == 'done' }"
             )
               option {{ Status.toDo }}
               option {{ Status.inProgress }}
@@ -413,18 +413,65 @@ textarea {
   .modal_wrapper {
     width: 70vw;
   }
+  textarea {
+    min-width: 262px;
+    max-width: 262px;
+  }
+  .first-part-task p {
+    width: 355px;
+  }
+  .dateInput {
+    width: 268px;
+  }
 }
 @media only screen and (max-width: 768px) {
   .third-part-task {
     margin-top: 10px;
   }
-  .controls {
-    margin-top: 5px;
+  .Button {
+    width: 85px;
+  }
+  .first-part-task p {
+    width: 315px;
+  }
+  textarea {
+    min-width: 222px;
+    max-width: 222px;
+  }
+  .dateInput {
+    width: 228px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .modal_wrapper {
+    width: 80vw;
   }
 }
 @media only screen and (max-width: 480px) {
   .second-part-task {
     margin-top: 10px;
+  }
+  .first-part-task p {
+    width: 200px;
+  }
+  .div_form {
+    display: flex;
+    flex-direction: column;
+  }
+  .controls {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .edit {
+    margin-bottom: 0px;
+  }
+  .cancel {
+    margin-left: 10px;
+  }
+  textarea {
+    max-height: 100px;
   }
 }
 </style>

@@ -150,7 +150,7 @@ export default defineComponent({
 .time {
   /* opacity: 0.7; */
   font-size: 14px;
-  color: DarkGray;
+  color: Gray;
 }
 .chat-icon {
   background: #fff8dd;
