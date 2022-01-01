@@ -20,7 +20,7 @@ export default createStore({
       {
         title: "Task 2",
         text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-        time: "2021-12-31",
+        time: "2022-01-01",
         id: 1,
         isNew: false,
         status: Status.inProgress,

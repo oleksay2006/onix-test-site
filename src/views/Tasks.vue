@@ -1,5 +1,6 @@
 <template lang="pug">
 .tasks-tab.tab.tab-1
+  SearchTask(v-on:setSearch="setSearchValue")
   .list
     p.day TASK LIST
     .add-new(v-on:click="showNew()")
@@ -11,7 +12,7 @@
     v-bind:currentTask="currentTask"
   )
   .message.task(
-    v-for="(task, index) in tasks",
+    v-for="(task, index) in filteredProducts",
     :key="'task-' + index",
     :class="{ new_animation: task.isNew }",
     :load="removeAnimation(task)",
@@ -30,12 +31,14 @@ import useVuelidate from "@vuelidate/core";
 import Status from "@/enums/StatusEnum";
 import AddTaskModal from "@/components/AddTaskModal.vue";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
+import SearchTask from "@/components/SearchTask.vue";
 
 export default defineComponent({
   name: "Tasks",
   components: {
     AddTaskModal,
     TaskDetailsModal,
+    SearchTask,
   },
   setup() {
     // Before the component is mounted, the value
@@ -66,10 +69,15 @@ export default defineComponent({
       isShowChange: false,
       currentTask: {},
       Status,
+      sortedProducts: [],
+      searchValue: "",
     };
   },
   methods: {
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
+    setSearchValue(data) {
+      this.searchValue = data.title;
+    },
     removeAnimation(task) {
       setTimeout(() => {
         task.isNew = false;
@@ -92,12 +100,36 @@ export default defineComponent({
     deleteTask(id) {
       this.DELETE_TASK(id);
     },
+    sortProductsBySearchValue(value) {
+      this.sortedProducts = [...this.tasks];
+      if (value) {
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          return item.title.toLowerCase().includes(value.toLowerCase());
+        });
+        console.log(this.sortedProducts);
+      } else {
+        this.sortedProducts = this.tasks;
+      }
+    },
+  },
+  watch: {
+    searchValue: function () {
+      this.sortProductsBySearchValue(this.searchValue);
+    },
   },
   computed: {
     ...mapState(["tasks"]),
+    filteredProducts() {
+      if (this.sortedProducts.length) {
+        return this.sortedProducts;
+      } else {
+        return this.tasks;
+      }
+    },
   },
   mounted() {
-    console.log(this.currentTask);
+    this.sortProductsBySearchValue(this.searchValue);
+    console.log(this.searchValue);
   },
 });
 </script>

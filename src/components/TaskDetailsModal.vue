@@ -31,7 +31,7 @@
             v-model="v$.time.$model",
             type="date",
             name="trip-start",
-            min="2021-12-21",
+            min="2022-01-01",
             max="2022-12-31",
             :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
           )
