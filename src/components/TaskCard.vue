@@ -11,19 +11,16 @@ export default defineComponent({
   name: "TaskCard",
   props: ["task"],
   data() {
-    return {
-      // isOutdated: false,
-      // isSoon: false,
-      // isFuture: false,
-    };
+    return {};
   },
   computed: {
     isOutdated() {
       const x = new Date(this.task.time);
       const y = new Date();
-      return y.getFullYear() >= x.getFullYear() &&
+      return (y.getFullYear() == x.getFullYear() &&
         y.getDate() > x.getDate() &&
-        y.getMonth() >= x.getMonth()
+        y.getMonth() >= x.getMonth()) ||
+        y.getFullYear() > x.getFullYear()
         ? true
         : false;
     },
@@ -35,13 +32,6 @@ export default defineComponent({
         x.getMonth() === y.getMonth()
         ? true
         : false;
-      // if (
-      //   x.getFullYear() === y.getFullYear() &&
-      //   x.getDate() === y.getDate() &&
-      //   x.getMonth() === y.getMonth()
-      // ) {
-      //   return true;
-      // }
     },
     isFuture() {
       const x = new Date(this.task.time);

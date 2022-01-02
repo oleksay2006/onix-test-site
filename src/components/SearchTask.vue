@@ -9,6 +9,7 @@
   p.info от:
   input.dateInput(
     v-model="time",
+    v-on:input="inputForSearch",
     type="date",
     name="trip-start",
     min="2017-12-21",
@@ -17,6 +18,7 @@
   p.info до:
   input.dateInput(
     v-model="time_2",
+    v-on:input="inputForSearch",
     type="date",
     name="trip-start",
     min="2017-12-21",
@@ -24,7 +26,7 @@
   )
   fa.search(icon="search", v-on:click="searchTask()")
   fa.cancelSearch(icon="times", v-on:click="cancelSearch()", v-if="isSearch")
-  span.helper(v-if="isExist") Задачи с таким именем нету
+  span.helper(v-if="isExist") Задачи с такими параметрами не существует
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -33,7 +35,6 @@ import { mapState } from "vuex";
 export default defineComponent({
   setup() {},
   name: "SearchTask",
-  //   props: ["task"],
   data() {
     return {
       title: "",
@@ -45,18 +46,36 @@ export default defineComponent({
     };
   },
   methods: {
+    cancelSearch() {
+      this.title = "";
+      this.time = "";
+      this.time_2 = "";
+      this.isSearch = false;
+      this.isExist = false;
+      this.$emit("setSearch", {
+        title: "",
+        time: "",
+        time_2: "",
+      });
+    },
     inputForSearch() {
-      console.log("input value changed");
+      this.isSearch = true;
+      console.log("input value changed", " isSearch = ", this.isSearch);
       this.$emit("setSearch", {
         title: this.title,
         time: this.time,
+        time_2: this.time_2,
       });
       this.sortedProductsForHelper = [...this.tasks];
-      let value = this.title;
-      if (value) {
+      let value = {
+        title: this.title,
+        time: this.time,
+        time_2: this.time_2,
+      };
+      if (value.title) {
         this.sortedProductsForHelper = this.sortedProductsForHelper.filter(
           function (item) {
-            return item.title.toLowerCase().includes(value.toLowerCase());
+            return item.title.toLowerCase().includes(value.title.toLowerCase());
           }
         );
         if (this.sortedProductsForHelper.length == 0) {
@@ -66,6 +85,7 @@ export default defineComponent({
         }
       } else {
         this.isExist = false;
+        this.isSearch = false;
       }
     },
     searchTask() {
@@ -74,18 +94,21 @@ export default defineComponent({
         time: this.time,
         time_2: this.time_2,
       });
-      let dateStart = Date.parse(this.time);
-      let dateEnd = Date.parse(this.time_2);
-      if (this.time && this.time_2) {
-        console.log("both dates");
-        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
-          console.log(new Date(i).toISOString().substr(0, 10));
-        }
-      } else if (this.time && !this.time_2) {
-        console.log("only 1 date");
-      } else if (this.time_2 && !this.time) {
-        console.log("only 2 date");
-      }
+      // let dateStart = Date.parse(this.time);
+      // let dateEnd = Date.parse(this.time_2);
+      // if (this.time && this.time_2) {
+      //   console.log("both dates");
+      //   for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
+      //     console.log(new Date(i).toISOString().substr(0, 10));
+      //   }
+      // }
+
+      // else if (this.time && !this.time_2) {
+      //   console.log("only 1 date");
+      // } else if (this.time_2 && !this.time) {
+      //   console.log("only 2 date");
+      // }
+
       // for (let i = 0; i < this.tasks.length; i++) {
       //   console.log(this.tasks[i].title);
       //   // let re = new RegExp(this.title.toLowerCase());
@@ -95,11 +118,6 @@ export default defineComponent({
   },
   computed: {
     ...mapState(["tasks"]),
-  },
-  mounted() {
-    // const input = input.addEventListener("input", () => {
-    //   input.value += "5";
-    // });
   },
 });
 </script>

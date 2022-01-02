@@ -85,6 +85,11 @@ export default defineComponent({
         this.description = "";
         this.time = "";
         this.$emit("removeNew");
+        this.$emit("setSearch", {
+          title: "",
+          time: "",
+          time_2: "",
+        });
       }
     },
   },
