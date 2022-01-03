@@ -2,14 +2,14 @@
 .searchDiv
   h3 Поиск
   input.search-input.new-title(
-    v-on:input="inputForSearch",
+    v-on:input="searchTask",
     placeholder="Введите название задачи",
     v-model="title"
   )
   p.info от:
   input.dateInput(
     v-model="time",
-    v-on:input="inputForSearch",
+    v-on:input="searchTask",
     type="date",
     name="trip-start",
     min="2017-12-21",
@@ -18,7 +18,7 @@
   p.info до:
   input.dateInput(
     v-model="time_2",
-    v-on:input="inputForSearch",
+    v-on:input="searchTask",
     type="date",
     name="trip-start",
     min="2017-12-21",
@@ -42,7 +42,7 @@ export default defineComponent({
       time_2: "",
       isSearch: false,
       isExist: false,
-      sortedProductsForHelper: [],
+      sortedProducts: [],
     };
   },
   methods: {
@@ -58,42 +58,23 @@ export default defineComponent({
         time_2: "",
       });
     },
-    inputForSearch() {
-      this.isSearch = true;
-      console.log("input value changed", " isSearch = ", this.isSearch);
-      this.$emit("setSearch", {
-        title: this.title,
-        time: this.time,
-        time_2: this.time_2,
-      });
-      this.sortedProductsForHelper = [...this.tasks];
-      let value = {
+    searchTask() {
+      let obj = {
         title: this.title,
         time: this.time,
         time_2: this.time_2,
       };
-      if (value.title) {
-        this.sortedProductsForHelper = this.sortedProductsForHelper.filter(
-          function (item) {
-            return item.title.toLowerCase().includes(value.title.toLowerCase());
-          }
-        );
-        if (this.sortedProductsForHelper.length == 0) {
-          this.isExist = true;
-        } else {
-          this.isExist = false;
-        }
-      } else {
-        this.isExist = false;
-        this.isSearch = false;
-      }
-    },
-    searchTask() {
-      this.$emit("setSearch", {
-        title: this.title,
-        time: this.time,
-        time_2: this.time_2,
-      });
+      this.isSearch = this.title || this.time || this.time_2 ? true : false;
+      this.sortProductsBySearchValue(obj);
+      console.log("sortedProducts: ", this.sortedProducts);
+      this.$emit("setSearch", this.sortedProducts);
+
+      // this.$emit("setSearch", {
+      //   title: this.title,
+      //   time: this.time,
+      //   time_2: this.time_2,
+      // });
+
       // let dateStart = Date.parse(this.time);
       // let dateEnd = Date.parse(this.time_2);
       // if (this.time && this.time_2) {
@@ -102,18 +83,108 @@ export default defineComponent({
       //     console.log(new Date(i).toISOString().substr(0, 10));
       //   }
       // }
-
-      // else if (this.time && !this.time_2) {
-      //   console.log("only 1 date");
-      // } else if (this.time_2 && !this.time) {
-      //   console.log("only 2 date");
-      // }
-
-      // for (let i = 0; i < this.tasks.length; i++) {
-      //   console.log(this.tasks[i].title);
-      //   // let re = new RegExp(this.title.toLowerCase());
-      //   // alert(re.test(this.tasks[i].title.toLowerCase())); // true
-      // }
+    },
+    sortProductsBySearchValue(value) {
+      this.sortedProducts = [...this.tasks];
+      if (value.title && !value.time && !value.time_2) {
+        console.log("only title without dates");
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          return (
+            item.title.toLowerCase().includes(value.title.toLowerCase()) ||
+            item.text.toLowerCase().includes(value.title.toLowerCase())
+          );
+        });
+      } else if (value.title && value.time && !value.time_2) {
+        const y = new Date(value.time);
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          const x = new Date(item.time);
+          return (
+            item.title.toLowerCase().includes(value.title.toLowerCase()) &&
+            x >= y
+          );
+        });
+        console.log("only title and first date");
+      } else if (value.title && !value.time && value.time_2) {
+        const y = new Date(value.time_2);
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          const x = new Date(item.time);
+          return (
+            item.title.toLowerCase().includes(value.title.toLowerCase()) &&
+            ((y.getFullYear() >= x.getFullYear() &&
+              y.getDate() >= x.getDate() &&
+              y.getMonth() >= x.getMonth()) ||
+              (y.getFullYear() >= x.getFullYear() &&
+                (y.getDate() > x.getDate() ||
+                  y.getDate() < x.getDate() ||
+                  y.getDate() == x.getDate()) &&
+                y.getMonth() > x.getMonth()))
+          );
+        });
+        console.log("only title and second date");
+      } else if (value.time && !value.time_2 && !value.title) {
+        const y = new Date(value.time);
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          const x = new Date(item.time);
+          return x >= y;
+        });
+        console.log("only first date");
+      } else if (value.time_2 && !value.time && !value.title) {
+        const y = new Date(value.time_2);
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          const x = new Date(item.time);
+          return (
+            (y.getFullYear() >= x.getFullYear() &&
+              y.getDate() >= x.getDate() &&
+              y.getMonth() >= x.getMonth()) ||
+            (y.getFullYear() >= x.getFullYear() &&
+              (y.getDate() > x.getDate() ||
+                y.getDate() < x.getDate() ||
+                y.getDate() == x.getDate()) &&
+              y.getMonth() > x.getMonth())
+          );
+        });
+        console.log("only second date");
+      } else if (value.time && value.time_2 && !value.title) {
+        let dateStart = Date.parse(value.time);
+        let dateEnd = Date.parse(value.time_2);
+        let dates = [];
+        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
+          let str = new Date(i).toISOString().substr(0, 10);
+          dates.push(str);
+          console.log(str);
+        }
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          const x = new Date(item.time).toISOString().substr(0, 10);
+          return dates.includes(x);
+        });
+        console.log("both dates without title ");
+      } else if (value.title && value.time && value.time_2) {
+        let dateStart = Date.parse(value.time);
+        let dateEnd = Date.parse(value.time_2);
+        let dates = [];
+        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
+          let str = new Date(i).toISOString().substr(0, 10);
+          dates.push(str);
+          console.log(str);
+        }
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          const x = new Date(item.time).toISOString().substr(0, 10);
+          return (
+            dates.includes(x) &&
+            item.title.toLowerCase().includes(value.title.toLowerCase())
+          );
+        });
+        console.log("title, both dates");
+      } else {
+        this.sortedProducts = this.tasks;
+        // this.sortedProducts = [];
+      }
+      if (this.sortedProducts.length == 0) {
+        this.isExist = true;
+      } else {
+        this.isExist = false;
+      }
+      console.log(this.sortedProducts);
     },
   },
   computed: {

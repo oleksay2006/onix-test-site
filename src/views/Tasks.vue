@@ -76,7 +76,7 @@ export default defineComponent({
   methods: {
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
     setSearchValue(data) {
-      this.searchValue = data;
+      this.sortedProducts = data;
     },
     removeAnimation(task) {
       setTimeout(() => {
@@ -100,105 +100,12 @@ export default defineComponent({
     deleteTask(id) {
       this.DELETE_TASK(id);
     },
-    sortProductsBySearchValue(value) {
-      this.sortedProducts = [...this.tasks];
-      if (value.title && !value.time && !value.time_2) {
-        console.log("only title without dates");
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          return item.title.toLowerCase().includes(value.title.toLowerCase());
-        });
-        console.log(value.time, " ", value.time_2);
-      } else if (value.title && value.time && !value.time_2) {
-        const y = new Date(value.time);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
-          return (
-            item.title.toLowerCase().includes(value.title.toLowerCase()) &&
-            x >= y
-          );
-        });
-        console.log("only title and first date");
-      } else if (value.title && !value.time && value.time_2) {
-        const y = new Date(value.time_2);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
-          return (
-            item.title.toLowerCase().includes(value.title.toLowerCase()) &&
-            ((y.getFullYear() >= x.getFullYear() &&
-              y.getDate() > x.getDate() &&
-              y.getMonth() >= x.getMonth()) ||
-              (y.getFullYear() >= x.getFullYear() &&
-                (y.getDate() > x.getDate() ||
-                  y.getDate() < x.getDate() ||
-                  y.getDate() == x.getDate()) &&
-                y.getMonth() > x.getMonth()))
-          );
-        });
-        console.log("only title and second date");
-      } else if (value.time && !value.time_2 && !value.title) {
-        const y = new Date(value.time);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
-          return x >= y;
-        });
-        console.log("only first date");
-      } else if (value.time_2 && !value.time && !value.title) {
-        const y = new Date(value.time_2);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
-          return (
-            (y.getFullYear() >= x.getFullYear() &&
-              y.getDate() > x.getDate() &&
-              y.getMonth() >= x.getMonth()) ||
-            (y.getFullYear() >= x.getFullYear() &&
-              (y.getDate() > x.getDate() ||
-                y.getDate() < x.getDate() ||
-                y.getDate() == x.getDate()) &&
-              y.getMonth() > x.getMonth())
-          );
-        });
-        console.log("only second date");
-      } else if (value.time && value.time_2 && !value.title) {
-        let dateStart = Date.parse(value.time);
-        let dateEnd = Date.parse(value.time_2);
-        let dates = [];
-        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
-          let str = new Date(i).toISOString().substr(0, 10);
-          dates.push(str);
-          console.log(str);
-        }
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time).toISOString().substr(0, 10);
-          return dates.includes(x);
-        });
-        console.log("both dates without title ");
-      } else if (value.title && value.time && value.time_2) {
-        let dateStart = Date.parse(value.time);
-        let dateEnd = Date.parse(value.time_2);
-        let dates = [];
-        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
-          let str = new Date(i).toISOString().substr(0, 10);
-          dates.push(str);
-          console.log(str);
-        }
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time).toISOString().substr(0, 10);
-          return (
-            dates.includes(x) &&
-            item.title.toLowerCase().includes(value.title.toLowerCase())
-          );
-        });
-        console.log("title, both dates");
-      } else {
-        this.sortedProducts = this.tasks;
-      }
-    },
   },
-  watch: {
-    searchValue: function () {
-      this.sortProductsBySearchValue(this.searchValue);
-    },
-  },
+  // watch: {
+  //   searchValue: function () {
+  //     this.sortProductsBySearchValue(this.searchValue);
+  //   },
+  // },
   computed: {
     ...mapState(["tasks"]),
     filteredProducts() {
@@ -210,7 +117,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.sortProductsBySearchValue(this.searchValue);
+    // this.sortProductsBySearchValue(this.searchValue);
     console.log(this.searchValue);
   },
 });

@@ -5,54 +5,7 @@
     v-on:removeEditTask="removeEditTask",
     v-bind:currentTask="currentTask"
   )
-  //- table
-  //-   tr(
-  //-     @drop="onDrop($event, Status.toDo)",
-  //-     @dragenter.prevent,
-  //-     @dragover.prevent
-  //-   )
-  //-     th.toDo To Do
-  //-       p.numberOfTasks Number of tasks: {{ toDoTasks.length }}
-  //-     TaskCard(
-  //-       v-for="(task, index) in toDoTasks",
-  //-       :key="'todo_task-' + index",
-  //-       draggable="true",
-  //-       @dragstart="startDrag($event, task)",
-  //-       :task="task",
-  //-       v-on:click="showChange(task)"
-  //-     )
-  //-   tr(
-  //-     @drop="onDrop($event, Status.inProgress)",
-  //-     @dragenter.prevent,
-  //-     @dragover.prevent
-  //-   )
-  //-     th In progress
-  //-       p.numberOfTasks Number of tasks: {{ inProgress.length }}
-  //-     TaskCard(
-  //-       v-for="(task, index) in inProgress",
-  //-       :key="'inProgress_task-' + index",
-  //-       draggable="true",
-  //-       @dragstart="startDrag($event, task)",
-  //-       :task="task",
-  //-       v-on:click="showChange(task)"
-  //-     )
-  //-   tr(
-  //-     @drop="onDrop($event, Status.done)",
-  //-     @dragenter.prevent,
-  //-     @dragover.prevent
-  //-   )
-  //-     th.done Done
-  //-       p.numberOfTasks Number of tasks: {{ done.length }}
-  //-     TaskCard(
-  //-       v-for="(task, index) in done",
-  //-       :key="'done_task-' + index",
-  //-       draggable="true",
-  //-       @dragstart="startDrag($event, task)",
-  //-       :task="task",
-  //-       v-on:click="showChange(task)"
-  //-     )
-  //-     //- v-show="task.status == this.Status.done",
-
+  SearchTask(v-on:setSearch="setSearchValue")
   .table
     .toDoHeadDiv.head(
       @drop="onDrop($event, Status.toDo)",
@@ -109,18 +62,21 @@ import Status from "@/enums/StatusEnum";
 import TaskCard from "@/components/TaskCard.vue";
 import { taskInterface } from "@/interfaces/task.interface";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
+import SearchTask from "@/components/SearchTask.vue";
 
 export default defineComponent({
   name: "Kanban",
   components: {
     TaskCard,
     TaskDetailsModal,
+    SearchTask,
   },
   data() {
     return {
       Status,
       isShowChange: false,
       currentTask: {} as taskInterface,
+      sortedProducts: [],
     };
   },
   setup() {
@@ -161,18 +117,29 @@ export default defineComponent({
   },
   computed: {
     ...mapState(["tasks"]),
+    filteredProducts() {
+      if (this.sortedProducts.length) {
+        return this.sortedProducts;
+      } else {
+        return this.tasks;
+      }
+    },
     toDoTasks: function () {
-      return this.tasks.filter((t) => t.status == Status.toDo);
+      // return this.tasks.filter((t) => t.status == Status.toDo);
+      return this.filteredProducts.filter((t) => t.status == Status.toDo);
     },
     inProgress: function () {
-      return this.tasks.filter((t) => t.status == Status.inProgress);
+      return this.filteredProducts.filter((t) => t.status == Status.inProgress);
     },
     done: function () {
-      return this.tasks.filter((t) => t.status == Status.done);
+      return this.filteredProducts.filter((t) => t.status == Status.done);
     },
   },
   methods: {
     ...mapActions(["CHANGE_STATUS"]),
+    setSearchValue(data) {
+      this.sortedProducts = data;
+    },
     showChange(task) {
       this.currentTask = task;
       this.isShowChange = true;
