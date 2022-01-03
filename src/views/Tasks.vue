@@ -256,6 +256,11 @@ export default defineComponent({
     margin-top: 10px;
   }
 }
+@media only screen and (max-width: 426px) {
+  .first-part-task p {
+    width: 200px;
+  }
+}
 @media only screen and (max-width: 400px) {
   .tasks-tab {
     padding: 20px;

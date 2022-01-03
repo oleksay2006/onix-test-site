@@ -6,24 +6,27 @@
     placeholder="Введите название задачи",
     v-model="title"
   )
-  p.info от:
-  input.dateInput(
-    v-model="time",
-    v-on:input="searchTask",
-    type="date",
-    name="trip-start",
-    min="2017-12-21",
-    max="2030-12-31"
-  )
-  p.info до:
-  input.dateInput(
-    v-model="time_2",
-    v-on:input="searchTask",
-    type="date",
-    name="trip-start",
-    min="2017-12-21",
-    max="2030-12-31"
-  )
+  .datesInputs
+    .firstInput
+      p.info от:
+      input.dateInput(
+        v-model="time",
+        v-on:input="searchTask",
+        type="date",
+        name="trip-start",
+        min="2017-12-21",
+        max="2030-12-31"
+      )
+    .secondInput
+      p.info до:
+      input.dateInput(
+        v-model="time_2",
+        v-on:input="searchTask",
+        type="date",
+        name="trip-start",
+        min="2017-12-21",
+        max="2030-12-31"
+      )
   fa.search(icon="search", v-on:click="searchTask()")
   fa.cancelSearch(icon="times", v-on:click="cancelSearch()", v-if="isSearch")
   span.helper(v-if="isExist") Задачи с такими параметрами не существует
@@ -193,6 +196,19 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.datesInputs {
+  display: flex;
+}
+.firstInput {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+.secondInput {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
 .helper {
   margin-left: 15px;
   font-size: 15px;
@@ -218,9 +234,6 @@ export default defineComponent({
   color: gray;
   cursor: pointer;
 }
-.info {
-  margin-left: 20px;
-}
 .search-input {
   /* margin-top: 10px; */
   padding: 7px 20px 7px 10px;
@@ -239,5 +252,59 @@ export default defineComponent({
   padding: 5.4px 13px;
   border: 1px solid #cfd8dc;
   margin-left: 10px;
+}
+@media only screen and (max-width: 1024px) {
+  .search-input {
+    width: 170px;
+  }
+  .searchDiv {
+    flex-wrap: wrap;
+  }
+  .helper {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .datesInputs {
+    flex-direction: column;
+  }
+  .firstInput {
+    margin-bottom: 5px;
+  }
+  .secondInput {
+    margin-top: 5px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .firstInput {
+    margin-left: 10px;
+  }
+  .secondInput {
+    margin-left: 10px;
+  }
+  .searchDiv h3 {
+    margin-right: 5px;
+  }
+  .cancelSearch {
+    margin-left: 5px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .firstInput {
+    margin-left: 0px;
+  }
+  .secondInput {
+    margin-left: 0px;
+  }
+  .datesInputs {
+    margin-top: 10px;
+  }
+  .searchDiv h3 {
+    margin-right: 20px;
+  }
+  .cancelSearch {
+    margin-left: 15px;
+  }
 }
 </style>
