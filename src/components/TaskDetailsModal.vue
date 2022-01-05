@@ -9,7 +9,6 @@
             p.text {{ this.currentTask.text }}
           p.time Выполнить до {{ this.currentTask.time }}
         .first-part-task(v-if="WantEdit")
-          //- v-show="WantEdit"
           h3 Название задачи
           textarea.new-input.new-title(
             placeholder="Введите название задачи",
@@ -49,7 +48,7 @@
         .controls(:class="{ editControls: WantEdit }")
           a.edit.Button(
             href="#",
-            v-on:click.prevent="Edit()",
+            v-on:click.prevent="edit()",
             v-show="NotEdit"
           ) Edit
           a.cancel.Button(href="#", v-on:click.prevent="removeEditTask()") Cancel
@@ -64,6 +63,7 @@
 import { mapState, mapActions } from "vuex";
 import { defineComponent } from "vue";
 import { required } from "@vuelidate/validators";
+import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
 import useVuelidate from "@vuelidate/core";
 
@@ -98,7 +98,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["CREATE_NEW_TASK", "CHANGE_TASK"]),
-    Edit() {
+    edit() {
       this.title = this.currentTask.title;
       this.description = this.currentTask.text;
       this.time = this.currentTask.time;
@@ -119,23 +119,22 @@ export default defineComponent({
       this.v$.description.$dirty = false;
       this.v$.time.$dirty = false;
       this.v$.select.$dirty = false;
-      console.log(this.select);
     },
     changeTask() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        const changedTask = {
+        const changedTask: taskInterface = {
           title: this.title,
           text: this.description,
           time: this.time,
           id: this.currentTask.id,
+          isNew: this.currentTask.isNew,
           status: this.select,
         };
         this.CHANGE_TASK(changedTask);
         this.removeEditTask();
       } else {
         this.v$.$dirty = false;
-        console.log(this.v$);
       }
     },
   },
@@ -368,6 +367,7 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 #boardName {

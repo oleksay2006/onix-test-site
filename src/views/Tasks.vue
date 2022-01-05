@@ -49,7 +49,6 @@ export default defineComponent({
       divs.value.forEach((element) => {
         setTimeout(() => {
           element.classList.add("animation");
-          console.log(element);
         }, num);
         num += 500;
       });
@@ -85,7 +84,6 @@ export default defineComponent({
     },
     showNew() {
       this.isShow = true;
-      console.log(this.isShow);
     },
     showChange(task) {
       this.currentTask = task;
@@ -101,11 +99,6 @@ export default defineComponent({
       this.DELETE_TASK(id);
     },
   },
-  // watch: {
-  //   searchValue: function () {
-  //     this.sortProductsBySearchValue(this.searchValue);
-  //   },
-  // },
   computed: {
     ...mapState(["tasks"]),
     filteredProducts() {
@@ -115,10 +108,6 @@ export default defineComponent({
         return this.tasks;
       }
     },
-  },
-  mounted() {
-    // this.sortProductsBySearchValue(this.searchValue);
-    console.log(this.searchValue);
   },
 });
 </script>
@@ -215,17 +204,21 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   text-align: center;
-
   .add-new {
-    background-color: #ff0000;
-    /* height: 35px;
-    width: 120px; */
+    background-color: #eaeaea;
     border-radius: 8px;
     cursor: pointer;
     padding: 10px;
   }
 }
-
+// .add-new {
+//   background-color: #eaeaea;
+//   /* height: 35px;
+//   width: 120px; */
+//   border-radius: 8px;
+//   cursor: pointer;
+//   padding: 10px;
+// }
 @media only screen and (max-width: 768px) {
   .new {
     flex-wrap: wrap;

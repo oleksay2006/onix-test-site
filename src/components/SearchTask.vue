@@ -40,12 +40,12 @@ export default defineComponent({
   name: "SearchTask",
   data() {
     return {
-      title: "",
-      time: "",
-      time_2: "",
-      isSearch: false,
-      isExist: false,
-      sortedProducts: [],
+      title: "" as string,
+      time: "" as string,
+      time_2: "" as string,
+      isSearch: false as boolean,
+      isExist: false as boolean,
+      sortedProducts: [] as Array<Object>,
     };
   },
   methods: {
@@ -62,35 +62,18 @@ export default defineComponent({
       });
     },
     searchTask() {
-      let obj = {
+      let obj: object = {
         title: this.title,
         time: this.time,
         time_2: this.time_2,
       };
       this.isSearch = this.title || this.time || this.time_2 ? true : false;
       this.sortProductsBySearchValue(obj);
-      console.log("sortedProducts: ", this.sortedProducts);
       this.$emit("setSearch", this.sortedProducts);
-
-      // this.$emit("setSearch", {
-      //   title: this.title,
-      //   time: this.time,
-      //   time_2: this.time_2,
-      // });
-
-      // let dateStart = Date.parse(this.time);
-      // let dateEnd = Date.parse(this.time_2);
-      // if (this.time && this.time_2) {
-      //   console.log("both dates");
-      //   for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
-      //     console.log(new Date(i).toISOString().substr(0, 10));
-      //   }
-      // }
     },
     sortProductsBySearchValue(value) {
       this.sortedProducts = [...this.tasks];
       if (value.title && !value.time && !value.time_2) {
-        console.log("only title without dates");
         this.sortedProducts = this.sortedProducts.filter(function (item) {
           return (
             item.title.toLowerCase().includes(value.title.toLowerCase()) ||
@@ -106,7 +89,6 @@ export default defineComponent({
             x >= y
           );
         });
-        console.log("only title and first date");
       } else if (value.title && !value.time && value.time_2) {
         const y = new Date(value.time_2);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
@@ -123,14 +105,12 @@ export default defineComponent({
                 y.getMonth() > x.getMonth()))
           );
         });
-        console.log("only title and second date");
       } else if (value.time && !value.time_2 && !value.title) {
         const y = new Date(value.time);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
           const x = new Date(item.time);
           return x >= y;
         });
-        console.log("only first date");
       } else if (value.time_2 && !value.time && !value.title) {
         const y = new Date(value.time_2);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
@@ -146,7 +126,6 @@ export default defineComponent({
               y.getMonth() > x.getMonth())
           );
         });
-        console.log("only second date");
       } else if (value.time && value.time_2 && !value.title) {
         let dateStart = Date.parse(value.time);
         let dateEnd = Date.parse(value.time_2);
@@ -154,13 +133,11 @@ export default defineComponent({
         for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
           let str = new Date(i).toISOString().substr(0, 10);
           dates.push(str);
-          console.log(str);
         }
         this.sortedProducts = this.sortedProducts.filter(function (item) {
           const x = new Date(item.time).toISOString().substr(0, 10);
           return dates.includes(x);
         });
-        console.log("both dates without title ");
       } else if (value.title && value.time && value.time_2) {
         let dateStart = Date.parse(value.time);
         let dateEnd = Date.parse(value.time_2);
@@ -168,7 +145,6 @@ export default defineComponent({
         for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
           let str = new Date(i).toISOString().substr(0, 10);
           dates.push(str);
-          console.log(str);
         }
         this.sortedProducts = this.sortedProducts.filter(function (item) {
           const x = new Date(item.time).toISOString().substr(0, 10);
@@ -177,7 +153,6 @@ export default defineComponent({
             item.title.toLowerCase().includes(value.title.toLowerCase())
           );
         });
-        console.log("title, both dates");
       } else {
         this.sortedProducts = this.tasks;
         // this.sortedProducts = [];
@@ -187,7 +162,6 @@ export default defineComponent({
       } else {
         this.isExist = false;
       }
-      console.log(this.sortedProducts);
     },
   },
   computed: {
@@ -195,116 +169,110 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.datesInputs {
-  display: flex;
-}
-.firstInput {
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-}
-.secondInput {
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-}
-.helper {
-  margin-left: 15px;
-  font-size: 15px;
-  color: red;
-}
-.first-part-task {
+<style scoped lang="sass">
+.datesInputs
+  display: flex
+
+.firstInput
+  display: flex
+  align-items: center
+  margin-left: 20px
+
+.secondInput
+  display: flex
+  align-items: center
+  margin-left: 20px
+
+.helper
+  margin-left: 15px
+  font-size: 15px
+  color: red
+
+.first-part-task
   /* display: block; */
-  display: flex;
-  flex-direction: column;
-}
-.searchDiv h3 {
-  margin-right: 15px;
-}
-.cancelSearch {
-  margin-left: 15px;
-  font-size: 23px;
-  color: gray;
-  cursor: pointer;
-}
-.search {
-  margin-left: 10px;
-  font-size: 20px;
-  color: gray;
-  cursor: pointer;
-}
-.search-input {
-  /* margin-top: 10px; */
-  padding: 7px 20px 7px 10px;
-  border-radius: 5px;
-  border: 1px solid #cfd8dc;
-  font-size: 14px;
-  width: 200px;
-}
-.searchDiv {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-}
-.dateInput {
-  border-radius: 5px;
-  padding: 5.4px 13px;
-  border: 1px solid #cfd8dc;
-  margin-left: 10px;
-}
-@media only screen and (max-width: 1024px) {
-  .search-input {
-    width: 170px;
-  }
-  .searchDiv {
-    flex-wrap: wrap;
-  }
-  .helper {
-    margin-left: 0;
-    margin-top: 15px;
-  }
-}
-@media only screen and (max-width: 768px) {
-  .datesInputs {
-    flex-direction: column;
-  }
-  .firstInput {
-    margin-bottom: 5px;
-  }
-  .secondInput {
-    margin-top: 5px;
-  }
-}
-@media only screen and (max-width: 640px) {
-  .firstInput {
-    margin-left: 10px;
-  }
-  .secondInput {
-    margin-left: 10px;
-  }
-  .searchDiv h3 {
-    margin-right: 5px;
-  }
-  .cancelSearch {
-    margin-left: 5px;
-  }
-}
-@media only screen and (max-width: 480px) {
-  .firstInput {
-    margin-left: 0px;
-  }
-  .secondInput {
-    margin-left: 0px;
-  }
-  .datesInputs {
-    margin-top: 10px;
-  }
-  .searchDiv h3 {
-    margin-right: 20px;
-  }
-  .cancelSearch {
-    margin-left: 15px;
-  }
-}
+  display: flex
+  flex-direction: column
+
+.searchDiv h3
+  margin-right: 15px
+
+.cancelSearch
+  margin-left: 15px
+  font-size: 23px
+  color: gray
+  cursor: pointer
+
+.search
+  margin-left: 10px
+  font-size: 20px
+  color: gray
+  cursor: pointer
+
+.search-input
+  padding: 7px 20px 7px 10px
+  border-radius: 5px
+  border: 1px solid #cfd8dc
+  font-size: 14px
+  width: 200px
+
+.searchDiv
+  margin-bottom: 20px
+  display: flex
+  align-items: center
+
+.dateInput
+  border-radius: 5px
+  padding: 5.4px 13px
+  border: 1px solid #cfd8dc
+  margin-left: 10px
+
+@media only screen and (max-width: 1024px)
+  .search-input
+    width: 170px
+
+  .searchDiv
+    flex-wrap: wrap
+
+  .helper
+    margin-left: 0
+    margin-top: 15px
+
+@media only screen and (max-width: 768px)
+  .datesInputs
+    flex-direction: column
+
+  .firstInput
+    margin-bottom: 5px
+
+  .secondInput
+    margin-top: 5px
+
+@media only screen and (max-width: 640px)
+  .firstInput
+    margin-left: 10px
+
+  .secondInput
+    margin-left: 10px
+
+  .searchDiv h3
+    margin-right: 5px
+
+  .cancelSearch
+    margin-left: 5px
+
+@media only screen and (max-width: 480px)
+  .firstInput
+    margin-left: 0px
+
+  .secondInput
+    margin-left: 0px
+
+  .datesInputs
+    margin-top: 10px
+
+  .searchDiv h3
+    margin-right: 20px
+
+  .cancelSearch
+    margin-left: 15px
 </style>
