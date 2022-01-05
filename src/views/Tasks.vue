@@ -122,7 +122,7 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .helper {
   margin-top: 3px;
   font-size: 13px;
@@ -215,15 +215,17 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   text-align: center;
+
+  .add-new {
+    background-color: #ff0000;
+    /* height: 35px;
+    width: 120px; */
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px;
+  }
 }
-.add-new {
-  background-color: #eaeaea;
-  /* height: 35px;
-  width: 120px; */
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 10px;
-}
+
 @media only screen and (max-width: 768px) {
   .new {
     flex-wrap: wrap;
