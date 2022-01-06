@@ -5,15 +5,15 @@
       .div_form
         .message.task(v-if="NotEdit")
           .first-part-task
-            h3.title {{ this.currentTask.title }}
-            p.text {{ this.currentTask.text }}
-          p.time Выполнить до {{ this.currentTask.time }}
+            h3.title {{ currentTask.title }}
+            p.text {{ currentTask.text }}
+          p.time Выполнить до {{ currentTask.time }}
         .first-part-task(v-if="WantEdit")
           h3 Название задачи
           textarea.new-input.new-title(
             placeholder="Введите название задачи",
             v-model="v$.title.$model",
-            :class="{ invalid: v$.title.$error, isDone: this.currentTask.status == 'done' }"
+            :class="{ invalid: v$.title.$error, isDone: currentTask.status == Status.done }"
           )
           span.helper(v-if="v$.title.$error") Это обязательное поле
         .second-part-task(v-if="WantEdit")
@@ -21,7 +21,7 @@
           textarea.new-input.new-description(
             placeholder="Введите описание задачи",
             v-model="v$.description.$model",
-            :class="{ invalid: v$.description.$error, isDone: this.currentTask.status == 'done' }"
+            :class="{ invalid: v$.description.$error, isDone: currentTask.status == Status.done }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
         .third-part-task(v-if="WantEdit")
@@ -32,7 +32,7 @@
             name="trip-start",
             min="2021-12-01",
             max="2022-12-31",
-            :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
+            :class="{ invalid: v$.time.$error, isDone: currentTask.status == Status.done }"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .fourth-part-task(v-if="WantEdit")
@@ -40,7 +40,7 @@
           span.custom-dropdown.big
             select(
               v-model="v$.select.$model",
-              :class="{ isDone: this.currentTask.status == 'done' }"
+              :class="{ isDone: currentTask.status == Status.done }"
             )
               option {{ Status.toDo }}
               option {{ Status.inProgress }}

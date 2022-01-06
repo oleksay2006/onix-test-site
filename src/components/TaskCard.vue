@@ -1,29 +1,32 @@
 <template lang="pug">
 .taskCard(:class="{ outdated: isOutdated, soon: isSoon, future: isFuture }")
-  h4 {{ this.task.title }}
-  p.time {{ this.task.time }}
+  h4 {{ task.title }}
+  p.time {{ task.time }}
   fa.clock(icon="clock", v-if="inProgress")
   fa.check-circle(icon="check-circle", v-if="done")
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import Status from "@/enums/StatusEnum";
 
 export default defineComponent({
   setup() {},
   name: "TaskCard",
   props: ["task"],
   data() {
-    return {};
+    return {
+      Status,
+    };
   },
   computed: {
     toDo() {
-      return this.task.status == "to-do" ? true : false;
+      return this.task.status == Status.toDo;
     },
     inProgress() {
-      return this.task.status == "in-progress" ? true : false;
+      return this.task.status == Status.inProgress;
     },
     done() {
-      return this.task.status == "done" ? true : false;
+      return this.task.status == Status.done;
     },
     isOutdated() {
       const x = new Date(this.task.time);

@@ -76,7 +76,7 @@ export default defineComponent({
       Status,
       isShowChange: false,
       currentTask: {} as taskInterface,
-      sortedProducts: [],
+      sortedProducts: [] as taskInterface[],
     };
   },
   setup() {
@@ -133,10 +133,10 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["CHANGE_STATUS"]),
-    setSearchValue(data) {
+    setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
     },
-    showChange(task) {
+    showChange(task: taskInterface) {
       this.currentTask = task;
       this.isShowChange = true;
     },

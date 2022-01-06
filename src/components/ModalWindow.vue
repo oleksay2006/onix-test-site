@@ -4,9 +4,9 @@
     .modal
       .div_form
         label(for="boardName")
-          p.good(v-if="this.openedTasks > 0") Are you sure you want to change the number of tasks?
-          p.bad(v-if="this.openedTasks == 0") No opened tasks!
-        .modal-buttons(v-if="this.openedTasks > 0")
+          p.good(v-if="openedTasks > 0") Are you sure you want to change the number of tasks?
+          p.bad(v-if="openedTasks == 0") No opened tasks!
+        .modal-buttons(v-if="openedTasks > 0")
           button.modalButton.first-button(
             type="button",
             @click="changeNumber()"

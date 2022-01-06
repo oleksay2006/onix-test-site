@@ -27,6 +27,7 @@
 <script lang="ts">
 import { ref, defineComponent, onMounted } from "vue";
 import { mapActions, mapState } from "vuex";
+import { taskInterface } from "@/interfaces/task.interface";
 import useVuelidate from "@vuelidate/core";
 import Status from "@/enums/StatusEnum";
 import AddTaskModal from "@/components/AddTaskModal.vue";
@@ -66,18 +67,18 @@ export default defineComponent({
       time: "",
       isShow: false,
       isShowChange: false,
-      currentTask: {},
+      currentTask: {} as taskInterface,
       Status,
-      sortedProducts: [],
+      sortedProducts: [] as taskInterface[],
       searchValue: "",
     };
   },
   methods: {
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
-    setSearchValue(data) {
+    setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
     },
-    removeAnimation(task) {
+    removeAnimation(task: taskInterface) {
       setTimeout(() => {
         task.isNew = false;
       }, 2000);
@@ -85,7 +86,7 @@ export default defineComponent({
     showNew() {
       this.isShow = true;
     },
-    showChange(task) {
+    showChange(task: taskInterface) {
       this.currentTask = task;
       this.isShowChange = true;
     },
@@ -95,7 +96,7 @@ export default defineComponent({
     removeNew() {
       this.isShow = false;
     },
-    deleteTask(id) {
+    deleteTask(id: number) {
       this.DELETE_TASK(id);
     },
   },

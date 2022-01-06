@@ -34,6 +34,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
+import { taskInterface } from "@/interfaces/task.interface";
 
 export default defineComponent({
   setup() {},
@@ -45,7 +46,7 @@ export default defineComponent({
       time_2: "" as string,
       isSearch: false as boolean,
       isExist: false as boolean,
-      sortedProducts: [] as Array<Object>,
+      sortedProducts: [] as taskInterface[],
     };
   },
   methods: {
@@ -63,15 +64,19 @@ export default defineComponent({
     },
     searchTask() {
       let obj: object = {
-        title: this.title,
-        time: this.time,
-        time_2: this.time_2,
+        title: this.title as string,
+        time: this.time as string,
+        time_2: this.time_2 as string,
       };
       this.isSearch = this.title || this.time || this.time_2 ? true : false;
       this.sortProductsBySearchValue(obj);
       this.$emit("setSearch", this.sortedProducts);
     },
-    sortProductsBySearchValue(value) {
+    sortProductsBySearchValue(value: {
+      title: string;
+      time: string;
+      time_2: string;
+    }) {
       this.sortedProducts = [...this.tasks];
       if (value.title && !value.time && !value.time_2) {
         this.sortedProducts = this.sortedProducts.filter(function (item) {
