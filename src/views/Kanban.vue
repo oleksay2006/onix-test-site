@@ -1,49 +1,76 @@
 <template lang="pug">
 .kanban-tab.tab.tab-2
+  TaskDetailsModal(
+    v-show="isShowChange",
+    v-on:removeEditTask="removeEditTask",
+    v-bind:currentTask="currentTask"
+  )
   table
-    tr(@drop="onDrop($event, 'to-do')", @dragenter.prevent, @dragover.prevent)
-      th.toDo To Do
-      td.taskCard(
-        v-for="(task, index) in tasks",
-        v-show="task.status == Status.toDo",
-        draggable="true",
-        @dragstart="startDrag($event, task)"
-      )
-        h4 {{ task.title }}
-        p.time {{ task.time }}
     tr(
-      @drop="onDrop($event, 'in-progress')",
+      @drop="onDrop($event, Status.toDo)",
+      @dragenter.prevent,
+      @dragover.prevent
+    )
+      th.toDo To Do
+      TaskCard(
+        v-for="(task, index) in toDoTasks",
+        :key="'todo_task-' + index",
+        draggable="true",
+        @dragstart="startDrag($event, task)",
+        :task="task",
+        v-on:click="showChange(task)"
+      )
+    tr(
+      @drop="onDrop($event, Status.inProgress)",
       @dragenter.prevent,
       @dragover.prevent
     )
       th In progress
-      td.taskCard(
-        v-for="(task, index) in tasks",
-        v-show="task.status == Status.inProgress",
+      TaskCard(
+        v-for="(task, index) in inProgress",
+        :key="'inProgress_task-' + index",
         draggable="true",
-        @dragstart="startDrag($event, task)"
+        @dragstart="startDrag($event, task)",
+        :task="task",
+        v-on:click="showChange(task)"
       )
-        h4 {{ task.title }}
-        p.time {{ task.time }}
-
-    tr(@drop="onDrop($event, 'done')", @dragenter.prevent, @dragover.prevent)
+    tr(
+      @drop="onDrop($event, Status.done)",
+      @dragenter.prevent,
+      @dragover.prevent
+    )
       th.done Done
-      td.taskCard(
-        v-for="(task, index) in tasks",
-        v-show="task.status == Status.done",
+      TaskCard(
+        v-for="(task, index) in done",
+        :key="'done_task-' + index",
         draggable="true",
-        @dragstart="startDrag($event, task)"
+        @dragstart="startDrag($event, task)",
+        :task="task",
+        v-on:click="showChange(task)"
       )
-        h4 {{ task.title }}
-        p.time {{ task.time }}
+      //- v-show="task.status == this.Status.done",
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { mapActions, mapState, useStore } from "vuex";
 import Status from "@/enums/StatusEnum";
+import TaskCard from "@/components/TaskCard.vue";
+import { taskInterface } from "@/interfaces/task.interface";
+import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 
 export default defineComponent({
   name: "Kanban",
+  components: {
+    TaskCard,
+    TaskDetailsModal,
+  },
+  data() {
+    return {
+      Status,
+      isShowChange: false,
+      currentTask: {} as taskInterface,
+    };
+  },
   setup() {
     const store = useStore();
 
@@ -64,12 +91,12 @@ export default defineComponent({
       const task = tasks.value.find(
         (task) => task.status == taskStatus && task.id == taskId
       );
-      if (task.status !== "done") {
+      if (task.status !== Status.done) {
         let taskData = {
           status: status,
           id: task.id,
         };
-        store.dispatch("Change_status", taskData);
+        store.dispatch("CHANGE_STATUS", taskData);
         // task.status = status;
       } else {
         alert("You done this task, y cant make another status for this");
@@ -80,14 +107,27 @@ export default defineComponent({
       onDrop,
     };
   },
-  enums: {
-    Status,
-  },
   computed: {
     ...mapState(["tasks"]),
+    toDoTasks: function () {
+      return this.tasks.filter((t) => t.status == Status.toDo);
+    },
+    inProgress: function () {
+      return this.tasks.filter((t) => t.status == Status.inProgress);
+    },
+    done: function () {
+      return this.tasks.filter((t) => t.status == Status.done);
+    },
   },
   methods: {
-    ...mapActions(["Change_status"]),
+    ...mapActions(["CHANGE_STATUS"]),
+    showChange(task) {
+      this.currentTask = task;
+      this.isShowChange = true;
+    },
+    removeEditTask() {
+      this.isShowChange = false;
+    },
   },
 });
 </script>

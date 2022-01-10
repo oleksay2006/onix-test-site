@@ -38,49 +38,7 @@ export default defineComponent({
         main.style.width = "100%";
       } else if (test == "75%") {
         main.style.width = "100%";
-
-        if (
-          window.matchMedia("(max-width: 1024px)").matches &&
-          !window.matchMedia("(max-width: 768px)").matches
-        ) {
-          const close_window =
-            document.querySelector<HTMLElement>(".close-window");
-          // const check_square =
-          //   document.querySelector<HTMLElement>(".check-square");
-          const third_task =
-            document.querySelector<HTMLElement>(".third-part-task");
-          const controls = document.querySelector<HTMLElement>(".controls");
-          // check_square.style.fontSize = "35px";
-          controls.style.flexDirection = "column";
-          controls.style.marginTop = "0px";
-          third_task.style.marginTop = "0px";
-          close_window.style.marginLeft = "0px";
-          close_window.style.fontSize = "30px";
-        }
-        if (window.matchMedia("(max-width: 640px)").matches) {
-          const second_task =
-            document.querySelector<HTMLElement>(".second-part-task");
-          second_task.style.marginTop = "0px";
-        }
       } else {
-        if (window.matchMedia("(max-width: 1024px)").matches) {
-          const close_window =
-            document.querySelector<HTMLElement>(".close-window");
-          const third_task =
-            document.querySelector<HTMLElement>(".third-part-task");
-          const controls = document.querySelector<HTMLElement>(".controls");
-          controls.style.flexDirection = "row";
-          controls.style.marginTop = "20px";
-          third_task.style.marginTop = "10px";
-          close_window.style.marginLeft = "10px";
-          close_window.style.fontSize = "33px";
-        }
-        if (window.matchMedia("(max-width: 640px)").matches) {
-          const second_task =
-            document.querySelector<HTMLElement>(".second-part-task");
-          second_task.style.marginTop = "10px";
-        }
-
         main.style.width = "75%";
       }
     },
@@ -190,9 +148,9 @@ export default defineComponent({
   margin-left: 20px;
 }
 .time {
-  opacity: 0.7;
+  /* opacity: 0.7; */
   font-size: 14px;
-  color: #131313;
+  color: DarkGray;
 }
 .chat-icon {
   background: #fff8dd;
