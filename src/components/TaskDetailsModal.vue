@@ -5,15 +5,15 @@
       .div_form
         .message.task(v-if="NotEdit")
           .first-part-task
-            h3.title {{ currentTask.title }}
-            p.text {{ currentTask.text }}
-          p.time Выполнить до {{ currentTask.time }}
+            h3.title {{ this.currentTask.customData.title }}
+            p.text {{ this.currentTask.customData.text }}
+          p.time Выполнить до {{ this.currentTask.customData.time }}
         .first-part-task(v-if="WantEdit")
           h3 Название задачи
           textarea.new-input.new-title(
             placeholder="Введите название задачи",
             v-model="v$.title.$model",
-            :class="{ invalid: v$.title.$error, isDone: currentTask.status == Status.done }"
+            :class="{ invalid: v$.title.$error, isDone: currentTask.customData.status == Status.done }"
           )
           span.helper(v-if="v$.title.$error") Это обязательное поле
         .second-part-task(v-if="WantEdit")
@@ -21,7 +21,7 @@
           textarea.new-input.new-description(
             placeholder="Введите описание задачи",
             v-model="v$.description.$model",
-            :class="{ invalid: v$.description.$error, isDone: currentTask.status == Status.done }"
+            :class="{ invalid: v$.description.$error, isDone: currentTask.customData.status == Status.done }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
         .third-part-task(v-if="WantEdit")
@@ -32,7 +32,7 @@
             name="trip-start",
             min="2021-12-01",
             max="2022-12-31",
-            :class="{ invalid: v$.time.$error, isDone: currentTask.status == Status.done }"
+            :class="{ invalid: v$.time.$error, isDone: currentTask.customData.status == Status.done }"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .fourth-part-task(v-if="WantEdit")
@@ -40,7 +40,7 @@
           span.custom-dropdown.big
             select(
               v-model="v$.select.$model",
-              :class="{ isDone: currentTask.status == Status.done }"
+              :class="{ isDone: currentTask.customData.status == Status.done }"
             )
               option {{ Status.toDo }}
               option {{ Status.inProgress }}
@@ -49,7 +49,7 @@
           a.edit.Button(
             href="#",
             v-on:click.prevent="edit()",
-            v-show="NotEdit"
+            v-show="ifCalendar"
           ) Edit
           a.cancel.Button(href="#", v-on:click.prevent="removeEditTask()") Cancel
           a.save.Button(
@@ -79,12 +79,13 @@ export default defineComponent({
       time: "",
       WantEdit: false,
       NotEdit: true,
+      NotEditTask: true,
       WantSave: true,
       select: "",
       Status,
     };
   },
-  props: ["currentTask"],
+  props: ["currentTask", "isCalendar"],
   validations() {
     return {
       title: { required },
@@ -93,20 +94,35 @@ export default defineComponent({
       select: { required },
     };
   },
+  watch: {
+    isCalendar() {
+      console.log("isCalendar changed: ", this.isCalendar);
+    },
+  },
   computed: {
     ...mapState([]),
+    ifCalendar() {
+      if (this.isCalendar == false) {
+        console.log(this.isCalendar);
+        return this.isCalendar;
+      } else {
+        console.log(this.NotEdit);
+        return this.NotEdit;
+      }
+    },
   },
   methods: {
     ...mapActions(["CREATE_NEW_TASK", "CHANGE_TASK"]),
     edit() {
-      this.title = this.currentTask.title;
-      this.description = this.currentTask.text;
-      this.time = this.currentTask.time;
-      this.select = this.currentTask.status;
+      this.title = this.currentTask.customData.title;
+      this.description = this.currentTask.customData.text;
+      this.time = this.currentTask.customData.time;
+      this.select = this.currentTask.customData.status;
       this.NotEdit = false;
+      this.NotEditTask = false;
       this.WantEdit = true;
       setTimeout(() => {
-        if (this.currentTask.status == Status.done) {
+        if (this.currentTask.customData.status == Status.done) {
           alert("You can't edit this task, because it's done");
         }
       }, 100);
@@ -114,6 +130,7 @@ export default defineComponent({
     removeEditTask() {
       this.$emit("removeEditTask");
       this.NotEdit = true;
+      this.NotEditTask = true;
       this.WantEdit = false;
       this.v$.title.$dirty = false;
       this.v$.description.$dirty = false;
@@ -123,14 +140,23 @@ export default defineComponent({
     changeTask() {
       this.v$.$validate();
       if (!this.v$.$error) {
+        console.log(typeof this.time);
         const changedTask: taskInterface = {
-          title: this.title,
-          text: this.description,
-          time: this.time,
-          id: this.currentTask.id,
-          isNew: this.currentTask.isNew,
-          status: this.select,
+          customData: {
+            id: this.currentTask.customData.id,
+            title: this.title,
+            text: this.description,
+            time: this.time,
+            isNew: this.currentTask.customData.isNew,
+            status: this.select,
+          },
+          dates: new Date(
+            new Date(this.time).getFullYear(),
+            new Date(this.time).getMonth(),
+            new Date(this.time).getDate()
+          ),
         };
+        console.log("task changed: ", changedTask.dates);
         this.CHANGE_TASK(changedTask);
         this.removeEditTask();
       } else {

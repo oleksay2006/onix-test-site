@@ -75,7 +75,17 @@ export default defineComponent({
     return {
       Status,
       isShowChange: false,
-      currentTask: {} as taskInterface,
+      currentTask: {
+        customData: {
+          id: 0,
+          title: "",
+          text: "",
+          time: "",
+          isNew: false,
+          status: "",
+        },
+        dates: "",
+      } as taskInterface,
       sortedProducts: [] as taskInterface[],
     };
   },
@@ -87,20 +97,23 @@ export default defineComponent({
     const startDrag = (event, task) => {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("taskStatus", task.status);
-      event.dataTransfer.setData("taskId", task.id);
+      event.dataTransfer.setData("taskStatus", task.customData.status);
+      console.log(task.customData.status);
+      event.dataTransfer.setData("taskId", task.customData.id);
     };
 
     const onDrop = (event, status) => {
       const taskId = event.dataTransfer.getData("taskId");
       const taskStatus = event.dataTransfer.getData("taskStatus");
       const task = tasks.value.find(
-        (task) => task.status == taskStatus && task.id == taskId
+        (task) =>
+          task.customData.status == taskStatus && task.customData.id == taskId
       );
-      if (task.status !== Status.done) {
+      console.log(tasks.value);
+      if (task.customData.status !== Status.done) {
         let taskData = {
           status: status,
-          id: task.id,
+          id: task.customData.id,
         };
         store.dispatch("CHANGE_STATUS", taskData);
       } else {
@@ -122,13 +135,19 @@ export default defineComponent({
       }
     },
     toDoTasks: function () {
-      return this.filteredProducts.filter((t) => t.status == Status.toDo);
+      return this.filteredProducts.filter(
+        (t) => t.customData.status == Status.toDo
+      );
     },
     inProgress: function () {
-      return this.filteredProducts.filter((t) => t.status == Status.inProgress);
+      return this.filteredProducts.filter(
+        (t) => t.customData.status == Status.inProgress
+      );
     },
     done: function () {
-      return this.filteredProducts.filter((t) => t.status == Status.done);
+      return this.filteredProducts.filter(
+        (t) => t.customData.status == Status.done
+      );
     },
   },
   methods: {

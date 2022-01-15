@@ -14,14 +14,14 @@
   .message.task(
     v-for="(task, index) in filteredProducts",
     :key="'task-' + index",
-    :class="{ new_animation: task.isNew }",
+    :class="{ new_animation: task.customData.isNew }",
     :load="removeAnimation(task)",
     v-on:click="showChange(task)"
   )
     .first-part-task
-      h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.title }}
-      p.text {{ task.text }}
-    p.time Выполнить до {{ task.time }}
+      h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.customData.title }}
+      p.text {{ task.customData.text }}
+    p.time Выполнить до {{ task.customData.time }}
     fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.id)")
 </template>
 <script lang="ts">
@@ -67,7 +67,17 @@ export default defineComponent({
       time: "",
       isShow: false,
       isShowChange: false,
-      currentTask: {} as taskInterface,
+      currentTask: {
+        customData: {
+          id: 0,
+          title: "",
+          text: "",
+          time: "",
+          isNew: false,
+          status: "",
+        },
+        dates: "",
+      } as taskInterface,
       Status,
       sortedProducts: [] as taskInterface[],
       searchValue: "",
@@ -80,7 +90,7 @@ export default defineComponent({
     },
     removeAnimation(task: taskInterface) {
       setTimeout(() => {
-        task.isNew = false;
+        task.customData.isNew = false;
       }, 2000);
     },
     showNew() {

@@ -67,15 +67,31 @@ export default defineComponent({
     addNew() {
       this.v$.$validate();
       if (!this.v$.$error) {
+        // const newCard: taskInterface = {
+        //   title: this.title,
+        //   text: this.description,
+        //   time: this.time,
+        //   id: Date.now(),
+        //   isNew: true,
+        //   status: Status.toDo,
+        // };
         const newCard: taskInterface = {
-          title: this.title,
-          text: this.description,
-          time: this.time,
-          id: Date.now(),
-          isNew: true,
-          status: Status.toDo,
+          customData: {
+            id: Date.now(),
+            title: this.title,
+            text: this.description,
+            time: this.time,
+            isNew: true,
+            status: Status.toDo,
+          },
+          dates: new Date(
+            new Date(this.time).getFullYear(),
+            new Date(this.time).getMonth(),
+            new Date(this.time).getDate()
+          ),
         };
         this.CREATE_NEW_TASK(newCard);
+        console.log(newCard);
         this.title = "";
         this.description = "";
         this.time = "";

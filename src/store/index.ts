@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
+import activityPageStore from "./modules/activityPage";
+// import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
   state: {
@@ -10,42 +12,72 @@ export default createStore({
     openedTasks: 11 as number,
     tasks: [
       {
-        title: "Task 1",
-        text: "Go to the shop",
-        time: "2022-06-07",
-        id: 0,
-        isNew: false,
-        status: Status.inProgress,
+        // id: 0,
+        customData: {
+          id: 0,
+          title: "Task 1",
+          text: "Go to the shop",
+          time: "2022-06-07",
+          isNew: false,
+          status: Status.inProgress,
+        },
+        dates: new Date(
+          new Date("2022-06-07").getFullYear(),
+          new Date("2022-06-07").getMonth(),
+          new Date("2022-06-07").getDate()
+        ),
       },
       {
-        title: "Task 2",
-        text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-        time: "2022-01-01",
-        id: 1,
-        isNew: false,
-        status: Status.inProgress,
+        // id: 1,
+        customData: {
+          id: 1,
+          title: "Task 2",
+          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
+          time: "2022-01-01",
+          isNew: false,
+          status: Status.inProgress,
+        },
+        dates: new Date(
+          new Date("2022-01-01").getFullYear(),
+          new Date("2022-01-01").getMonth(),
+          new Date("2022-01-01").getDate()
+        ),
       },
       {
-        title: "Task 3",
-        text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-        time: "2022-01-01",
-        id: 2,
-        isNew: false,
-        status: Status.toDo,
+        // id: 2,
+        customData: {
+          id: 2,
+          title: "Task 3",
+          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
+          time: "2022-01-01",
+          isNew: false,
+          status: Status.toDo,
+        },
+        dates: new Date(
+          new Date("2022-01-01").getFullYear(),
+          new Date("2022-01-01").getMonth(),
+          new Date("2022-01-01").getDate()
+        ),
       },
     ] as taskInterface[],
   },
+  // plugins: [createPersistedState()],
   mutations: {
     CHANGE_TASK: (state, changedTask) => {
-      const task = state.tasks.find((task) => task.id == changedTask.id);
-      task.title = changedTask.title;
-      task.text = changedTask.text;
-      task.time = changedTask.time;
-      task.status = changedTask.status;
+      const task = state.tasks.find(
+        (task) => task.customData.id == changedTask.customData.id
+      );
+      task.customData.title = changedTask.customData.title;
+      task.customData.text = changedTask.customData.text;
+      task.customData.time = changedTask.customData.time;
+      task.customData.status = changedTask.customData.status;
+      task.dates = changedTask.dates;
     },
     CHANGE_STATUS: (state, taskData) => {
-      const task = state.tasks.find((task) => task.id == taskData.id);
-      task.status = taskData.status;
+      const task = state.tasks.find(
+        (task) => task.customData.id == taskData.id
+      );
+      task.customData.status = taskData.status;
     },
     SET_NEW_TASK: (state, newCard) => {
       state.tasks.push(newCard);
@@ -53,7 +85,7 @@ export default createStore({
       console.log(state.tasks);
     },
     DELETE_TASK: (state, id) => {
-      state.tasks = state.tasks.filter((t) => t.id !== id);
+      state.tasks = state.tasks.filter((t) => t.customData.id !== id);
     },
     CHANGE_NUMBER_OF_TASKS: (state) => {
       state.completedTasks += 1;
@@ -101,5 +133,7 @@ export default createStore({
       return state.tasks;
     },
   },
-  modules: {},
+  modules: {
+    activityPageModule: activityPageStore,
+  },
 });

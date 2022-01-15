@@ -81,25 +81,32 @@ export default defineComponent({
       if (value.title && !value.time && !value.time_2) {
         this.sortedProducts = this.sortedProducts.filter(function (item) {
           return (
-            item.title.toLowerCase().includes(value.title.toLowerCase()) ||
-            item.text.toLowerCase().includes(value.title.toLowerCase())
+            item.customData.title
+              .toLowerCase()
+              .includes(value.title.toLowerCase()) ||
+            item.customData.text
+              .toLowerCase()
+              .includes(value.title.toLowerCase())
           );
         });
       } else if (value.title && value.time && !value.time_2) {
         const y = new Date(value.time);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
+          const x = new Date(item.customData.time);
           return (
-            item.title.toLowerCase().includes(value.title.toLowerCase()) &&
-            x >= y
+            item.customData.title
+              .toLowerCase()
+              .includes(value.title.toLowerCase()) && x >= y
           );
         });
       } else if (value.title && !value.time && value.time_2) {
         const y = new Date(value.time_2);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
+          const x = new Date(item.customData.time);
           return (
-            item.title.toLowerCase().includes(value.title.toLowerCase()) &&
+            item.customData.title
+              .toLowerCase()
+              .includes(value.title.toLowerCase()) &&
             ((y.getFullYear() >= x.getFullYear() &&
               y.getDate() >= x.getDate() &&
               y.getMonth() >= x.getMonth()) ||
@@ -113,13 +120,13 @@ export default defineComponent({
       } else if (value.time && !value.time_2 && !value.title) {
         const y = new Date(value.time);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
+          const x = new Date(item.customData.time);
           return x >= y;
         });
       } else if (value.time_2 && !value.time && !value.title) {
         const y = new Date(value.time_2);
         this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time);
+          const x = new Date(item.customData.time);
           return (
             (y.getFullYear() >= x.getFullYear() &&
               y.getDate() >= x.getDate() &&
@@ -140,7 +147,7 @@ export default defineComponent({
           dates.push(str);
         }
         this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time).toISOString().substr(0, 10);
+          const x = new Date(item.customData.time).toISOString().substr(0, 10);
           return dates.includes(x);
         });
       } else if (value.title && value.time && value.time_2) {
@@ -152,10 +159,12 @@ export default defineComponent({
           dates.push(str);
         }
         this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.time).toISOString().substr(0, 10);
+          const x = new Date(item.customData.time).toISOString().substr(0, 10);
           return (
             dates.includes(x) &&
-            item.title.toLowerCase().includes(value.title.toLowerCase())
+            item.customData.title
+              .toLowerCase()
+              .includes(value.title.toLowerCase())
           );
         });
       } else {

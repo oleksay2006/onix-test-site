@@ -1,7 +1,7 @@
 <template lang="pug">
 .taskCard(:class="{ outdated: isOutdated, soon: isSoon, future: isFuture }")
-  h4 {{ task.title }}
-  p.time {{ task.time }}
+  h4 {{ task.customData.title }}
+  p.time {{ task.customData.time }}
   fa.clock(icon="clock", v-if="inProgress")
   fa.check-circle(icon="check-circle", v-if="done")
 </template>
@@ -20,16 +20,16 @@ export default defineComponent({
   },
   computed: {
     toDo() {
-      return this.task.status == Status.toDo;
+      return this.task.customData.status == Status.toDo;
     },
     inProgress() {
-      return this.task.status == Status.inProgress;
+      return this.task.customData.status == Status.inProgress;
     },
     done() {
-      return this.task.status == Status.done;
+      return this.task.customData.status == Status.done;
     },
     isOutdated() {
-      const x = new Date(this.task.time);
+      const x = new Date(this.task.customData.time);
       const y = new Date();
       return (y.getFullYear() == x.getFullYear() &&
         y.getDate() > x.getDate() &&
@@ -39,7 +39,7 @@ export default defineComponent({
         : false;
     },
     isSoon() {
-      const x = new Date(this.task.time);
+      const x = new Date(this.task.customData.time);
       const y = new Date();
       return x.getFullYear() === y.getFullYear() &&
         x.getDate() === y.getDate() &&
@@ -48,7 +48,7 @@ export default defineComponent({
         : false;
     },
     isFuture() {
-      const x = new Date(this.task.time);
+      const x = new Date(this.task.customData.time);
       const y = new Date();
       return x > y ? true : false;
     },
