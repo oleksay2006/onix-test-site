@@ -57,7 +57,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { mapActions, mapState, useStore } from "vuex";
+import { useStore } from "vuex";
 import Status from "@/enums/StatusEnum";
 import TaskCard from "@/components/TaskCard.vue";
 import { taskInterface } from "@/interfaces/task.interface";
@@ -91,14 +91,12 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-
-    const tasks = computed(() => store.state.tasks);
+    const tasks = computed(() => store.state.tasksModule.tasks);
 
     const startDrag = (event, task) => {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("taskStatus", task.customData.status);
-      console.log(task.customData.status);
       event.dataTransfer.setData("taskId", task.customData.id);
     };
 
@@ -115,7 +113,8 @@ export default defineComponent({
           status: status,
           id: task.customData.id,
         };
-        store.dispatch("CHANGE_STATUS", taskData);
+        console.log(taskData);
+        store.dispatch("tasksModule/CHANGE_STATUS", taskData);
       } else {
         alert("You done this task, y cant make another status for this");
       }
@@ -123,10 +122,10 @@ export default defineComponent({
     return {
       startDrag,
       onDrop,
+      tasks,
     };
   },
   computed: {
-    ...mapState(["tasks"]),
     filteredProducts() {
       if (this.sortedProducts.length) {
         return this.sortedProducts;
@@ -151,7 +150,6 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapActions(["CHANGE_STATUS"]),
     setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
     },

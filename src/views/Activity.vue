@@ -30,34 +30,33 @@
     )
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapActions, mapState } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Activity",
   data() {
     return {};
   },
-  computed: {
-    ...mapState({
-      images: (state: any): any => {
-        return state.activityPageModule.images;
-      },
-      messages: (state: any): any => {
-        return state.activityPageModule.messages;
-      },
-    }),
-  },
-  methods: {
-    ...mapActions(["IMAGE_INDEX"]),
-    showIndex(index: number) {
+  setup() {
+    const store = useStore();
+    const images = computed(() => store.state.activityPageModule.images);
+    const messages = computed(() => store.state.activityPageModule.messages);
+    function showIndex(index: number) {
       const notifications: Element = document.querySelector(".notifications");
-      this.IMAGE_INDEX(index);
+      // this.IMAGE_INDEX(index);
+      store.dispatch("activityPageModule/IMAGE_INDEX", index);
       notifications.classList.remove("hidden");
-    },
-    getImgUrl(pic: string) {
+    }
+    function getImgUrl(pic: string) {
       return require("../assets/" + pic);
-    },
+    }
+    return {
+      images,
+      messages,
+      showIndex,
+      getImgUrl,
+    };
   },
 });
 </script>

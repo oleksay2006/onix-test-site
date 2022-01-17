@@ -5,17 +5,17 @@
     li(v-for="(img, index) in images", :key="'image-' + index") {{ img.source }}
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapState } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Files",
-  computed: {
-    ...mapState({
-      images: (state: any): any => {
-        return state.activityPageModule.images;
-      },
-    }),
+  setup() {
+    const store = useStore();
+    const images = computed(() => store.state.activityPageModule.images);
+    return {
+      images,
+    };
   },
 });
 </script>

@@ -3,6 +3,7 @@ import { Module } from "vuex";
 const store: Module<any, any> = {
   namespaced: true,
   state: {
+    img_index: 0 as number,
     images: [
       {
         name: "Town",
@@ -32,6 +33,11 @@ const store: Module<any, any> = {
         text: "Darika Samak uploaded 4 files on An option to search in current projects or in all projects",
       },
     ],
+  },
+  mutations: {
+    CHANGE_INDEX: (state, index) => {
+      state.img_index = index;
+    },
   },
   actions: {
     IMAGE_INDEX({ commit }, index) {

@@ -36,8 +36,8 @@
   <!-- //- v-calendar -->
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapState } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 import { taskInterface } from "@/interfaces/task.interface";
 
@@ -46,9 +46,25 @@ export default defineComponent({
   components: {
     TaskDetailsModal,
   },
-  computed: {
-    ...mapState(["tasks"]),
+  setup() {
+    const store = useStore();
+    const tasks = computed(() => store.state.tasksModule.tasks);
+    // function removeEditTask() {
+    //   this.isShowChange = false;
+    //   this.isCalendar = true;
+    // }
+    // function showChange(task: taskInterface) {
+    //   this.currentTask = task;
+    //   this.isCalendar = false;
+    //   this.isShowChange = true;
+    // }
+    return {
+      tasks,
+      // removeEditTask,
+      // showChange,
+    };
   },
+  computed: {},
   methods: {
     removeEditTask() {
       this.isShowChange = false;
@@ -60,15 +76,6 @@ export default defineComponent({
       this.isShowChange = true;
     },
     testClass() {
-      // let task = this.tasks.find((a) => a.customData.id == id);
-      // const month = new Date().getMonth();
-      // const year = new Date().getFullYear();
-      // attr.dates = new Date(year, month, 31);
-      // task.dates = new Date(
-      //   new Date("2022-01-23").getFullYear(),
-      //   new Date("2022-01-23").getMonth(),
-      //   new Date("2022-01-23").getDate()
-      // );
       console.log(this.tasks);
     },
   },

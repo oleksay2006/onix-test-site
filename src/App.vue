@@ -6,9 +6,9 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  beforeUnmount() {
-    window.localStorage.clear();
-  },
+  // beforeUnmount() {
+  //   window.localStorage.clear();
+  // },
 });
 </script>
 

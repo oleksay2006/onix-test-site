@@ -60,7 +60,7 @@
           ) Save
 </template>
 <script lang="ts">
-import { mapState, mapActions } from "vuex";
+import { useStore } from "vuex";
 import { defineComponent } from "vue";
 import { required } from "@vuelidate/validators";
 import { taskInterface } from "@/interfaces/task.interface";
@@ -70,7 +70,36 @@ import useVuelidate from "@vuelidate/core";
 export default defineComponent({
   name: "TaskDetailsModal",
   setup() {
-    return { v$: useVuelidate() };
+    const store = useStore();
+    const v$ = useVuelidate();
+    function changeTask() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        const changedTask: taskInterface = {
+          customData: {
+            id: this.currentTask.customData.id,
+            title: this.title,
+            text: this.description,
+            time: this.time,
+            isNew: this.currentTask.customData.isNew,
+            status: this.select,
+          },
+          dates: new Date(
+            new Date(this.time).getFullYear(),
+            new Date(this.time).getMonth(),
+            new Date(this.time).getDate()
+          ),
+        };
+        store.dispatch("tasksModule/CHANGE_TASK", changedTask);
+        this.removeEditTask();
+      } else {
+        this.v$.$dirty = false;
+      }
+    }
+    return {
+      v$,
+      changeTask,
+    };
   },
   data() {
     return {
@@ -100,19 +129,15 @@ export default defineComponent({
     },
   },
   computed: {
-    ...mapState([]),
     ifCalendar() {
       if (this.isCalendar == false) {
-        console.log(this.isCalendar);
         return this.isCalendar;
       } else {
-        console.log(this.NotEdit);
         return this.NotEdit;
       }
     },
   },
   methods: {
-    ...mapActions(["CREATE_NEW_TASK", "CHANGE_TASK"]),
     edit() {
       this.title = this.currentTask.customData.title;
       this.description = this.currentTask.customData.text;
@@ -136,32 +161,6 @@ export default defineComponent({
       this.v$.description.$dirty = false;
       this.v$.time.$dirty = false;
       this.v$.select.$dirty = false;
-    },
-    changeTask() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log(typeof this.time);
-        const changedTask: taskInterface = {
-          customData: {
-            id: this.currentTask.customData.id,
-            title: this.title,
-            text: this.description,
-            time: this.time,
-            isNew: this.currentTask.customData.isNew,
-            status: this.select,
-          },
-          dates: new Date(
-            new Date(this.time).getFullYear(),
-            new Date(this.time).getMonth(),
-            new Date(this.time).getDate()
-          ),
-        };
-        console.log("task changed: ", changedTask.dates);
-        this.CHANGE_TASK(changedTask);
-        this.removeEditTask();
-      } else {
-        this.v$.$dirty = false;
-      }
     },
   },
 });

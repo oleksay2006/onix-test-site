@@ -22,11 +22,11 @@
       h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.customData.title }}
       p.text {{ task.customData.text }}
     p.time Выполнить до {{ task.customData.time }}
-    fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.id)")
+    fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.customData.id)")
 </template>
 <script lang="ts">
-import { ref, defineComponent, onMounted } from "vue";
-import { mapActions, mapState } from "vuex";
+import { ref, defineComponent, onMounted, computed } from "vue";
+import { useStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 import useVuelidate from "@vuelidate/core";
 import Status from "@/enums/StatusEnum";
@@ -42,6 +42,8 @@ export default defineComponent({
     SearchTask,
   },
   setup() {
+    const store = useStore();
+    const tasks = computed(() => store.state.tasksModule.tasks);
     // Before the component is mounted, the value
     // of the ref is `[]` which is the default
     let num = 0;
@@ -54,9 +56,42 @@ export default defineComponent({
         num += 500;
       });
     });
+    // function setSearchValue(data: taskInterface[]) {
+    //   this.sortedProducts = data;
+    // }
+    // function removeAnimation(task: taskInterface) {
+    //   setTimeout(() => {
+    //     task.customData.isNew = false;
+    //   }, 2000);
+    // }
+    // function showNew() {
+    //   this.isShow = true;
+    // }
+    // function showChange(task: taskInterface) {
+    //   this.currentTask = task;
+    //   console.log(this.isShowChange);
+    //   this.isShowChange = true;
+    // }
+    // function removeEditTask() {
+    //   console.log(this.isShowChange);
+    //   // this.isShowChange = false;
+    // }
+    // function removeNew() {
+    //   this.isShow = false;
+    // }
+    function deleteTask(id: number) {
+      store.dispatch("tasksModule/DELETE_TASK", id);
+    }
     return {
       divs,
-      close,
+      tasks,
+      // setSearchValue,
+      // removeAnimation,
+      // showNew,
+      // showChange,
+      // removeEditTask,
+      // removeNew,
+      deleteTask,
     };
   },
   data() {
@@ -84,7 +119,6 @@ export default defineComponent({
     };
   },
   methods: {
-    ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
     setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
     },
@@ -106,12 +140,8 @@ export default defineComponent({
     removeNew() {
       this.isShow = false;
     },
-    deleteTask(id: number) {
-      this.DELETE_TASK(id);
-    },
   },
   computed: {
-    ...mapState(["tasks"]),
     filteredProducts() {
       if (this.sortedProducts.length) {
         return this.sortedProducts;

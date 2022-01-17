@@ -14,28 +14,35 @@
           button.modalButton.second-button(type="button", @click="hideModal()") No
 </template>
 <script lang="ts">
-import { mapState, mapActions } from "vuex";
-import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { defineComponent, computed } from "vue";
 
 export default defineComponent({
   name: "ModalWindow",
   data() {
     return {};
   },
-  computed: {
-    ...mapState(["modal", "openedTasks"]),
-  },
-  methods: {
-    ...mapActions(["HIDE_MODAL", "CHANGE_NUMBER_OF_TASKS"]),
-    hideModal() {
-      this.HIDE_MODAL();
-    },
-    changeNumber() {
+  setup() {
+    const store = useStore();
+    const openedTasks = computed(() => store.state.tasksModule.openedTasks);
+    const modal = computed(() => store.state.tasksModule.modal);
+    function hideModal() {
+      store.dispatch("tasksModule/HIDE_MODAL");
+    }
+    function changeNumber() {
       if (this.openedTasks > 0) {
-        this.CHANGE_NUMBER_OF_TASKS();
+        store.dispatch("tasksModule/CHANGE_NUMBER_OF_TASKS");
       }
-    },
+    }
+    return {
+      openedTasks,
+      hideModal,
+      changeNumber,
+      modal,
+    };
   },
+  computed: {},
+  methods: {},
 });
 </script>
 <style scoped lang="sass">

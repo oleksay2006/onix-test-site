@@ -32,12 +32,18 @@
   span.helper(v-if="isExist") Задачи с такими параметрами не существует
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapState } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 
 export default defineComponent({
-  setup() {},
+  setup() {
+    const store = useStore();
+    const tasks = computed(() => store.state.tasksModule.tasks);
+    return {
+      tasks,
+    };
+  },
   name: "SearchTask",
   data() {
     return {
@@ -178,9 +184,7 @@ export default defineComponent({
       }
     },
   },
-  computed: {
-    ...mapState(["tasks"]),
-  },
+  computed: {},
 });
 </script>
 <style scoped lang="sass">

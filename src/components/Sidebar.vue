@@ -37,36 +37,49 @@ div
           p.notifications_text {{ img_index }}
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapState, mapActions } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Sidebar",
+  setup() {
+    const profile_name = "Jean Gonzales";
+    const store = useStore();
+    const img_index = computed(() => store.state.activityPageModule.img_index);
+    const modal = computed(() => store.state.tasksModule.modal);
+    const completedTasks = computed(
+      () => store.state.tasksModule.completedTasks
+    );
+    const openedTasks = computed(() => store.state.tasksModule.openedTasks);
+    function showModal() {
+      store.dispatch("tasksModule/SHOW_MODAL");
+      if (this.openedTasks == 0) {
+        setTimeout(() => {
+          store.dispatch("tasksModule/HIDE_MODAL");
+        }, 2000);
+      }
+    }
+    return {
+      img_index,
+      completedTasks,
+      openedTasks,
+      modal,
+      showModal,
+      profile_name,
+    };
+  },
   methods: {
-    ...mapActions(["SHOW_MODAL", "HIDE_MODAL"]),
     resizeMain() {
       this.$emit("resizeMain");
     },
     change() {
       this.$emit("change");
     },
-    showModal() {
-      this.SHOW_MODAL();
-      if (this.openedTasks == 0) {
-        setTimeout(() => {
-          this.HIDE_MODAL();
-        }, 2000);
-      }
-    },
   },
   data() {
-    return {
-      profile_name: "Jean Gonzales",
-    };
+    return {};
   },
-  computed: {
-    ...mapState(["completedTasks", "openedTasks", "modal", "img_index"]),
-  },
+  computed: {},
 });
 </script>
 <style>
