@@ -1,5 +1,6 @@
 <template lang="pug">
 .tasks-tab.tab.tab-1
+  SearchTask(v-on:setSearch="setSearchValue")
   .list
     p.day TASK LIST
     .add-new(v-on:click="showNew()")
@@ -11,7 +12,7 @@
     v-bind:currentTask="currentTask"
   )
   .message.task(
-    v-for="(task, index) in tasks",
+    v-for="(task, index) in filteredProducts",
     :key="'task-' + index",
     :class="{ new_animation: task.isNew }",
     :load="removeAnimation(task)",
@@ -26,16 +27,19 @@
 <script lang="ts">
 import { ref, defineComponent, onMounted } from "vue";
 import { mapActions, mapState } from "vuex";
+import { taskInterface } from "@/interfaces/task.interface";
 import useVuelidate from "@vuelidate/core";
 import Status from "@/enums/StatusEnum";
 import AddTaskModal from "@/components/AddTaskModal.vue";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
+import SearchTask from "@/components/SearchTask.vue";
 
 export default defineComponent({
   name: "Tasks",
   components: {
     AddTaskModal,
     TaskDetailsModal,
+    SearchTask,
   },
   setup() {
     // Before the component is mounted, the value
@@ -46,7 +50,6 @@ export default defineComponent({
       divs.value.forEach((element) => {
         setTimeout(() => {
           element.classList.add("animation");
-          console.log(element);
         }, num);
         num += 500;
       });
@@ -64,22 +67,26 @@ export default defineComponent({
       time: "",
       isShow: false,
       isShowChange: false,
-      currentTask: {},
+      currentTask: {} as taskInterface,
       Status,
+      sortedProducts: [] as taskInterface[],
+      searchValue: "",
     };
   },
   methods: {
     ...mapActions(["SET_TASKS", "CREATE_NEW_TASK", "DELETE_TASK"]),
-    removeAnimation(task) {
+    setSearchValue(data: taskInterface[]) {
+      this.sortedProducts = data;
+    },
+    removeAnimation(task: taskInterface) {
       setTimeout(() => {
         task.isNew = false;
       }, 2000);
     },
     showNew() {
       this.isShow = true;
-      console.log(this.isShow);
     },
-    showChange(task) {
+    showChange(task: taskInterface) {
       this.currentTask = task;
       this.isShowChange = true;
     },
@@ -89,19 +96,23 @@ export default defineComponent({
     removeNew() {
       this.isShow = false;
     },
-    deleteTask(id) {
+    deleteTask(id: number) {
       this.DELETE_TASK(id);
     },
   },
   computed: {
     ...mapState(["tasks"]),
-  },
-  mounted() {
-    console.log(this.currentTask);
+    filteredProducts() {
+      if (this.sortedProducts.length) {
+        return this.sortedProducts;
+      } else {
+        return this.tasks;
+      }
+    },
   },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .helper {
   margin-top: 3px;
   font-size: 13px;
@@ -194,15 +205,21 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  .add-new {
+    background-color: #eaeaea;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px;
+  }
 }
-.add-new {
-  background-color: #eaeaea;
-  /* height: 35px;
-  width: 120px; */
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 10px;
-}
+// .add-new {
+//   background-color: #eaeaea;
+//   /* height: 35px;
+//   width: 120px; */
+//   border-radius: 8px;
+//   cursor: pointer;
+//   padding: 10px;
+// }
 @media only screen and (max-width: 768px) {
   .new {
     flex-wrap: wrap;
@@ -233,6 +250,11 @@ export default defineComponent({
 @media only screen and (max-width: 480px) {
   .second-part-task {
     margin-top: 10px;
+  }
+}
+@media only screen and (max-width: 426px) {
+  .first-part-task p {
+    width: 200px;
   }
 }
 @media only screen and (max-width: 400px) {

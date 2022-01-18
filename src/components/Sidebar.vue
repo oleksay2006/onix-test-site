@@ -15,11 +15,11 @@ div
       .profile-main
         img#profile-img(src="@/assets/profile.svg", alt="profile photo")
         .profile-text
-          p.profile-name {{ this.profile_name }}
+          p.profile-name {{ profile_name }}
           p.profile-owner Product Owner
       fa#profile-more(icon="ellipsis-h")
     .tasks
-      .completed(@click="showModal(), Change()")
+      .completed(@click="showModal(), change()")
         p.numbers.completed_nums {{ completedTasks }}
         p.task-type Completed Tasks
       .opened
@@ -47,7 +47,7 @@ export default defineComponent({
     resizeMain() {
       this.$emit("resizeMain");
     },
-    Change() {
+    change() {
       this.$emit("change");
     },
     showModal() {

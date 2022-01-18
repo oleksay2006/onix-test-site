@@ -5,16 +5,15 @@
       .div_form
         .message.task(v-if="NotEdit")
           .first-part-task
-            h3.title {{ this.currentTask.title }}
-            p.text {{ this.currentTask.text }}
-          p.time Выполнить до {{ this.currentTask.time }}
+            h3.title {{ currentTask.title }}
+            p.text {{ currentTask.text }}
+          p.time Выполнить до {{ currentTask.time }}
         .first-part-task(v-if="WantEdit")
-          //- v-show="WantEdit"
           h3 Название задачи
           textarea.new-input.new-title(
             placeholder="Введите название задачи",
             v-model="v$.title.$model",
-            :class="{ invalid: v$.title.$error, isDone: this.currentTask.status == 'done' }"
+            :class="{ invalid: v$.title.$error, isDone: currentTask.status == Status.done }"
           )
           span.helper(v-if="v$.title.$error") Это обязательное поле
         .second-part-task(v-if="WantEdit")
@@ -22,7 +21,7 @@
           textarea.new-input.new-description(
             placeholder="Введите описание задачи",
             v-model="v$.description.$model",
-            :class="{ invalid: v$.description.$error, isDone: this.currentTask.status == 'done' }"
+            :class="{ invalid: v$.description.$error, isDone: currentTask.status == Status.done }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
         .third-part-task(v-if="WantEdit")
@@ -31,9 +30,9 @@
             v-model="v$.time.$model",
             type="date",
             name="trip-start",
-            min="2021-12-21",
+            min="2021-12-01",
             max="2022-12-31",
-            :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
+            :class="{ invalid: v$.time.$error, isDone: currentTask.status == Status.done }"
           )
           span.helper(v-if="v$.time.$error") Это обязательное поле
         .fourth-part-task(v-if="WantEdit")
@@ -41,7 +40,7 @@
           span.custom-dropdown.big
             select(
               v-model="v$.select.$model",
-              :class="{ invalid: v$.time.$error, isDone: this.currentTask.status == 'done' }"
+              :class="{ isDone: currentTask.status == Status.done }"
             )
               option {{ Status.toDo }}
               option {{ Status.inProgress }}
@@ -49,7 +48,7 @@
         .controls(:class="{ editControls: WantEdit }")
           a.edit.Button(
             href="#",
-            v-on:click.prevent="Edit()",
+            v-on:click.prevent="edit()",
             v-show="NotEdit"
           ) Edit
           a.cancel.Button(href="#", v-on:click.prevent="removeEditTask()") Cancel
@@ -64,6 +63,7 @@
 import { mapState, mapActions } from "vuex";
 import { defineComponent } from "vue";
 import { required } from "@vuelidate/validators";
+import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
 import useVuelidate from "@vuelidate/core";
 
@@ -98,7 +98,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["CREATE_NEW_TASK", "CHANGE_TASK"]),
-    Edit() {
+    edit() {
       this.title = this.currentTask.title;
       this.description = this.currentTask.text;
       this.time = this.currentTask.time;
@@ -119,23 +119,22 @@ export default defineComponent({
       this.v$.description.$dirty = false;
       this.v$.time.$dirty = false;
       this.v$.select.$dirty = false;
-      console.log(this.select);
     },
     changeTask() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        const changedTask = {
+        const changedTask: taskInterface = {
           title: this.title,
           text: this.description,
           time: this.time,
           id: this.currentTask.id,
+          isNew: this.currentTask.isNew,
           status: this.select,
         };
         this.CHANGE_TASK(changedTask);
         this.removeEditTask();
       } else {
         this.v$.$dirty = false;
-        console.log(this.v$);
       }
     },
   },
@@ -368,6 +367,7 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 #boardName {
@@ -413,18 +413,65 @@ textarea {
   .modal_wrapper {
     width: 70vw;
   }
+  textarea {
+    min-width: 262px;
+    max-width: 262px;
+  }
+  .first-part-task p {
+    width: 355px;
+  }
+  .dateInput {
+    width: 268px;
+  }
 }
 @media only screen and (max-width: 768px) {
   .third-part-task {
     margin-top: 10px;
   }
-  .controls {
-    margin-top: 5px;
+  .Button {
+    width: 85px;
+  }
+  .first-part-task p {
+    width: 315px;
+  }
+  textarea {
+    min-width: 222px;
+    max-width: 222px;
+  }
+  .dateInput {
+    width: 228px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .modal_wrapper {
+    width: 80vw;
   }
 }
 @media only screen and (max-width: 480px) {
   .second-part-task {
     margin-top: 10px;
+  }
+  .first-part-task p {
+    width: 200px;
+  }
+  .div_form {
+    display: flex;
+    flex-direction: column;
+  }
+  .controls {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .edit {
+    margin-bottom: 0px;
+  }
+  .cancel {
+    margin-left: 10px;
+  }
+  textarea {
+    max-height: 100px;
   }
 }
 </style>

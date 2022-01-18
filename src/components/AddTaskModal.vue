@@ -21,11 +21,6 @@
           span.helper(v-if="v$.description.$error") Это обязательное поле
         .third-part-task
           h3 Дата выполнения задачи
-          //- input.new-input.new-description(
-          //-   placeholder="Введите время",
-          //-   v-model="time",
-          //-   :class="{ invalid: v$.title.$error }"
-          //- )
           input.dateInput(
             v-model="v$.time.$model",
             type="date",
@@ -85,11 +80,13 @@ export default defineComponent({
         this.description = "";
         this.time = "";
         this.$emit("removeNew");
+        this.$emit("setSearch", {
+          title: "",
+          time: "",
+          time_2: "",
+        });
       }
     },
-  },
-  mounted() {
-    console.log("AddTaskModal: ", this.isShow);
   },
 });
 </script>

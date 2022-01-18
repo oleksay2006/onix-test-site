@@ -56,12 +56,12 @@ export default defineComponent({
   computed: {},
   methods: {
     ...mapActions(["IMAGE_INDEX"]),
-    showIndex(index) {
+    showIndex(index: number) {
       const notifications: Element = document.querySelector(".notifications");
       this.IMAGE_INDEX(index);
       notifications.classList.remove("hidden");
     },
-    getImgUrl(pic) {
+    getImgUrl(pic: string) {
       return require("../assets/" + pic);
     },
   },
