@@ -131,6 +131,7 @@ export default defineComponent({
       this.isShow = true;
     },
     showChange(task: taskInterface) {
+      console.log(task);
       this.currentTask = task;
       this.isShowChange = true;
     },

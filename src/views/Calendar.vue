@@ -71,6 +71,7 @@ export default defineComponent({
       this.isCalendar = true;
     },
     showChange(task: taskInterface) {
+      console.log(this.tasks);
       this.currentTask = task;
       this.isCalendar = false;
       this.isShowChange = true;

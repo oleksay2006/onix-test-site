@@ -3,14 +3,16 @@ import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
 import activityPageStore from "./modules/activityPage";
 import tasksStore from "./modules/tasksModule";
-import createPersistedState from "vuex-persistedstate";
-// const tasksState = createPersistedState({
-//   paths: ['tasks']
-// })
+import VuexPersistence from "vuex-persist";
+// import createPersistedState from "vuex-persistedstate";
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+});
 
 export default createStore({
+  plugins: [vuexLocal.plugin],
   state: {},
-  plugins: [createPersistedState()],
   mutations: {},
   actions: {},
   getters: {},
