@@ -84,12 +84,6 @@ export default defineComponent({
             isNew: this.currentTask.customData.isNew,
             status: this.select,
           },
-          dates: this.time,
-          // dates: new Date(
-          //   new Date(this.time).getFullYear(),
-          //   new Date(this.time).getMonth(),
-          //   new Date(this.time).getDate()
-          // ),
         };
         store.dispatch("tasksModule/CHANGE_TASK", changedTask);
         this.removeEditTask();

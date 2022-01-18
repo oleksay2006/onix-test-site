@@ -66,9 +66,8 @@ export default defineComponent({
             isNew: true,
             status: Status.toDo,
           },
-          dates: this.time,
+          dates: new Date(),
         };
-        // this.CREATE_NEW_TASK(newCard);
         store.dispatch("tasksModule/CREATE_NEW_TASK", newCard);
         console.log(newCard);
         this.title = "";

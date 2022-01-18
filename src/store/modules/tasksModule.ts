@@ -18,44 +18,29 @@ const store: Module<any, any> = {
           isNew: false,
           status: Status.inProgress,
         },
-        dates: "2022-06-07",
-        // dates: new Date(
-        //   new Date("2022-06-07").getFullYear(),
-        //   new Date("2022-06-07").getMonth(),
-        //   new Date("2022-06-07").getDate()
-        // ),
+        dates: "2022-05-07",
       },
       {
         customData: {
           id: 1,
           title: "Task 2",
           text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-          time: "2022-01-01",
+          time: "2022-01-05",
           isNew: false,
           status: Status.inProgress,
         },
         dates: "2022-01-01",
-        // dates: new Date(
-        //   new Date("2022-01-01").getFullYear(),
-        //   new Date("2022-01-01").getMonth(),
-        //   new Date("2022-01-01").getDate()
-        // ),
       },
       {
         customData: {
           id: 2,
           title: "Task 3",
           text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-          time: "2022-01-01",
+          time: "2022-01-16",
           isNew: false,
           status: Status.toDo,
         },
-        dates: "2022-01-01",
-        // dates: new Date(
-        //   new Date("2022-01-01").getFullYear(),
-        //   new Date("2022-01-01").getMonth(),
-        //   new Date("2022-01-01").getDate()
-        // ),
+        dates: "2022-01-12",
       },
     ] as taskInterface[],
   },
@@ -92,7 +77,7 @@ const store: Module<any, any> = {
       task.customData.text = changedTask.customData.text;
       task.customData.time = changedTask.customData.time;
       task.customData.status = changedTask.customData.status;
-      task.dates = changedTask.dates;
+      // task.dates = changedTask.dates;
     },
   },
   actions: {

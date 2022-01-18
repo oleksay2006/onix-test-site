@@ -7,7 +7,7 @@
       v-bind:isCalendar="isCalendar"
     />
     <div class="text-center section">
-      <h2 class="h2">Calendar</h2>
+      <h2 class="h2">Даты создания задач</h2>
       <v-calendar
         class="custom-calendar max-w-full"
         :masks="masks"
