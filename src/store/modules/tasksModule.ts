@@ -18,11 +18,12 @@ const store: Module<any, any> = {
           isNew: false,
           status: Status.inProgress,
         },
-        dates: new Date(
-          new Date("2022-06-07").getFullYear(),
-          new Date("2022-06-07").getMonth(),
-          new Date("2022-06-07").getDate()
-        ),
+        dates: "2022-06-07",
+        // dates: new Date(
+        //   new Date("2022-06-07").getFullYear(),
+        //   new Date("2022-06-07").getMonth(),
+        //   new Date("2022-06-07").getDate()
+        // ),
       },
       {
         customData: {
@@ -33,11 +34,12 @@ const store: Module<any, any> = {
           isNew: false,
           status: Status.inProgress,
         },
-        dates: new Date(
-          new Date("2022-01-01").getFullYear(),
-          new Date("2022-01-01").getMonth(),
-          new Date("2022-01-01").getDate()
-        ),
+        dates: "2022-01-01",
+        // dates: new Date(
+        //   new Date("2022-01-01").getFullYear(),
+        //   new Date("2022-01-01").getMonth(),
+        //   new Date("2022-01-01").getDate()
+        // ),
       },
       {
         customData: {
@@ -48,11 +50,12 @@ const store: Module<any, any> = {
           isNew: false,
           status: Status.toDo,
         },
-        dates: new Date(
-          new Date("2022-01-01").getFullYear(),
-          new Date("2022-01-01").getMonth(),
-          new Date("2022-01-01").getDate()
-        ),
+        dates: "2022-01-01",
+        // dates: new Date(
+        //   new Date("2022-01-01").getFullYear(),
+        //   new Date("2022-01-01").getMonth(),
+        //   new Date("2022-01-01").getDate()
+        // ),
       },
     ] as taskInterface[],
   },

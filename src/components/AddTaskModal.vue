@@ -66,11 +66,7 @@ export default defineComponent({
             isNew: true,
             status: Status.toDo,
           },
-          dates: new Date(
-            new Date(this.time).getFullYear(),
-            new Date(this.time).getMonth(),
-            new Date(this.time).getDate()
-          ),
+          dates: this.time,
         };
         // this.CREATE_NEW_TASK(newCard);
         store.dispatch("tasksModule/CREATE_NEW_TASK", newCard);
