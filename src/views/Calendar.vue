@@ -170,6 +170,7 @@ export default defineComponent({
   height: 90px;
   min-width: 90px;
   background-color: white;
+  z-index: 0;
 }
 /deep/ .weekday-1 {
   background-color: #eff8ff;
