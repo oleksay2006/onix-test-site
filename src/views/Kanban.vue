@@ -8,52 +8,22 @@
   SearchTask(v-on:setSearch="setSearchValue")
   .table
     .toDoHeadDiv.head(
-      @drop="onDrop($event, Status.toDo)",
+      v-for="stat in Status",
+      @drop="onDrop($event, stat)",
       @dragenter.prevent,
       @dragover.prevent
     )
-      .div_th.toDo To-Do
-        p.numberOfTasks Number of tasks: {{ toDoTasks.length }}
+      .div_th.toDo {{ stat }}
+        p.numberOfTasks Number of tasks: {{ tasksForKanban(stat).length }}
       TaskCard(
-        v-for="(task, index) in toDoTasks",
+        v-for="(task, index) in tasksForKanban(stat)",
         :key="'todo_task-' + index",
         draggable="true",
         @dragstart="startDrag($event, task)",
         :task="task",
         v-on:click="showChange(task)"
       )
-    hr
-    .inProgressHeadDiv.head(
-      @drop="onDrop($event, Status.inProgress)",
-      @dragenter.prevent,
-      @dragover.prevent
-    )
-      .div_th.inProgress In progress
-        p.numberOfTasks Number of tasks: {{ inProgress.length }}
-      TaskCard(
-        v-for="(task, index) in inProgress",
-        :key="'inProgress_task-' + index",
-        draggable="true",
-        @dragstart="startDrag($event, task)",
-        :task="task",
-        v-on:click="showChange(task)"
-      )
-    hr
-    .doneHeadDiv.head(
-      @drop="onDrop($event, Status.done)",
-      @dragenter.prevent,
-      @dragover.prevent
-    )
-      .div_th.done Done
-        p.numberOfTasks Number of tasks: {{ done.length }}
-      TaskCard(
-        v-for="(task, index) in done",
-        :key="'done_task-' + index",
-        draggable="true",
-        @dragstart="startDrag($event, task)",
-        :task="task",
-        v-on:click="showChange(task)"
-      )
+    //- hr
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
@@ -133,23 +103,12 @@ export default defineComponent({
         return this.tasks;
       }
     },
-    toDoTasks: function () {
-      return this.filteredProducts.filter(
-        (t) => t.customData.status == Status.toDo
-      );
-    },
-    inProgress: function () {
-      return this.filteredProducts.filter(
-        (t) => t.customData.status == Status.inProgress
-      );
-    },
-    done: function () {
-      return this.filteredProducts.filter(
-        (t) => t.customData.status == Status.done
-      );
-    },
   },
   methods: {
+    tasksForKanban(status) {
+      // console.log(status);
+      return this.filteredProducts.filter((t) => t.customData.status == status);
+    },
     setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
     },

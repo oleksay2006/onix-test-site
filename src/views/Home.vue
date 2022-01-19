@@ -32,23 +32,23 @@ export default defineComponent({
       }
     },
   },
-  mounted() {
-    const notifications: Element = document.querySelector(".notifications");
-    let notifications_text: Element = document.querySelector(
-      ".notifications_text"
-    );
-    const town: Element = document.querySelector("#town");
-    const beach: Element = document.querySelector("#beach");
-    const fiord: Element = document.querySelector("#fiord");
-    const beach_2: Element = document.querySelector("#beach_2");
-    const images: Array<Element> = [town, beach, fiord, beach_2];
-    images.forEach((item) => {
-      item.addEventListener("click", () => {
-        notifications.classList.remove("hidden");
-        notifications_text.innerHTML = String(images.indexOf(item));
-      });
-    });
-  },
+  // mounted() {
+  //   const notifications: Element = document.querySelector(".notifications");
+  //   let notifications_text: Element = document.querySelector(
+  //     ".notifications_text"
+  //   );
+  //   const town: Element = document.querySelector("#town");
+  //   const beach: Element = document.querySelector("#beach");
+  //   const fiord: Element = document.querySelector("#fiord");
+  //   const beach_2: Element = document.querySelector("#beach_2");
+  //   const images: Array<Element> = [town, beach, fiord, beach_2];
+  //   images.forEach((item) => {
+  //     item.addEventListener("click", () => {
+  //       notifications.classList.remove("hidden");
+  //       notifications_text.innerHTML = String(images.indexOf(item));
+  //     });
+  //   });
+  // },
 });
 </script>
 <style>

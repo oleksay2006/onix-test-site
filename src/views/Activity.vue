@@ -43,10 +43,8 @@ export default defineComponent({
     const images = computed(() => store.state.activityPageModule.images);
     const messages = computed(() => store.state.activityPageModule.messages);
     function showIndex(index: number) {
-      const notifications: Element = document.querySelector(".notifications");
-      // this.IMAGE_INDEX(index);
       store.dispatch("activityPageModule/IMAGE_INDEX", index);
-      notifications.classList.remove("hidden");
+      store.dispatch("activityPageModule/SHOW_NOTIFICATIONS");
     }
     function getImgUrl(pic: string) {
       return require("../assets/" + pic);

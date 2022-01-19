@@ -1,24 +1,33 @@
 <template lang="pug">
 .root-div
-  Sidebar(v-on:resizeMain="resizeMain", v-on:change="change")
+  Sidebar(
+    v-on:resizeMain="resizeMain",
+    v-on:showModal="showModal",
+    :completedTasks="completedTasks",
+    :openedTasks="openedTasks"
+  )
   Header/
-  ModalWindow/
+  ModalWindow(
+    v-if="modal",
+    v-on:hideModal="hideModal",
+    v-on:changeNumber="changeNumber",
+    :openedTasks="openedTasks"
+  )
 </template>
 <script lang="ts">
 import Sidebar from "@/components/Sidebar.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import Header from "@/components/Header.vue";
 import { defineComponent } from "vue";
-import { mapState } from "vuex";
 
 export default defineComponent({
   name: "Home",
-  computed: {
-    ...mapState(["openedTasks"]),
-  },
+  computed: {},
   data() {
     return {
       modal: false as boolean,
+      completedTasks: 372 as number,
+      openedTasks: 11 as number,
     };
   },
   components: {
@@ -27,9 +36,21 @@ export default defineComponent({
     Header,
   },
   methods: {
-    change() {
+    changeNumber() {
+      this.completedTasks += 1;
+      this.openedTasks -= 1;
+    },
+    hideModal() {
+      this.modal = false;
+    },
+    showModal() {
       this.modal = true;
       console.log(this.modal);
+      if (this.openedTasks == 0) {
+        setTimeout(() => {
+          this.hideModal();
+        }, 2000);
+      }
     },
     resizeMain() {
       const main = document.querySelector<HTMLElement>(".main");

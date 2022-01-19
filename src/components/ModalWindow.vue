@@ -1,5 +1,5 @@
 <template lang="pug">
-.mainModal(ref="modal_wrapper", v-show="modal")
+.mainModal(ref="modal_wrapper")
   .modal_wrapper
     .modal
       .div_form
@@ -14,35 +14,40 @@
           button.modalButton.second-button(type="button", @click="hideModal()") No
 </template>
 <script lang="ts">
-import { useStore } from "vuex";
-import { defineComponent, computed } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ModalWindow",
+  props: ["openedTasks"],
   data() {
     return {};
   },
-  setup() {
-    const store = useStore();
-    const openedTasks = computed(() => store.state.tasksModule.openedTasks);
-    const modal = computed(() => store.state.tasksModule.modal);
-    function hideModal() {
-      store.dispatch("tasksModule/HIDE_MODAL");
-    }
-    function changeNumber() {
-      if (this.openedTasks > 0) {
-        store.dispatch("tasksModule/CHANGE_NUMBER_OF_TASKS");
-      }
-    }
-    return {
-      openedTasks,
-      hideModal,
-      changeNumber,
-      modal,
-    };
-  },
+  // setup() {
+  //   function hideModal() {
+  //     store.dispatch("tasksModule/HIDE_MODAL");
+  //   }
+  //   function changeNumber() {
+  //     if (this.openedTasks > 0) {
+  //       store.dispatch("tasksModule/CHANGE_NUMBER_OF_TASKS");
+  //     }
+  //   }
+  //   return {
+  //     hideModal,
+  //     changeNumber,
+  //   };
+  // },
   computed: {},
-  methods: {},
+  methods: {
+    hideModal() {
+      this.$emit("hideModal");
+    },
+    changeNumber() {
+      if (this.openedTasks > 0) {
+        this.hideModal();
+        this.$emit("changeNumber");
+      }
+    },
+  },
 });
 </script>
 <style scoped lang="sass">

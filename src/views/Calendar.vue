@@ -1,38 +1,28 @@
-<template>
-  <div class="calendar-tab tab tab-4">
-    <TaskDetailsModal
-      v-show="isShowChange"
-      v-on:removeEditTask="removeEditTask"
-      v-bind:currentTask="currentTask"
-      v-bind:isCalendar="isCalendar"
-    />
-    <div class="text-center section">
-      <h2 class="h2">Даты создания задач</h2>
-      <v-calendar
-        class="custom-calendar max-w-full"
-        :masks="masks"
-        :attributes="tasks"
-        disable-page-swipe
-        is-expanded
-      >
-        <template v-slot:day-content="{ day, attributes }">
-          <div class="flex flex-col h-full z-10">
-            <span class="day-label text-sm text-gray-900">{{ day.day }}</span>
-            <div class="flex-grow overflow-y-auto overflow-x-auto">
-              <p
-                v-for="attr in attributes"
-                :key="attr.customData.id"
-                class="testClass"
-                v-on:click="showChange(attr)"
-              >
-                {{ attr.customData.title }}
-              </p>
-            </div>
-          </div>
-        </template>
-      </v-calendar>
-    </div>
-  </div>
+<template lang="pug">
+.calendar-tab.tab.tab-4
+  TaskDetailsModal(
+    v-show="isShowChange",
+    v-on:removeEditTask="removeEditTask",
+    v-bind:currentTask="currentTask",
+    v-bind:isCalendar="isCalendar"
+  )
+  .text-center.section
+    h2.h2 Даты создания задач
+    v-calendar.custom-calendar.max-w-full(
+      :masks="masks",
+      :attributes="tasks",
+      disable-page-swipe,
+      is-expanded
+    )
+      template(v-slot:day-content="{ day, attributes }")
+        .flex.flex-col.h-full.z-10
+          span.day-label.text-sm.text-gray-900 {{ day.day }}
+          .flex-grow.overflow-y-auto.overflow-x-auto
+            p.testClass(
+              v-for="attr in attributes",
+              :key="attr.customData.id",
+              v-on:click="showChange(attr)"
+            ) {{ attr.customData.title }}
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
@@ -46,24 +36,49 @@ export default defineComponent({
     TaskDetailsModal,
   },
   setup() {
+    // const masks = {
+    //   weekdays: "WWW",
+    // };
+    // let isCalendar = ref(true);
+    // let isShowChange = ref(false);
+    // let currentTask: taskInterface = reactive({
+    //   customData: {
+    //     id: 0,
+    //     title: "",
+    //     text: "",
+    //     time: "",
+    //     isNew: false,
+    //     status: "",
+    //   },
+    //   dates: "",
+    // });
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
-    // function removeEditTask() {
-    //   this.isShowChange = false;
-    //   this.isCalendar = true;
-    // }
+    // const removeEditTask = () => {
+    //   isShowChange.value = false;
+    //   isCalendar.value = true;
+    // };
     // function showChange(task: taskInterface) {
-    //   this.currentTask = task;
-    //   this.isCalendar = false;
-    //   this.isShowChange = true;
+    //   currentTask = task;
+    //   isCalendar.value = false;
+    //   isShowChange.value = true;
     // }
     return {
-      tasks,
+      // masks,
+      // isCalendar,
+      // isShowChange,
+      // currentTask,
       // removeEditTask,
       // showChange,
+      tasks,
     };
   },
   computed: {},
+  watch: {
+    currentTask() {
+      console.log("currentTask changed");
+    },
+  },
   methods: {
     removeEditTask() {
       this.isShowChange = false;

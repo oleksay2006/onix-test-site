@@ -3,6 +3,7 @@ import { Module } from "vuex";
 const store: Module<any, any> = {
   namespaced: true,
   state: {
+    notifications: false as boolean,
     img_index: 0 as number,
     images: [
       {
@@ -38,10 +39,16 @@ const store: Module<any, any> = {
     CHANGE_INDEX: (state, index) => {
       state.img_index = index;
     },
+    SHOW_NOTIFICATIONS: (state) => {
+      state.notifications = true;
+    },
   },
   actions: {
     IMAGE_INDEX({ commit }, index) {
       commit("CHANGE_INDEX", index);
+    },
+    SHOW_NOTIFICATIONS({ commit }) {
+      commit("SHOW_NOTIFICATIONS");
     },
   },
 };

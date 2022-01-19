@@ -5,9 +5,6 @@ import Status from "@/enums/StatusEnum";
 const store: Module<any, any> = {
   namespaced: true,
   state: {
-    modal: false as boolean,
-    completedTasks: 372 as number,
-    openedTasks: 11 as number,
     tasks: [
       {
         customData: {
@@ -58,17 +55,6 @@ const store: Module<any, any> = {
       );
       task.customData.status = taskData.status;
     },
-    CHANGE_NUMBER_OF_TASKS: (state) => {
-      state.completedTasks += 1;
-      state.openedTasks -= 1;
-      state.modal = false;
-    },
-    SHOW_MODAL: (state) => {
-      state.modal = true;
-    },
-    HIDE_MODAL: (state) => {
-      state.modal = false;
-    },
     CHANGE_TASK: (state, changedTask) => {
       const task = state.tasks.find(
         (task) => task.customData.id == changedTask.customData.id
@@ -90,15 +76,6 @@ const store: Module<any, any> = {
     },
     CHANGE_STATUS({ commit }, taskData) {
       commit("CHANGE_STATUS", taskData);
-    },
-    CHANGE_NUMBER_OF_TASKS({ commit }) {
-      commit("CHANGE_NUMBER_OF_TASKS");
-    },
-    SHOW_MODAL({ commit }) {
-      commit("SHOW_MODAL");
-    },
-    HIDE_MODAL({ commit }) {
-      commit("HIDE_MODAL");
     },
     CHANGE_TASK({ commit }, changedTask) {
       commit("CHANGE_TASK", changedTask);

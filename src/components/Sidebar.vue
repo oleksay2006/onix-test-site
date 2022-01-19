@@ -19,7 +19,7 @@ div
           p.profile-owner Product Owner
       fa#profile-more(icon="ellipsis-h")
     .tasks
-      .completed(@click="showModal(), change()")
+      .completed(@click="showModal()")
         p.numbers.completed_nums {{ completedTasks }}
         p.task-type Completed Tasks
       .opened
@@ -33,7 +33,7 @@ div
         router-link(:to="{ name: 'tasks' }") My Tasks
       .menu-category
         p Notifications
-        .notifications.hidden
+        .notifications(v-if="notifications")
           p.notifications_text {{ img_index }}
 </template>
 <script lang="ts">
@@ -42,44 +42,31 @@ import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Sidebar",
+  props: ["completedTasks", "openedTasks"],
   setup() {
     const profile_name = "Jean Gonzales";
     const store = useStore();
     const img_index = computed(() => store.state.activityPageModule.img_index);
-    const modal = computed(() => store.state.tasksModule.modal);
-    const completedTasks = computed(
-      () => store.state.tasksModule.completedTasks
+    const notifications = computed(
+      () => store.state.activityPageModule.notifications
     );
-    const openedTasks = computed(() => store.state.tasksModule.openedTasks);
-    function showModal() {
-      store.dispatch("tasksModule/SHOW_MODAL");
-      if (this.openedTasks == 0) {
-        setTimeout(() => {
-          store.dispatch("tasksModule/HIDE_MODAL");
-        }, 2000);
-      }
-    }
     return {
       img_index,
-      completedTasks,
-      openedTasks,
-      modal,
-      showModal,
       profile_name,
+      notifications,
     };
   },
   methods: {
     resizeMain() {
       this.$emit("resizeMain");
     },
-    change() {
-      this.$emit("change");
+    showModal() {
+      this.$emit("showModal");
     },
   },
   data() {
     return {};
   },
-  computed: {},
 });
 </script>
 <style>

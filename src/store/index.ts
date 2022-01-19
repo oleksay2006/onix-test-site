@@ -4,7 +4,6 @@ import Status from "@/enums/StatusEnum";
 import activityPageStore from "./modules/activityPage";
 import tasksStore from "./modules/tasksModule";
 import VuexPersistence from "vuex-persist";
-// import createPersistedState from "vuex-persistedstate";
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
