@@ -5,9 +5,9 @@
       .div_form
         .message.task(v-if="NotEdit")
           .first-part-task
-            h3.title {{ this.currentTask.customData.title }}
-            p.text {{ this.currentTask.customData.text }}
-          p.time Выполнить до {{ this.currentTask.customData.time }}
+            h3.title {{ currentTask.customData.title }}
+            p.text {{ currentTask.customData.text }}
+          p.time Выполнить до {{ currentTask.customData.time }}
         .first-part-task(v-if="WantEdit")
           h3 Название задачи
           textarea.new-input.new-title(

@@ -18,41 +18,31 @@
 import Sidebar from "@/components/Sidebar.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import Header from "@/components/Header.vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Home",
-  computed: {},
-  data() {
-    return {
-      modal: false as boolean,
-      completedTasks: 372 as number,
-      openedTasks: 11 as number,
-    };
-  },
-  components: {
-    Sidebar,
-    ModalWindow,
-    Header,
-  },
-  methods: {
-    changeNumber() {
-      this.completedTasks += 1;
-      this.openedTasks -= 1;
-    },
-    hideModal() {
-      this.modal = false;
-    },
-    showModal() {
-      this.modal = true;
-      console.log(this.modal);
-      if (this.openedTasks == 0) {
+  setup() {
+    let modal = ref(false);
+    let completedTasks = ref(372);
+    let openedTasks = ref(11);
+    function changeNumber() {
+      completedTasks.value += 1;
+      openedTasks.value -= 1;
+    }
+    function hideModal() {
+      modal.value = false;
+    }
+    function showModal() {
+      modal.value = true;
+      console.log(modal);
+      if (openedTasks.value == 0) {
         setTimeout(() => {
-          this.hideModal();
+          hideModal();
         }, 2000);
       }
-    },
-    resizeMain() {
+    }
+    function resizeMain() {
       const main = document.querySelector<HTMLElement>(".main");
       let test = main.style.width;
       if (window.matchMedia("(max-width: 480px)").matches) {
@@ -62,8 +52,58 @@ export default defineComponent({
       } else {
         main.style.width = "75%";
       }
-    },
+    }
+    return {
+      changeNumber,
+      hideModal,
+      showModal,
+      resizeMain,
+      modal,
+      completedTasks,
+      openedTasks,
+    };
   },
+  // data() {
+  //   return {
+  //     modal: false as boolean,
+  //     completedTasks: 372 as number,
+  //     openedTasks: 11 as number,
+  //   };
+  // },
+  components: {
+    Sidebar,
+    ModalWindow,
+    Header,
+  },
+  // methods: {
+  //   changeNumber() {
+  //     this.completedTasks += 1;
+  //     this.openedTasks -= 1;
+  //   },
+  //   hideModal() {
+  //     this.modal = false;
+  //   },
+  //   showModal() {
+  //     this.modal = true;
+  //     console.log(this.modal);
+  //     if (this.openedTasks == 0) {
+  //       setTimeout(() => {
+  //         this.hideModal();
+  //       }, 2000);
+  //     }
+  //   },
+  //   resizeMain() {
+  //     const main = document.querySelector<HTMLElement>(".main");
+  //     let test = main.style.width;
+  //     if (window.matchMedia("(max-width: 480px)").matches) {
+  //       main.style.width = "100%";
+  //     } else if (test == "75%") {
+  //       main.style.width = "100%";
+  //     } else {
+  //       main.style.width = "75%";
+  //     }
+  //   },
+  // },
 });
 </script>
 <style>

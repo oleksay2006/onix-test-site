@@ -6,52 +6,30 @@
   fa.check-circle(icon="check-circle", v-if="done")
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed, toRefs } from "vue";
 import Status from "@/enums/StatusEnum";
+import { StyleByDate } from "@/composition/StyleByDate";
 
 export default defineComponent({
-  setup() {},
+  setup(props) {
+    const { task } = toRefs(props);
+    const inProgress = computed(() => {
+      return task.value.customData.status == Status.inProgress;
+    });
+    const done = computed(() => {
+      return task.value.customData.status == Status.done;
+    });
+    return {
+      Status,
+      inProgress,
+      done,
+      ...StyleByDate(task),
+    };
+  },
   name: "TaskCard",
   props: ["task"],
   data() {
-    return {
-      Status,
-    };
-  },
-  computed: {
-    toDo() {
-      return this.task.customData.status == Status.toDo;
-    },
-    inProgress() {
-      return this.task.customData.status == Status.inProgress;
-    },
-    done() {
-      return this.task.customData.status == Status.done;
-    },
-    isOutdated() {
-      const x = new Date(this.task.customData.time);
-      const y = new Date();
-      return (y.getFullYear() == x.getFullYear() &&
-        y.getDate() > x.getDate() &&
-        y.getMonth() >= x.getMonth()) ||
-        y.getFullYear() > x.getFullYear()
-        ? true
-        : false;
-    },
-    isSoon() {
-      const x = new Date(this.task.customData.time);
-      const y = new Date();
-      return x.getFullYear() === y.getFullYear() &&
-        x.getDate() === y.getDate() &&
-        x.getMonth() === y.getMonth()
-        ? true
-        : false;
-    },
-    isFuture() {
-      const x = new Date(this.task.customData.time);
-      const y = new Date();
-      return x > y ? true : false;
-    },
+    return {};
   },
 });
 </script>

@@ -14,7 +14,7 @@
           button.modalButton.second-button(type="button", @click="hideModal()") No
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, toRefs } from "vue";
 
 export default defineComponent({
   name: "ModalWindow",
@@ -22,31 +22,21 @@ export default defineComponent({
   data() {
     return {};
   },
-  // setup() {
-  //   function hideModal() {
-  //     store.dispatch("tasksModule/HIDE_MODAL");
-  //   }
-  //   function changeNumber() {
-  //     if (this.openedTasks > 0) {
-  //       store.dispatch("tasksModule/CHANGE_NUMBER_OF_TASKS");
-  //     }
-  //   }
-  //   return {
-  //     hideModal,
-  //     changeNumber,
-  //   };
-  // },
-  computed: {},
-  methods: {
-    hideModal() {
-      this.$emit("hideModal");
-    },
-    changeNumber() {
-      if (this.openedTasks > 0) {
-        this.hideModal();
-        this.$emit("changeNumber");
+  setup(props, { emit }) {
+    const { openedTasks } = toRefs(props);
+    function hideModal() {
+      emit("hideModal");
+    }
+    function changeNumber() {
+      if (openedTasks.value > 0) {
+        hideModal();
+        emit("changeNumber");
       }
-    },
+    }
+    return {
+      hideModal,
+      changeNumber,
+    };
   },
 });
 </script>
@@ -67,6 +57,7 @@ export default defineComponent({
   display: flex
   justify-content: center
   align-items: center
+  z-index: 1
 
 #boardName
   padding: 2.5px 1.5px 1px 3.5px

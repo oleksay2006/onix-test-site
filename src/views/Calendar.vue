@@ -25,10 +25,10 @@
             ) {{ attr.customData.title }}
 </template>
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
-import { taskInterface } from "@/interfaces/task.interface";
+// import { taskInterface } from "@/interfaces/task.interface";
 
 export default defineComponent({
   name: "Calendar",
@@ -36,79 +36,45 @@ export default defineComponent({
     TaskDetailsModal,
   },
   setup() {
-    // const masks = {
-    //   weekdays: "WWW",
-    // };
-    // let isCalendar = ref(true);
-    // let isShowChange = ref(false);
-    // let currentTask: taskInterface = reactive({
-    //   customData: {
-    //     id: 0,
-    //     title: "",
-    //     text: "",
-    //     time: "",
-    //     isNew: false,
-    //     status: "",
-    //   },
-    //   dates: "",
-    // });
+    const masks = {
+      weekdays: "WWW",
+    };
+    let isCalendar = ref(true);
+    let isShowChange = ref(false);
+    let currentTask = ref({
+      customData: {
+        id: 0,
+        title: "",
+        text: "",
+        time: "",
+        isNew: false,
+        status: "",
+      },
+      dates: "",
+    });
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
-    // const removeEditTask = () => {
-    //   isShowChange.value = false;
-    //   isCalendar.value = true;
-    // };
-    // function showChange(task: taskInterface) {
-    //   currentTask = task;
-    //   isCalendar.value = false;
-    //   isShowChange.value = true;
-    // }
+    const removeEditTask = () => {
+      isShowChange.value = false;
+      isCalendar.value = true;
+    };
+    function showChange(task) {
+      currentTask.value = task;
+      isCalendar.value = false;
+      isShowChange.value = true;
+    }
     return {
-      // masks,
-      // isCalendar,
-      // isShowChange,
-      // currentTask,
-      // removeEditTask,
-      // showChange,
+      masks,
+      isCalendar,
+      isShowChange,
+      currentTask,
+      removeEditTask,
+      showChange,
       tasks,
     };
   },
-  computed: {},
-  watch: {
-    currentTask() {
-      console.log("currentTask changed");
-    },
-  },
-  methods: {
-    removeEditTask() {
-      this.isShowChange = false;
-      this.isCalendar = true;
-    },
-    showChange(task: taskInterface) {
-      this.currentTask = task;
-      this.isCalendar = false;
-      this.isShowChange = true;
-    },
-  },
   data() {
-    return {
-      isCalendar: true as boolean,
-      currentTask: {
-        customData: {
-          id: 0,
-          title: "",
-          text: "",
-          time: "",
-          isNew: false,
-          status: "",
-        },
-        dates: "",
-      } as taskInterface,
-      isShowChange: false as boolean,
-      masks: {
-        weekdays: "WWW",
-      },
-    };
+    return {};
   },
 });
 </script>

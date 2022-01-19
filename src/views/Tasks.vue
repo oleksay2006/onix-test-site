@@ -59,11 +59,11 @@ export default defineComponent({
     // function setSearchValue(data: taskInterface[]) {
     //   this.sortedProducts = data;
     // }
-    // function removeAnimation(task: taskInterface) {
-    //   setTimeout(() => {
-    //     task.customData.isNew = false;
-    //   }, 2000);
-    // }
+    function removeAnimation(task: taskInterface) {
+      setTimeout(() => {
+        store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
+      }, 2000);
+    }
     // function showNew() {
     //   this.isShow = true;
     // }
@@ -86,7 +86,7 @@ export default defineComponent({
       divs,
       tasks,
       // setSearchValue,
-      // removeAnimation,
+      removeAnimation,
       // showNew,
       // showChange,
       // removeEditTask,
@@ -121,11 +121,6 @@ export default defineComponent({
   methods: {
     setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
-    },
-    removeAnimation(task: taskInterface) {
-      setTimeout(() => {
-        task.customData.isNew = false;
-      }, 2000);
     },
     showNew() {
       this.isShow = true;

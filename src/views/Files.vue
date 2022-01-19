@@ -1,6 +1,6 @@
 <template lang="pug">
 .files-tab.tab.tab-5
-  h3 Изображения на вкладке Activity:
+  h3(v-on:click="Click") Изображения на вкладке Activity:
   ul
     li(v-for="(img, index) in images", :key="'image-' + index") {{ img.source }}
 </template>
