@@ -35,7 +35,7 @@
           fa.close-window(icon="window-close", v-on:click="$emit('removeNew')")
 </template>
 <script lang="ts">
-import { mapState, mapActions } from "vuex";
+import { useStore } from "vuex";
 import { defineComponent } from "vue";
 import { required } from "@vuelidate/validators";
 import { taskInterface } from "@/interfaces/task.interface";
@@ -46,36 +46,30 @@ export default defineComponent({
   name: "AddTaskModal",
   data() {
     return {
-      v$: useVuelidate(),
       title: "",
       description: "",
       time: "",
     };
   },
-  validations() {
-    return {
-      title: { required },
-      description: { required },
-      time: { required },
-    };
-  },
-  computed: {
-    ...mapState([]),
-  },
-  methods: {
-    ...mapActions(["CREATE_NEW_TASK"]),
-    addNew() {
+  setup() {
+    const v$ = useVuelidate();
+    const store = useStore();
+    function addNew() {
       this.v$.$validate();
       if (!this.v$.$error) {
         const newCard: taskInterface = {
-          title: this.title,
-          text: this.description,
-          time: this.time,
-          id: Date.now(),
-          isNew: true,
-          status: Status.toDo,
+          customData: {
+            id: Date.now(),
+            title: this.title,
+            text: this.description,
+            time: this.time,
+            isNew: true,
+            status: Status.toDo,
+          },
+          dates: new Date(),
         };
-        this.CREATE_NEW_TASK(newCard);
+        store.dispatch("tasksModule/CREATE_NEW_TASK", newCard);
+        console.log(newCard);
         this.title = "";
         this.description = "";
         this.time = "";
@@ -86,7 +80,52 @@ export default defineComponent({
           time_2: "",
         });
       }
-    },
+    }
+    return {
+      addNew,
+      v$,
+    };
+  },
+  validations() {
+    return {
+      title: { required },
+      description: { required },
+      time: { required },
+    };
+  },
+  methods: {
+    // ...mapActions(["CREATE_NEW_TASK"]),
+    // addNew() {
+    //   this.v$.$validate();
+    //   if (!this.v$.$error) {
+    //     const newCard: taskInterface = {
+    //       customData: {
+    //         id: Date.now(),
+    //         title: this.title,
+    //         text: this.description,
+    //         time: this.time,
+    //         isNew: true,
+    //         status: Status.toDo,
+    //       },
+    //       dates: new Date(
+    //         new Date(this.time).getFullYear(),
+    //         new Date(this.time).getMonth(),
+    //         new Date(this.time).getDate()
+    //       ),
+    //     };
+    //     this.CREATE_NEW_TASK(newCard);
+    //     console.log(newCard);
+    //     this.title = "";
+    //     this.description = "";
+    //     this.time = "";
+    //     this.$emit("removeNew");
+    //     this.$emit("setSearch", {
+    //       title: "",
+    //       time: "",
+    //       time_2: "",
+    //     });
+    //   }
+    // },
   },
 });
 </script>

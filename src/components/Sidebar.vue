@@ -19,7 +19,7 @@ div
           p.profile-owner Product Owner
       fa#profile-more(icon="ellipsis-h")
     .tasks
-      .completed(@click="showModal(), change()")
+      .completed(@click="showModal()")
         p.numbers.completed_nums {{ completedTasks }}
         p.task-type Completed Tasks
       .opened
@@ -33,39 +33,39 @@ div
         router-link(:to="{ name: 'tasks' }") My Tasks
       .menu-category
         p Notifications
-        .notifications.hidden
+        .notifications(v-if="notifications")
           p.notifications_text {{ img_index }}
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapState, mapActions } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Sidebar",
+  props: ["completedTasks", "openedTasks"],
+  setup() {
+    const profile_name = "Jean Gonzales";
+    const store = useStore();
+    const img_index = computed(() => store.state.activityPageModule.img_index);
+    const notifications = computed(
+      () => store.state.activityPageModule.notifications
+    );
+    return {
+      img_index,
+      profile_name,
+      notifications,
+    };
+  },
   methods: {
-    ...mapActions(["SHOW_MODAL", "HIDE_MODAL"]),
     resizeMain() {
       this.$emit("resizeMain");
     },
-    change() {
-      this.$emit("change");
-    },
     showModal() {
-      this.SHOW_MODAL();
-      if (this.openedTasks == 0) {
-        setTimeout(() => {
-          this.HIDE_MODAL();
-        }, 2000);
-      }
+      this.$emit("showModal");
     },
   },
   data() {
-    return {
-      profile_name: "Jean Gonzales",
-    };
-  },
-  computed: {
-    ...mapState(["completedTasks", "openedTasks", "modal", "img_index"]),
+    return {};
   },
 });
 </script>

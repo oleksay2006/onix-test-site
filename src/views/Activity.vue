@@ -5,13 +5,13 @@
     .first-part
       .message-img
         fa.message-img-fa(icon="check")
-      p Darika Samak mark as done Listing on Product Hunt so that we can reach as many potential users
+      p {{ messages[0].text }}
     p.time 8:40 PM
   .message
     .first-part
       .message-img.chat-icon
         fa.message-img-fa(icon="comment-alt")
-      p Emilee Simchenko commented on Account for teams and personal in bottom style
+      p {{ messages[1].text }}
     p.time 7:32 PM
   .apendix
     p During a project build, it is necessary to evaluate the product design and development against project requirements and outcomes
@@ -19,7 +19,7 @@
     .first-part
       .message-img.download-icon
         fa.download-icon-fa(icon="cloud-download-alt")
-      p Darika Samak uploaded 4 files on An option to search in current projects or in all projects
+      p {{ messages[2].text }}
     p.time 6:02 PM
   .images
     img(
@@ -30,40 +30,31 @@
     )
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapActions } from "vuex";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Activity",
   data() {
-    return {
-      images: [
-        {
-          source: "town.jpg",
-        },
-        {
-          source: "beach.jpg",
-        },
-        {
-          source: "fiord.jpg",
-        },
-        {
-          source: "beach-2.jpg",
-        },
-      ] as Array<object>,
-    };
+    return {};
   },
-  computed: {},
-  methods: {
-    ...mapActions(["IMAGE_INDEX"]),
-    showIndex(index: number) {
-      const notifications: Element = document.querySelector(".notifications");
-      this.IMAGE_INDEX(index);
-      notifications.classList.remove("hidden");
-    },
-    getImgUrl(pic: string) {
+  setup() {
+    const store = useStore();
+    const images = computed(() => store.state.activityPageModule.images);
+    const messages = computed(() => store.state.activityPageModule.messages);
+    function showIndex(index: number) {
+      store.dispatch("activityPageModule/IMAGE_INDEX", index);
+      store.dispatch("activityPageModule/SHOW_NOTIFICATIONS");
+    }
+    function getImgUrl(pic: string) {
       return require("../assets/" + pic);
-    },
+    }
+    return {
+      images,
+      messages,
+      showIndex,
+      getImgUrl,
+    };
   },
 });
 </script>

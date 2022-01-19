@@ -8,56 +8,26 @@
   SearchTask(v-on:setSearch="setSearchValue")
   .table
     .toDoHeadDiv.head(
-      @drop="onDrop($event, Status.toDo)",
+      v-for="stat in Status",
+      @drop="onDrop($event, stat)",
       @dragenter.prevent,
       @dragover.prevent
     )
-      .div_th.toDo To-Do
-        p.numberOfTasks Number of tasks: {{ toDoTasks.length }}
+      .div_th.toDo {{ stat }}
+        p.numberOfTasks Number of tasks: {{ tasksForKanban(stat).length }}
       TaskCard(
-        v-for="(task, index) in toDoTasks",
+        v-for="(task, index) in tasksForKanban(stat)",
         :key="'todo_task-' + index",
         draggable="true",
         @dragstart="startDrag($event, task)",
         :task="task",
         v-on:click="showChange(task)"
       )
-    hr
-    .inProgressHeadDiv.head(
-      @drop="onDrop($event, Status.inProgress)",
-      @dragenter.prevent,
-      @dragover.prevent
-    )
-      .div_th.inProgress In progress
-        p.numberOfTasks Number of tasks: {{ inProgress.length }}
-      TaskCard(
-        v-for="(task, index) in inProgress",
-        :key="'inProgress_task-' + index",
-        draggable="true",
-        @dragstart="startDrag($event, task)",
-        :task="task",
-        v-on:click="showChange(task)"
-      )
-    hr
-    .doneHeadDiv.head(
-      @drop="onDrop($event, Status.done)",
-      @dragenter.prevent,
-      @dragover.prevent
-    )
-      .div_th.done Done
-        p.numberOfTasks Number of tasks: {{ done.length }}
-      TaskCard(
-        v-for="(task, index) in done",
-        :key="'done_task-' + index",
-        draggable="true",
-        @dragstart="startDrag($event, task)",
-        :task="task",
-        v-on:click="showChange(task)"
-      )
+    //- hr
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { mapActions, mapState, useStore } from "vuex";
+import { useStore } from "vuex";
 import Status from "@/enums/StatusEnum";
 import TaskCard from "@/components/TaskCard.vue";
 import { taskInterface } from "@/interfaces/task.interface";
@@ -75,34 +45,46 @@ export default defineComponent({
     return {
       Status,
       isShowChange: false,
-      currentTask: {} as taskInterface,
+      currentTask: {
+        customData: {
+          id: 0,
+          title: "",
+          text: "",
+          time: "",
+          isNew: false,
+          status: "",
+        },
+        dates: "",
+      } as taskInterface,
       sortedProducts: [] as taskInterface[],
     };
   },
   setup() {
     const store = useStore();
-
-    const tasks = computed(() => store.state.tasks);
+    const tasks = computed(() => store.state.tasksModule.tasks);
 
     const startDrag = (event, task) => {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("taskStatus", task.status);
-      event.dataTransfer.setData("taskId", task.id);
+      event.dataTransfer.setData("taskStatus", task.customData.status);
+      event.dataTransfer.setData("taskId", task.customData.id);
     };
 
     const onDrop = (event, status) => {
       const taskId = event.dataTransfer.getData("taskId");
       const taskStatus = event.dataTransfer.getData("taskStatus");
       const task = tasks.value.find(
-        (task) => task.status == taskStatus && task.id == taskId
+        (task) =>
+          task.customData.status == taskStatus && task.customData.id == taskId
       );
-      if (task.status !== Status.done) {
+      console.log(tasks.value);
+      if (task.customData.status !== Status.done) {
         let taskData = {
           status: status,
-          id: task.id,
+          id: task.customData.id,
         };
-        store.dispatch("CHANGE_STATUS", taskData);
+        console.log(taskData);
+        store.dispatch("tasksModule/CHANGE_STATUS", taskData);
       } else {
         alert("You done this task, y cant make another status for this");
       }
@@ -110,10 +92,10 @@ export default defineComponent({
     return {
       startDrag,
       onDrop,
+      tasks,
     };
   },
   computed: {
-    ...mapState(["tasks"]),
     filteredProducts() {
       if (this.sortedProducts.length) {
         return this.sortedProducts;
@@ -121,18 +103,12 @@ export default defineComponent({
         return this.tasks;
       }
     },
-    toDoTasks: function () {
-      return this.filteredProducts.filter((t) => t.status == Status.toDo);
-    },
-    inProgress: function () {
-      return this.filteredProducts.filter((t) => t.status == Status.inProgress);
-    },
-    done: function () {
-      return this.filteredProducts.filter((t) => t.status == Status.done);
-    },
   },
   methods: {
-    ...mapActions(["CHANGE_STATUS"]),
+    tasksForKanban(status) {
+      // console.log(status);
+      return this.filteredProducts.filter((t) => t.customData.status == status);
+    },
     setSearchValue(data: taskInterface[]) {
       this.sortedProducts = data;
     },

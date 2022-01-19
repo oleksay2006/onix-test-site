@@ -1,11 +1,28 @@
 <template lang="pug">
 .files-tab.tab.tab-5
-  p Coming soon
+  h3 Изображения на вкладке Activity:
+  ul
+    li(v-for="(img, index) in images", :key="'image-' + index") {{ img.source }}
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Files",
+  setup() {
+    const store = useStore();
+    const images = computed(() => store.state.activityPageModule.images);
+    return {
+      images,
+    };
+  },
 });
 </script>
+<style scoped lang="sass">
+ul
+  padding-left: 20px
+  li
+    margin-top: 5px
+    font-size: 17px
+</style>

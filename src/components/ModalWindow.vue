@@ -1,5 +1,5 @@
 <template lang="pug">
-.mainModal(ref="modal_wrapper", v-show="modal")
+.mainModal(ref="modal_wrapper")
   .modal_wrapper
     .modal
       .div_form
@@ -14,25 +14,37 @@
           button.modalButton.second-button(type="button", @click="hideModal()") No
 </template>
 <script lang="ts">
-import { mapState, mapActions } from "vuex";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ModalWindow",
+  props: ["openedTasks"],
   data() {
     return {};
   },
-  computed: {
-    ...mapState(["modal", "openedTasks"]),
-  },
+  // setup() {
+  //   function hideModal() {
+  //     store.dispatch("tasksModule/HIDE_MODAL");
+  //   }
+  //   function changeNumber() {
+  //     if (this.openedTasks > 0) {
+  //       store.dispatch("tasksModule/CHANGE_NUMBER_OF_TASKS");
+  //     }
+  //   }
+  //   return {
+  //     hideModal,
+  //     changeNumber,
+  //   };
+  // },
+  computed: {},
   methods: {
-    ...mapActions(["HIDE_MODAL", "CHANGE_NUMBER_OF_TASKS"]),
     hideModal() {
-      this.HIDE_MODAL();
+      this.$emit("hideModal");
     },
     changeNumber() {
       if (this.openedTasks > 0) {
-        this.CHANGE_NUMBER_OF_TASKS();
+        this.hideModal();
+        this.$emit("changeNumber");
       }
     },
   },

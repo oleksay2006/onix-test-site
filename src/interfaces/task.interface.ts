@@ -1,8 +1,11 @@
 export interface taskInterface {
-  title: String;
-  text: String;
-  time: String;
-  id: Number;
-  isNew: Boolean;
-  status: String;
+  customData: {
+    id: Number;
+    title: String;
+    text: String;
+    time: String;
+    isNew: Boolean;
+    status: String;
+  };
+  dates?: any;
 }
