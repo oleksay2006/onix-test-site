@@ -7,7 +7,7 @@
           h3 Название задачи
           input.new-input.new-title(
             placeholder="Введите название задачи",
-            v-model="title",
+            v-model="v$.title.$model",
             :class="{ invalid: v$.title.$error }"
           )
           span.helper(v-if="v$.title.$error") Это обязательное поле
@@ -15,7 +15,7 @@
           h3 Описание задачи
           input.new-input.new-description(
             placeholder="Введите описание задачи",
-            v-model="description",
+            v-model="v$.description.$model",
             :class="{ invalid: v$.description.$error }"
           )
           span.helper(v-if="v$.description.$error") Это обязательное поле
@@ -35,34 +35,46 @@
           fa.close-window(icon="window-close", v-on:click="$emit('removeNew')")
 </template>
 <script lang="ts">
-import { useStore } from "vuex";
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 import { required } from "@vuelidate/validators";
+import { useStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
 import useVuelidate from "@vuelidate/core";
 
 export default defineComponent({
   name: "AddTaskModal",
-  data() {
-    return {
+  // data() {
+  //   return {
+  //     title: "",
+  //     description: "",
+  //     time: "",
+  //   };
+  // },
+  setup(props, { emit }) {
+    const state = reactive({
       title: "",
       description: "",
       time: "",
+    });
+    const rules = {
+      title: { required },
+      description: { required },
+      time: { required },
     };
-  },
-  setup() {
-    const v$ = useVuelidate();
+
+    const v$: any = useVuelidate(rules, state);
     const store = useStore();
     function addNew() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      v$.value.$validate();
+      if (!v$.value.$error) {
+        console.log(state);
         const newCard: taskInterface = {
           customData: {
             id: Date.now(),
-            title: this.title,
-            text: this.description,
-            time: this.time,
+            title: state.title,
+            text: state.description,
+            time: state.time,
             isNew: true,
             status: Status.toDo,
           },
@@ -70,62 +82,16 @@ export default defineComponent({
         };
         store.dispatch("tasksModule/CREATE_NEW_TASK", newCard);
         console.log(newCard);
-        this.title = "";
-        this.description = "";
-        this.time = "";
-        this.$emit("removeNew");
-        this.$emit("setSearch", {
-          title: "",
-          time: "",
-          time_2: "",
-        });
+        state.title = "";
+        state.description = "";
+        state.time = "";
+        emit("removeNew");
       }
     }
     return {
       addNew,
       v$,
     };
-  },
-  validations() {
-    return {
-      title: { required },
-      description: { required },
-      time: { required },
-    };
-  },
-  methods: {
-    // ...mapActions(["CREATE_NEW_TASK"]),
-    // addNew() {
-    //   this.v$.$validate();
-    //   if (!this.v$.$error) {
-    //     const newCard: taskInterface = {
-    //       customData: {
-    //         id: Date.now(),
-    //         title: this.title,
-    //         text: this.description,
-    //         time: this.time,
-    //         isNew: true,
-    //         status: Status.toDo,
-    //       },
-    //       dates: new Date(
-    //         new Date(this.time).getFullYear(),
-    //         new Date(this.time).getMonth(),
-    //         new Date(this.time).getDate()
-    //       ),
-    //     };
-    //     this.CREATE_NEW_TASK(newCard);
-    //     console.log(newCard);
-    //     this.title = "";
-    //     this.description = "";
-    //     this.time = "";
-    //     this.$emit("removeNew");
-    //     this.$emit("setSearch", {
-    //       title: "",
-    //       time: "",
-    //       time_2: "",
-    //     });
-    //   }
-    // },
   },
 });
 </script>

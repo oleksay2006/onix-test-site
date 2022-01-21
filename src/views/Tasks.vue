@@ -28,7 +28,6 @@
 import { ref, defineComponent, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
-import useVuelidate from "@vuelidate/core";
 import Status from "@/enums/StatusEnum";
 import AddTaskModal from "@/components/AddTaskModal.vue";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
@@ -42,6 +41,20 @@ export default defineComponent({
     SearchTask,
   },
   setup() {
+    let isShow: any = ref(false);
+    let isShowChange: any = ref(false);
+    let currentTask: any = ref({
+      customData: {
+        id: 0,
+        title: "",
+        text: "",
+        time: "",
+        isNew: false,
+        status: "",
+      },
+      dates: "",
+    });
+    let sortedProducts: any = ref([]);
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
     // Before the component is mounted, the value
@@ -56,95 +69,58 @@ export default defineComponent({
         num += 500;
       });
     });
-    // function setSearchValue(data: taskInterface[]) {
-    //   this.sortedProducts = data;
-    // }
+    function setSearchValue(data) {
+      sortedProducts.value = data;
+    }
     function removeAnimation(task: taskInterface) {
       setTimeout(() => {
         store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
       }, 2000);
     }
-    // function showNew() {
-    //   this.isShow = true;
-    // }
-    // function showChange(task: taskInterface) {
-    //   this.currentTask = task;
-    //   console.log(this.isShowChange);
-    //   this.isShowChange = true;
-    // }
-    // function removeEditTask() {
-    //   console.log(this.isShowChange);
-    //   // this.isShowChange = false;
-    // }
-    // function removeNew() {
-    //   this.isShow = false;
-    // }
+    function showNew() {
+      isShow.value = true;
+    }
+    function showChange(task: taskInterface) {
+      currentTask.value = task;
+      isShowChange.value = true;
+    }
+    function removeEditTask() {
+      isShowChange.value = false;
+    }
+    function removeNew() {
+      isShow.value = false;
+    }
     function deleteTask(id: number) {
       store.dispatch("tasksModule/DELETE_TASK", id);
     }
+    const filteredProducts = computed(() => {
+      if (sortedProducts.value.length) {
+        return sortedProducts.value;
+      } else {
+        return tasks.value;
+      }
+    });
+    // console.log(tasks.value);
     return {
+      filteredProducts,
+      isShow,
+      isShowChange,
+      currentTask,
+      sortedProducts,
       divs,
       tasks,
-      // setSearchValue,
+      setSearchValue,
       removeAnimation,
-      // showNew,
-      // showChange,
-      // removeEditTask,
-      // removeNew,
+      showNew,
+      showChange,
+      removeEditTask,
+      removeNew,
       deleteTask,
+      Status,
     };
   },
   data() {
-    return {
-      v$: useVuelidate(),
-      title: "",
-      description: "",
-      time: "",
-      isShow: false,
-      isShowChange: false,
-      currentTask: {
-        customData: {
-          id: 0,
-          title: "",
-          text: "",
-          time: "",
-          isNew: false,
-          status: "",
-        },
-        dates: "",
-      } as taskInterface,
-      Status,
-      sortedProducts: [] as taskInterface[],
-      searchValue: "",
-    };
-  },
-  methods: {
-    setSearchValue(data: taskInterface[]) {
-      this.sortedProducts = data;
-    },
-    showNew() {
-      this.isShow = true;
-    },
-    showChange(task: taskInterface) {
-      console.log(task);
-      this.currentTask = task;
-      this.isShowChange = true;
-    },
-    removeEditTask() {
-      this.isShowChange = false;
-    },
-    removeNew() {
-      this.isShow = false;
-    },
-  },
-  computed: {
-    filteredProducts() {
-      if (this.sortedProducts.length) {
-        return this.sortedProducts;
-      } else {
-        return this.tasks;
-      }
-    },
+    return {};
   },
 });
 </script>

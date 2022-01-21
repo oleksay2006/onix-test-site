@@ -20,6 +20,9 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="sass">
+.error
+  border: 1px solid red
+
 ul
   padding-left: 20px
   li

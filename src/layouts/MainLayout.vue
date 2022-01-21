@@ -63,47 +63,11 @@ export default defineComponent({
       openedTasks,
     };
   },
-  // data() {
-  //   return {
-  //     modal: false as boolean,
-  //     completedTasks: 372 as number,
-  //     openedTasks: 11 as number,
-  //   };
-  // },
   components: {
     Sidebar,
     ModalWindow,
     Header,
   },
-  // methods: {
-  //   changeNumber() {
-  //     this.completedTasks += 1;
-  //     this.openedTasks -= 1;
-  //   },
-  //   hideModal() {
-  //     this.modal = false;
-  //   },
-  //   showModal() {
-  //     this.modal = true;
-  //     console.log(this.modal);
-  //     if (this.openedTasks == 0) {
-  //       setTimeout(() => {
-  //         this.hideModal();
-  //       }, 2000);
-  //     }
-  //   },
-  //   resizeMain() {
-  //     const main = document.querySelector<HTMLElement>(".main");
-  //     let test = main.style.width;
-  //     if (window.matchMedia("(max-width: 480px)").matches) {
-  //       main.style.width = "100%";
-  //     } else if (test == "75%") {
-  //       main.style.width = "100%";
-  //     } else {
-  //       main.style.width = "75%";
-  //     }
-  //   },
-  // },
 });
 </script>
 <style>

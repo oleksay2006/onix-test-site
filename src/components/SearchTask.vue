@@ -34,157 +34,18 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
-import { taskInterface } from "@/interfaces/task.interface";
+import { SearchTask } from "@/composition/SearchTask";
 
 export default defineComponent({
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
     return {
       tasks,
+      ...SearchTask({ emit }),
     };
   },
   name: "SearchTask",
-  data() {
-    return {
-      title: "" as string,
-      time: "" as string,
-      time_2: "" as string,
-      isSearch: false as boolean,
-      isExist: false as boolean,
-      sortedProducts: [] as taskInterface[],
-    };
-  },
-  methods: {
-    cancelSearch() {
-      this.title = "";
-      this.time = "";
-      this.time_2 = "";
-      this.isSearch = false;
-      this.isExist = false;
-      this.$emit("setSearch", {
-        title: "",
-        time: "",
-        time_2: "",
-      });
-    },
-    searchTask() {
-      let obj: object = {
-        title: this.title as string,
-        time: this.time as string,
-        time_2: this.time_2 as string,
-      };
-      this.isSearch = this.title || this.time || this.time_2 ? true : false;
-      this.sortProductsBySearchValue(obj);
-      this.$emit("setSearch", this.sortedProducts);
-    },
-    sortProductsBySearchValue(value: {
-      title: string;
-      time: string;
-      time_2: string;
-    }) {
-      this.sortedProducts = [...this.tasks];
-      if (value.title && !value.time && !value.time_2) {
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          return (
-            item.customData.title
-              .toLowerCase()
-              .includes(value.title.toLowerCase()) ||
-            item.customData.text
-              .toLowerCase()
-              .includes(value.title.toLowerCase())
-          );
-        });
-      } else if (value.title && value.time && !value.time_2) {
-        const y = new Date(value.time);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.customData.time);
-          return (
-            item.customData.title
-              .toLowerCase()
-              .includes(value.title.toLowerCase()) && x >= y
-          );
-        });
-      } else if (value.title && !value.time && value.time_2) {
-        const y = new Date(value.time_2);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.customData.time);
-          return (
-            item.customData.title
-              .toLowerCase()
-              .includes(value.title.toLowerCase()) &&
-            ((y.getFullYear() >= x.getFullYear() &&
-              y.getDate() >= x.getDate() &&
-              y.getMonth() >= x.getMonth()) ||
-              (y.getFullYear() >= x.getFullYear() &&
-                (y.getDate() > x.getDate() ||
-                  y.getDate() < x.getDate() ||
-                  y.getDate() == x.getDate()) &&
-                y.getMonth() > x.getMonth()))
-          );
-        });
-      } else if (value.time && !value.time_2 && !value.title) {
-        const y = new Date(value.time);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.customData.time);
-          return x >= y;
-        });
-      } else if (value.time_2 && !value.time && !value.title) {
-        const y = new Date(value.time_2);
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.customData.time);
-          return (
-            (y.getFullYear() >= x.getFullYear() &&
-              y.getDate() >= x.getDate() &&
-              y.getMonth() >= x.getMonth()) ||
-            (y.getFullYear() >= x.getFullYear() &&
-              (y.getDate() > x.getDate() ||
-                y.getDate() < x.getDate() ||
-                y.getDate() == x.getDate()) &&
-              y.getMonth() > x.getMonth())
-          );
-        });
-      } else if (value.time && value.time_2 && !value.title) {
-        let dateStart = Date.parse(value.time);
-        let dateEnd = Date.parse(value.time_2);
-        let dates = [];
-        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
-          let str = new Date(i).toISOString().substr(0, 10);
-          dates.push(str);
-        }
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.customData.time).toISOString().substr(0, 10);
-          return dates.includes(x);
-        });
-      } else if (value.title && value.time && value.time_2) {
-        let dateStart = Date.parse(value.time);
-        let dateEnd = Date.parse(value.time_2);
-        let dates = [];
-        for (let i = dateStart; i <= dateEnd; i = i + 24 * 60 * 60 * 1000) {
-          let str = new Date(i).toISOString().substr(0, 10);
-          dates.push(str);
-        }
-        this.sortedProducts = this.sortedProducts.filter(function (item) {
-          const x = new Date(item.customData.time).toISOString().substr(0, 10);
-          return (
-            dates.includes(x) &&
-            item.customData.title
-              .toLowerCase()
-              .includes(value.title.toLowerCase())
-          );
-        });
-      } else {
-        this.sortedProducts = this.tasks;
-        // this.sortedProducts = [];
-      }
-      if (this.sortedProducts.length == 0) {
-        this.isExist = true;
-      } else {
-        this.isExist = false;
-      }
-    },
-  },
-  computed: {},
 });
 </script>
 <style scoped lang="sass">
