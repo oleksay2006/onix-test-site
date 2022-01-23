@@ -44,13 +44,6 @@ import useVuelidate from "@vuelidate/core";
 
 export default defineComponent({
   name: "AddTaskModal",
-  // data() {
-  //   return {
-  //     title: "",
-  //     description: "",
-  //     time: "",
-  //   };
-  // },
   setup(props, { emit }) {
     const state = reactive({
       title: "",
@@ -68,7 +61,6 @@ export default defineComponent({
     function addNew() {
       v$.value.$validate();
       if (!v$.value.$error) {
-        console.log(state);
         const newCard: taskInterface = {
           customData: {
             id: Date.now(),
@@ -81,7 +73,6 @@ export default defineComponent({
           dates: new Date(),
         };
         store.dispatch("tasksModule/CREATE_NEW_TASK", newCard);
-        console.log(newCard);
         state.title = "";
         state.description = "";
         state.time = "";

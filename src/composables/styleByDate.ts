@@ -1,6 +1,7 @@
 import { computed } from "vue";
+import { taskInterface } from "@/interfaces/task.interface";
 
-export function StyleByDate(task) {
+export function styleByDate(task) {
   const isOutdated = computed(() => {
     const x = new Date(task.value.customData.time);
     const y = new Date();

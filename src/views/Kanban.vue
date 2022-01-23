@@ -33,7 +33,8 @@ import TaskCard from "@/components/TaskCard.vue";
 import { taskInterface } from "@/interfaces/task.interface";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 import SearchTask from "@/components/SearchTask.vue";
-import { DragAndDrop } from "@/composition/DragAndDrop";
+import { dragAndDrop } from "@/composables/dragAndDrop";
+import { modalsInfo } from "@/composables/modalsInfo";
 
 export default defineComponent({
   name: "Kanban",
@@ -42,40 +43,18 @@ export default defineComponent({
     TaskDetailsModal,
     SearchTask,
   },
-  data() {
-    return {};
-  },
   setup() {
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
 
-    let isShowChange = ref(false);
-    let currentTask = ref({
-      customData: {
-        id: 0,
-        title: "",
-        text: "",
-        time: "",
-        isNew: false,
-        status: "",
-      },
-      dates: "",
-    });
-    let sortedProducts = ref([]);
-    function tasksForKanban(status) {
+    let sortedProducts = ref<taskInterface[]>([]);
+    function tasksForKanban(status: Status) {
       return filteredProducts.value.filter(
         (t) => t.customData.status == status
       );
     }
     function setSearchValue(data: taskInterface[]) {
       sortedProducts.value = data;
-    }
-    function showChange(task) {
-      currentTask.value = task;
-      isShowChange.value = true;
-    }
-    function removeEditTask() {
-      isShowChange.value = false;
     }
     const filteredProducts = computed(() => {
       if (sortedProducts.value.length) {
@@ -85,16 +64,13 @@ export default defineComponent({
       }
     });
     return {
-      removeEditTask,
-      showChange,
       setSearchValue,
       tasksForKanban,
       filteredProducts,
-      isShowChange,
-      currentTask,
       sortedProducts,
       Status,
-      ...DragAndDrop(),
+      ...dragAndDrop(),
+      ...modalsInfo(),
     };
   },
 });

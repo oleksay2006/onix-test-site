@@ -19,7 +19,7 @@
     v-on:click="showChange(task)"
   )
     .first-part-task
-      h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.customData.title }}
+      h3.title(:ref="setItemRef") {{ task.customData.title }}
       p.text {{ task.customData.text }}
     p.time Выполнить до {{ task.customData.time }}
     fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.customData.id)")
@@ -32,6 +32,7 @@ import Status from "@/enums/StatusEnum";
 import AddTaskModal from "@/components/AddTaskModal.vue";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 import SearchTask from "@/components/SearchTask.vue";
+import { modalsInfo } from "@/composables/modalsInfo";
 
 export default defineComponent({
   name: "Tasks",
@@ -41,26 +42,18 @@ export default defineComponent({
     SearchTask,
   },
   setup() {
-    let isShow: any = ref(false);
-    let isShowChange: any = ref(false);
-    let currentTask: any = ref({
-      customData: {
-        id: 0,
-        title: "",
-        text: "",
-        time: "",
-        isNew: false,
-        status: "",
-      },
-      dates: "",
-    });
-    let sortedProducts: any = ref([]);
+    let sortedProducts = ref<taskInterface[]>([]);
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
     // Before the component is mounted, the value
     // of the ref is `[]` which is the default
-    let num = 0;
+    let num: number = 0;
     const divs = ref([]);
+    const setItemRef = (el: HTMLElement) => {
+      if (el) {
+        divs.value.push(el);
+      }
+    };
     onMounted(() => {
       divs.value.forEach((element) => {
         setTimeout(() => {
@@ -69,26 +62,13 @@ export default defineComponent({
         num += 500;
       });
     });
-    function setSearchValue(data) {
+    function setSearchValue(data: taskInterface[]) {
       sortedProducts.value = data;
     }
     function removeAnimation(task: taskInterface) {
       setTimeout(() => {
         store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
       }, 2000);
-    }
-    function showNew() {
-      isShow.value = true;
-    }
-    function showChange(task: taskInterface) {
-      currentTask.value = task;
-      isShowChange.value = true;
-    }
-    function removeEditTask() {
-      isShowChange.value = false;
-    }
-    function removeNew() {
-      isShow.value = false;
     }
     function deleteTask(id: number) {
       store.dispatch("tasksModule/DELETE_TASK", id);
@@ -100,27 +80,18 @@ export default defineComponent({
         return tasks.value;
       }
     });
-    // console.log(tasks.value);
     return {
+      setItemRef,
       filteredProducts,
-      isShow,
-      isShowChange,
-      currentTask,
       sortedProducts,
       divs,
       tasks,
       setSearchValue,
       removeAnimation,
-      showNew,
-      showChange,
-      removeEditTask,
-      removeNew,
       deleteTask,
       Status,
+      ...modalsInfo(),
     };
-  },
-  data() {
-    return {};
   },
 });
 </script>

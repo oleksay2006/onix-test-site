@@ -64,9 +64,6 @@ export default defineComponent({
       showModal,
     };
   },
-  data() {
-    return {};
-  },
 });
 </script>
 <style>

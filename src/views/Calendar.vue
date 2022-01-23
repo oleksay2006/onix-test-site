@@ -25,9 +25,10 @@
             ) {{ attr.customData.title }}
 </template>
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
+import { modalsInfo } from "@/composables/modalsInfo";
 // import { taskInterface } from "@/interfaces/task.interface";
 
 export default defineComponent({
@@ -39,42 +40,13 @@ export default defineComponent({
     const masks = {
       weekdays: "WWW",
     };
-    let isCalendar = ref(true);
-    let isShowChange = ref(false);
-    let currentTask = ref({
-      customData: {
-        id: 0,
-        title: "",
-        text: "",
-        time: "",
-        isNew: false,
-        status: "",
-      },
-      dates: "",
-    });
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
-    const removeEditTask = () => {
-      isShowChange.value = false;
-      isCalendar.value = true;
-    };
-    function showChange(task) {
-      currentTask.value = task;
-      isCalendar.value = false;
-      isShowChange.value = true;
-    }
     return {
       masks,
-      isCalendar,
-      isShowChange,
-      currentTask,
-      removeEditTask,
-      showChange,
       tasks,
+      ...modalsInfo(),
     };
-  },
-  data() {
-    return {};
   },
 });
 </script>

@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent, computed, toRefs } from "vue";
 import Status from "@/enums/StatusEnum";
-import { StyleByDate } from "@/composition/StyleByDate";
+import { styleByDate } from "@/composables/styleByDate";
 
 export default defineComponent({
   setup(props) {
@@ -23,7 +23,7 @@ export default defineComponent({
       Status,
       inProgress,
       done,
-      ...StyleByDate(task),
+      ...styleByDate(task),
     };
   },
   name: "TaskCard",

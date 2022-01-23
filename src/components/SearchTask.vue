@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
-import { SearchTask } from "@/composition/SearchTask";
+import { searchTask } from "@/composables/searchTask";
 
 export default defineComponent({
   setup(props, { emit }) {
@@ -42,7 +42,7 @@ export default defineComponent({
     const tasks = computed(() => store.state.tasksModule.tasks);
     return {
       tasks,
-      ...SearchTask({ emit }),
+      ...searchTask({ emit }),
     };
   },
   name: "SearchTask",
