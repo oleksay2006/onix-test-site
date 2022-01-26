@@ -65,6 +65,10 @@ const store: Module<any, any> = {
       task.customData.status = changedTask.customData.status;
       // task.dates = changedTask.dates;
     },
+    REMOVE_ANIMATION: (state, id) => {
+      const task = state.tasks.find((task) => task.customData.id == id);
+      task.customData.isNew = false;
+    },
   },
   actions: {
     CREATE_NEW_TASK({ commit }, newCard) {
@@ -79,6 +83,9 @@ const store: Module<any, any> = {
     },
     CHANGE_TASK({ commit }, changedTask) {
       commit("CHANGE_TASK", changedTask);
+    },
+    REMOVE_ANIMATION({ commit }, id) {
+      commit("REMOVE_ANIMATION", id);
     },
   },
 };

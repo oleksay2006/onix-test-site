@@ -19,40 +19,12 @@ import Sidebar from "@/components/Sidebar.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import Header from "@/components/Header.vue";
 import { defineComponent } from "vue";
+import { sideBarModal } from "@/composables/sidebarModal";
 
 export default defineComponent({
   name: "Home",
-  computed: {},
-  data() {
-    return {
-      modal: false as boolean,
-      completedTasks: 372 as number,
-      openedTasks: 11 as number,
-    };
-  },
-  components: {
-    Sidebar,
-    ModalWindow,
-    Header,
-  },
-  methods: {
-    changeNumber() {
-      this.completedTasks += 1;
-      this.openedTasks -= 1;
-    },
-    hideModal() {
-      this.modal = false;
-    },
-    showModal() {
-      this.modal = true;
-      console.log(this.modal);
-      if (this.openedTasks == 0) {
-        setTimeout(() => {
-          this.hideModal();
-        }, 2000);
-      }
-    },
-    resizeMain() {
+  setup() {
+    function resizeMain() {
       const main = document.querySelector<HTMLElement>(".main");
       let test = main.style.width;
       if (window.matchMedia("(max-width: 480px)").matches) {
@@ -62,7 +34,16 @@ export default defineComponent({
       } else {
         main.style.width = "75%";
       }
-    },
+    }
+    return {
+      resizeMain,
+      ...sideBarModal(),
+    };
+  },
+  components: {
+    Sidebar,
+    ModalWindow,
+    Header,
   },
 });
 </script>

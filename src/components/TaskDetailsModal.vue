@@ -5,9 +5,9 @@
       .div_form
         .message.task(v-if="NotEdit")
           .first-part-task
-            h3.title {{ this.currentTask.customData.title }}
-            p.text {{ this.currentTask.customData.text }}
-          p.time Выполнить до {{ this.currentTask.customData.time }}
+            h3.title {{ currentTask.customData.title }}
+            p.text {{ currentTask.customData.text }}
+          p.time Выполнить до {{ currentTask.customData.time }}
         .first-part-task(v-if="WantEdit")
           h3 Название задачи
           textarea.new-input.new-title(
@@ -61,7 +61,7 @@
 </template>
 <script lang="ts">
 import { useStore } from "vuex";
-import { defineComponent } from "vue";
+import { defineComponent, ref, reactive, computed } from "vue";
 import { required } from "@vuelidate/validators";
 import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
@@ -69,95 +69,88 @@ import useVuelidate from "@vuelidate/core";
 
 export default defineComponent({
   name: "TaskDetailsModal",
-  setup() {
-    const store = useStore();
-    const v$ = useVuelidate();
-    function changeTask() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        const changedTask: taskInterface = {
-          customData: {
-            id: this.currentTask.customData.id,
-            title: this.title,
-            text: this.description,
-            time: this.time,
-            isNew: this.currentTask.customData.isNew,
-            status: this.select,
-          },
-        };
-        store.dispatch("tasksModule/CHANGE_TASK", changedTask);
-        this.removeEditTask();
-      } else {
-        this.v$.$dirty = false;
-      }
-    }
-    return {
-      v$,
-      changeTask,
-    };
-  },
-  data() {
-    return {
+  setup(props, { emit }) {
+    let WantEdit = ref(false);
+    let NotEdit = ref(true);
+    let NotEditTask = ref(true);
+    const state = reactive({
       title: "",
       description: "",
       time: "",
-      WantEdit: false,
-      NotEdit: true,
-      NotEditTask: true,
-      WantSave: true,
       select: "",
-      Status,
-    };
-  },
-  props: ["currentTask", "isCalendar"],
-  validations() {
-    return {
+    });
+    const rules = {
       title: { required },
       description: { required },
       time: { required },
       select: { required },
     };
-  },
-  watch: {
-    isCalendar() {
-      console.log("isCalendar changed: ", this.isCalendar);
-    },
-  },
-  computed: {
-    ifCalendar() {
-      if (this.isCalendar == false) {
-        return this.isCalendar;
+    const v$: any = useVuelidate(rules, state);
+    const ifCalendar = computed(() => {
+      if (props.isCalendar == false) {
+        return props.isCalendar;
       } else {
-        return this.NotEdit;
+        return NotEdit.value;
       }
-    },
-  },
-  methods: {
-    edit() {
-      this.title = this.currentTask.customData.title;
-      this.description = this.currentTask.customData.text;
-      this.time = this.currentTask.customData.time;
-      this.select = this.currentTask.customData.status;
-      this.NotEdit = false;
-      this.NotEditTask = false;
-      this.WantEdit = true;
+    });
+    function edit() {
+      state.title = props.currentTask.customData.title;
+      state.description = props.currentTask.customData.text;
+      state.time = props.currentTask.customData.time;
+      state.select = props.currentTask.customData.status;
+      NotEdit.value = false;
+      NotEditTask.value = false;
+      WantEdit.value = true;
       setTimeout(() => {
-        if (this.currentTask.customData.status == Status.done) {
+        if (props.currentTask.customData.status == Status.done) {
           alert("You can't edit this task, because it's done");
         }
       }, 100);
-    },
-    removeEditTask() {
-      this.$emit("removeEditTask");
-      this.NotEdit = true;
-      this.NotEditTask = true;
-      this.WantEdit = false;
-      this.v$.title.$dirty = false;
-      this.v$.description.$dirty = false;
-      this.v$.time.$dirty = false;
-      this.v$.select.$dirty = false;
-    },
+    }
+    function removeEditTask() {
+      emit("removeEditTask");
+      NotEdit.value = true;
+      NotEditTask.value = true;
+      WantEdit.value = false;
+      v$.value.title.$dirty = false;
+      v$.value.description.$dirty = false;
+      v$.value.time.$dirty = false;
+      v$.value.select.$dirty = false;
+    }
+
+    const store = useStore();
+    function changeTask() {
+      v$.value.$validate();
+      if (!v$.value.$error) {
+        const changedTask: taskInterface = {
+          customData: {
+            id: props.currentTask.customData.id,
+            title: state.title,
+            text: state.description,
+            time: state.time,
+            isNew: props.currentTask.customData.isNew,
+            status: state.select,
+          },
+        };
+        store.dispatch("tasksModule/CHANGE_TASK", changedTask);
+        removeEditTask();
+      } else {
+        v$.value.$dirty = false;
+      }
+    }
+    return {
+      v$,
+      changeTask,
+      Status,
+      ifCalendar,
+      edit,
+      removeEditTask,
+      WantEdit,
+      NotEdit,
+      NotEditTask,
+    };
   },
+  props: ["currentTask", "isCalendar"],
 });
 </script>
 <style scoped>

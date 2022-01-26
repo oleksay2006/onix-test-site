@@ -43,7 +43,13 @@ import { useStore } from "vuex";
 export default defineComponent({
   name: "Sidebar",
   props: ["completedTasks", "openedTasks"],
-  setup() {
+  setup(props, { emit }) {
+    function resizeMain() {
+      emit("resizeMain");
+    }
+    function showModal() {
+      emit("showModal");
+    }
     const profile_name = "Jean Gonzales";
     const store = useStore();
     const img_index = computed(() => store.state.activityPageModule.img_index);
@@ -54,18 +60,9 @@ export default defineComponent({
       img_index,
       profile_name,
       notifications,
+      resizeMain,
+      showModal,
     };
-  },
-  methods: {
-    resizeMain() {
-      this.$emit("resizeMain");
-    },
-    showModal() {
-      this.$emit("showModal");
-    },
-  },
-  data() {
-    return {};
   },
 });
 </script>

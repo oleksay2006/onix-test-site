@@ -19,7 +19,7 @@
     v-on:click="showChange(task)"
   )
     .first-part-task
-      h3.title(:ref="(el) => { if (el) divs[index] = el; }") {{ task.customData.title }}
+      h3.title(:ref="setItemRef") {{ task.customData.title }}
       p.text {{ task.customData.text }}
     p.time Выполнить до {{ task.customData.time }}
     fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.customData.id)")
@@ -28,11 +28,11 @@
 import { ref, defineComponent, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
-import useVuelidate from "@vuelidate/core";
 import Status from "@/enums/StatusEnum";
 import AddTaskModal from "@/components/AddTaskModal.vue";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 import SearchTask from "@/components/SearchTask.vue";
+import { modalsInfo } from "@/composables/modalsInfo";
 
 export default defineComponent({
   name: "Tasks",
@@ -42,12 +42,18 @@ export default defineComponent({
     SearchTask,
   },
   setup() {
+    let sortedProducts = ref<taskInterface[]>([]);
     const store = useStore();
     const tasks = computed(() => store.state.tasksModule.tasks);
     // Before the component is mounted, the value
     // of the ref is `[]` which is the default
-    let num = 0;
+    let num: number = 0;
     const divs = ref([]);
+    const setItemRef = (el: HTMLElement) => {
+      if (el) {
+        divs.value.push(el);
+      }
+    };
     onMounted(() => {
       divs.value.forEach((element) => {
         setTimeout(() => {
@@ -56,100 +62,36 @@ export default defineComponent({
         num += 500;
       });
     });
-    // function setSearchValue(data: taskInterface[]) {
-    //   this.sortedProducts = data;
-    // }
-    // function removeAnimation(task: taskInterface) {
-    //   setTimeout(() => {
-    //     task.customData.isNew = false;
-    //   }, 2000);
-    // }
-    // function showNew() {
-    //   this.isShow = true;
-    // }
-    // function showChange(task: taskInterface) {
-    //   this.currentTask = task;
-    //   console.log(this.isShowChange);
-    //   this.isShowChange = true;
-    // }
-    // function removeEditTask() {
-    //   console.log(this.isShowChange);
-    //   // this.isShowChange = false;
-    // }
-    // function removeNew() {
-    //   this.isShow = false;
-    // }
+    function setSearchValue(data: taskInterface[]) {
+      sortedProducts.value = data;
+    }
+    function removeAnimation(task: taskInterface) {
+      setTimeout(() => {
+        store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
+      }, 2000);
+    }
     function deleteTask(id: number) {
       store.dispatch("tasksModule/DELETE_TASK", id);
     }
+    const filteredProducts = computed(() => {
+      if (sortedProducts.value.length) {
+        return sortedProducts.value;
+      } else {
+        return tasks.value;
+      }
+    });
     return {
+      setItemRef,
+      filteredProducts,
+      sortedProducts,
       divs,
       tasks,
-      // setSearchValue,
-      // removeAnimation,
-      // showNew,
-      // showChange,
-      // removeEditTask,
-      // removeNew,
+      setSearchValue,
+      removeAnimation,
       deleteTask,
-    };
-  },
-  data() {
-    return {
-      v$: useVuelidate(),
-      title: "",
-      description: "",
-      time: "",
-      isShow: false,
-      isShowChange: false,
-      currentTask: {
-        customData: {
-          id: 0,
-          title: "",
-          text: "",
-          time: "",
-          isNew: false,
-          status: "",
-        },
-        dates: "",
-      } as taskInterface,
       Status,
-      sortedProducts: [] as taskInterface[],
-      searchValue: "",
+      ...modalsInfo(),
     };
-  },
-  methods: {
-    setSearchValue(data: taskInterface[]) {
-      this.sortedProducts = data;
-    },
-    removeAnimation(task: taskInterface) {
-      setTimeout(() => {
-        task.customData.isNew = false;
-      }, 2000);
-    },
-    showNew() {
-      this.isShow = true;
-    },
-    showChange(task: taskInterface) {
-      console.log(task);
-      this.currentTask = task;
-      this.isShowChange = true;
-    },
-    removeEditTask() {
-      this.isShowChange = false;
-    },
-    removeNew() {
-      this.isShow = false;
-    },
-  },
-  computed: {
-    filteredProducts() {
-      if (this.sortedProducts.length) {
-        return this.sortedProducts;
-      } else {
-        return this.tasks;
-      }
-    },
   },
 });
 </script>
