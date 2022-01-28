@@ -15,7 +15,7 @@
     v-for="(task, index) in filteredProducts",
     :key="'task-' + index",
     :class="{ new_animation: task.customData.isNew }",
-    :load="removeAnimation(task)",
+    :load.once="removeAnimation(task)",
     v-on:click="showChange(task)"
   )
     .first-part-task
@@ -44,6 +44,7 @@ export default defineComponent({
   setup() {
     let sortedProducts = ref<taskInterface[]>([]);
     const store = useStore();
+    // const TASKS = computed(() => store.getters.tasksModule.TASKS);
     const tasks = computed(() => store.state.tasksModule.tasks);
     // Before the component is mounted, the value
     // of the ref is `[]` which is the default
@@ -66,9 +67,11 @@ export default defineComponent({
       sortedProducts.value = data;
     }
     function removeAnimation(task: taskInterface) {
-      setTimeout(() => {
-        store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
-      }, 2000);
+      if (task.customData.isNew == true) {
+        setTimeout(() => {
+          store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
+        }, 2000);
+      }
     }
     function deleteTask(id: number) {
       store.dispatch("tasksModule/DELETE_TASK", id);
@@ -78,6 +81,7 @@ export default defineComponent({
         return sortedProducts.value;
       } else {
         return tasks.value;
+        // return TASKS.value;
       }
     });
     return {
@@ -85,12 +89,12 @@ export default defineComponent({
       filteredProducts,
       sortedProducts,
       divs,
-      tasks,
       setSearchValue,
       removeAnimation,
       deleteTask,
       Status,
       ...modalsInfo(),
+      tasks,
     };
   },
 });

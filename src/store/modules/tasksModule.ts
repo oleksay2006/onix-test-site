@@ -1,48 +1,49 @@
 import { Module } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
+import { getTasks, postTask, deleteTask, updateTask, removeAnimation, changeStatus } from "@/service/tasksApi";
 
 const store: Module<any, any> = {
   namespaced: true,
   state: {
     tasks: [
-      {
-        customData: {
-          id: 0,
-          title: "Task 1",
-          text: "Go to the shop",
-          time: "2022-06-07",
-          isNew: false,
-          status: Status.inProgress,
-        },
-        dates: "2022-05-07",
-      },
-      {
-        customData: {
-          id: 1,
-          title: "Task 2",
-          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-          time: "2022-01-05",
-          isNew: false,
-          status: Status.inProgress,
-        },
-        dates: "2022-01-01",
-      },
-      {
-        customData: {
-          id: 2,
-          title: "Task 3",
-          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-          time: "2022-01-16",
-          isNew: false,
-          status: Status.toDo,
-        },
-        dates: "2022-01-12",
-      },
+      // {
+      //   customData: {
+      //     id: 0,
+      //     title: "Task 1",
+      //     text: "Go to the shop",
+      //     time: "2022-06-07",
+      //     isNew: false,
+      //     status: Status.inProgress,
+      //   },
+      //   dates: "2022-05-07",
+      // },
+      // {
+      //   customData: {
+      //     id: 1,
+      //     title: "Task 2",
+      //     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
+      //     time: "2022-01-05",
+      //     isNew: false,
+      //     status: Status.inProgress,
+      //   },
+      //   dates: "2022-01-01",
+      // },
+      // {
+      //   customData: {
+      //     id: 2,
+      //     title: "Task 3",
+      //     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
+      //     time: "2022-01-16",
+      //     isNew: false,
+      //     status: Status.toDo,
+      //   },
+      //   dates: "2022-01-12",
+      // },
     ] as taskInterface[],
   },
   mutations: {
-    SET_NEW_TASK: (state, newCard) => {
+    SET_NEW_TASK: (state, newCard: taskInterface) => {
       state.tasks.push(newCard);
       console.log(state.tasks);
     },
@@ -69,23 +70,78 @@ const store: Module<any, any> = {
       const task = state.tasks.find((task) => task.customData.id == id);
       task.customData.isNew = false;
     },
+
+    SET_TASKS_TO_STATE: (state, response_data) => {
+      state.tasks = response_data;
+    },
   },
   actions: {
-    CREATE_NEW_TASK({ commit }, newCard) {
-      commit("SET_NEW_TASK", newCard);
+    SET_TASKS_TO_STATE({ commit }) {
+      getTasks()
+        .then(function (response) {
+          console.log(response.data);
+          commit("SET_TASKS_TO_STATE", response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    DELETE_TASK({ commit }, id) {
-      console.log(id);
-      commit("DELETE_TASK", id);
+
+    CREATE_NEW_TASK({ dispatch }, newCard: taskInterface) {
+      postTask(newCard)
+        .then(function (response) {
+          console.log(response.data);
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // commit("SET_NEW_TASK", newCard);
     },
-    CHANGE_STATUS({ commit }, taskData) {
-      commit("CHANGE_STATUS", taskData);
+    DELETE_TASK({ dispatch }, id: number) {
+      deleteTask(id)
+        .then(function (response) {
+          console.log(response.data);
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // commit("DELETE_TASK", id);
     },
-    CHANGE_TASK({ commit }, changedTask) {
-      commit("CHANGE_TASK", changedTask);
+    CHANGE_STATUS({ dispatch }, taskData) {
+      changeStatus(taskData)
+        .then(function (response) {
+          console.log(response.data);
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // commit("CHANGE_STATUS", taskData);
     },
-    REMOVE_ANIMATION({ commit }, id) {
-      commit("REMOVE_ANIMATION", id);
+    CHANGE_TASK({ dispatch }, changedTask: taskInterface) {
+      updateTask(changedTask)
+        .then(function (response) {
+          console.log(response.data);
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // commit("CHANGE_TASK", changedTask);
+    },
+    REMOVE_ANIMATION({ dispatch }, id) {
+      console.log(id, 'removeAnimation')
+      removeAnimation(id)
+        .then(function (response) {
+          console.log(response.data);
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // commit("REMOVE_ANIMATION", id);
     },
   },
 };
