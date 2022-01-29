@@ -44,7 +44,6 @@ export default defineComponent({
   setup() {
     let sortedProducts = ref<taskInterface[]>([]);
     const store = useStore();
-    // const TASKS = computed(() => store.getters.tasksModule.TASKS);
     const tasks = computed(() => store.state.tasksModule.tasks);
     // Before the component is mounted, the value
     // of the ref is `[]` which is the default
@@ -56,7 +55,7 @@ export default defineComponent({
       }
     };
     onMounted(() => {
-      divs.value.forEach((element) => {
+      divs.value.forEach((element: HTMLElement) => {
         setTimeout(() => {
           element.classList.add("animation");
         }, num);
@@ -81,7 +80,6 @@ export default defineComponent({
         return sortedProducts.value;
       } else {
         return tasks.value;
-        // return TASKS.value;
       }
     });
     return {

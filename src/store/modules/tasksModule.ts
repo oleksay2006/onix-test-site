@@ -1,77 +1,22 @@
 import { Module } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
-import { getTasks, postTask, deleteTask, updateTask, removeAnimation, changeStatus } from "@/service/tasksApi";
+import {
+  getTasks,
+  postTask,
+  deleteTask,
+  updateTask,
+  removeAnimation,
+  changeStatus,
+} from "@/service/tasksApi";
 
 const store: Module<any, any> = {
   namespaced: true,
   state: {
-    tasks: [
-      // {
-      //   customData: {
-      //     id: 0,
-      //     title: "Task 1",
-      //     text: "Go to the shop",
-      //     time: "2022-06-07",
-      //     isNew: false,
-      //     status: Status.inProgress,
-      //   },
-      //   dates: "2022-05-07",
-      // },
-      // {
-      //   customData: {
-      //     id: 1,
-      //     title: "Task 2",
-      //     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-      //     time: "2022-01-05",
-      //     isNew: false,
-      //     status: Status.inProgress,
-      //   },
-      //   dates: "2022-01-01",
-      // },
-      // {
-      //   customData: {
-      //     id: 2,
-      //     title: "Task 3",
-      //     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-      //     time: "2022-01-16",
-      //     isNew: false,
-      //     status: Status.toDo,
-      //   },
-      //   dates: "2022-01-12",
-      // },
-    ] as taskInterface[],
+    tasks: [] as taskInterface[],
   },
   mutations: {
-    SET_NEW_TASK: (state, newCard: taskInterface) => {
-      state.tasks.push(newCard);
-      console.log(state.tasks);
-    },
-    DELETE_TASK: (state, id) => {
-      state.tasks = state.tasks.filter((t) => t.customData.id !== id);
-    },
-    CHANGE_STATUS: (state, taskData) => {
-      const task = state.tasks.find(
-        (task) => task.customData.id == taskData.id
-      );
-      task.customData.status = taskData.status;
-    },
-    CHANGE_TASK: (state, changedTask) => {
-      const task = state.tasks.find(
-        (task) => task.customData.id == changedTask.customData.id
-      );
-      task.customData.title = changedTask.customData.title;
-      task.customData.text = changedTask.customData.text;
-      task.customData.time = changedTask.customData.time;
-      task.customData.status = changedTask.customData.status;
-      // task.dates = changedTask.dates;
-    },
-    REMOVE_ANIMATION: (state, id) => {
-      const task = state.tasks.find((task) => task.customData.id == id);
-      task.customData.isNew = false;
-    },
-
-    SET_TASKS_TO_STATE: (state, response_data) => {
+    SET_TASKS_TO_STATE: (state, response_data: taskInterface[]) => {
       state.tasks = response_data;
     },
   },
@@ -79,7 +24,6 @@ const store: Module<any, any> = {
     SET_TASKS_TO_STATE({ commit }) {
       getTasks()
         .then(function (response) {
-          console.log(response.data);
           commit("SET_TASKS_TO_STATE", response.data);
         })
         .catch(function (error) {
@@ -89,59 +33,48 @@ const store: Module<any, any> = {
 
     CREATE_NEW_TASK({ dispatch }, newCard: taskInterface) {
       postTask(newCard)
-        .then(function (response) {
-          console.log(response.data);
+        .then(function () {
           dispatch("SET_TASKS_TO_STATE");
         })
         .catch(function (error) {
           console.log(error);
         });
-      // commit("SET_NEW_TASK", newCard);
     },
     DELETE_TASK({ dispatch }, id: number) {
       deleteTask(id)
-        .then(function (response) {
-          console.log(response.data);
+        .then(function () {
           dispatch("SET_TASKS_TO_STATE");
         })
         .catch(function (error) {
           console.log(error);
         });
-      // commit("DELETE_TASK", id);
     },
-    CHANGE_STATUS({ dispatch }, taskData) {
+    CHANGE_STATUS({ dispatch }, taskData: { status: Status; id: number }) {
       changeStatus(taskData)
-        .then(function (response) {
-          console.log(response.data);
+        .then(function () {
           dispatch("SET_TASKS_TO_STATE");
         })
         .catch(function (error) {
           console.log(error);
         });
-      // commit("CHANGE_STATUS", taskData);
     },
     CHANGE_TASK({ dispatch }, changedTask: taskInterface) {
       updateTask(changedTask)
-        .then(function (response) {
-          console.log(response.data);
+        .then(function () {
           dispatch("SET_TASKS_TO_STATE");
         })
         .catch(function (error) {
           console.log(error);
         });
-      // commit("CHANGE_TASK", changedTask);
     },
-    REMOVE_ANIMATION({ dispatch }, id) {
-      console.log(id, 'removeAnimation')
+    REMOVE_ANIMATION({ dispatch }, id: number) {
       removeAnimation(id)
-        .then(function (response) {
-          console.log(response.data);
+        .then(function () {
           dispatch("SET_TASKS_TO_STATE");
         })
         .catch(function (error) {
           console.log(error);
         });
-      // commit("REMOVE_ANIMATION", id);
     },
   },
 };

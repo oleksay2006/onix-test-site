@@ -4,14 +4,6 @@ import Status from "@/enums/StatusEnum";
 
 export function getTasks() {
   return instance.get("tasks");
-  // .then(function (response) {
-  //   // обробка успішного запиту
-  //   console.log(response.data);
-  // })
-  // .catch(function (error) {
-  //   // обробка помилки
-  //   console.log(error);
-  // });;
 }
 export function postTask(payload: taskInterface) {
   return instance.post("tasks", payload);
@@ -25,6 +17,6 @@ export function updateTask(changedTask: taskInterface) {
 export function removeAnimation(id: number) {
   return instance.put(`tasks/${id}`);
 }
-export function changeStatus(taskData: { status: Status, id: number }) {
+export function changeStatus(taskData: { status: Status; id: number }) {
   return instance.put(`tasks/${taskData.id}`, taskData);
 }

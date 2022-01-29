@@ -33,10 +33,10 @@ const store: Module<any, any> = {
       {
         text: "Darika Samak uploaded 4 files on An option to search in current projects or in all projects",
       },
-    ],
+    ] as Array<object>,
   },
   mutations: {
-    CHANGE_INDEX: (state, index) => {
+    CHANGE_INDEX: (state, index: number) => {
       state.img_index = index;
     },
     SHOW_NOTIFICATIONS: (state) => {
@@ -44,7 +44,7 @@ const store: Module<any, any> = {
     },
   },
   actions: {
-    IMAGE_INDEX({ commit }, index) {
+    IMAGE_INDEX({ commit }, index: number) {
       commit("CHANGE_INDEX", index);
     },
     SHOW_NOTIFICATIONS({ commit }) {

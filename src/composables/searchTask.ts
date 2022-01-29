@@ -1,6 +1,5 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
-import { taskInterface } from "@/interfaces/task.interface";
 
 export function searchTask({ emit }) {
   const store = useStore();
@@ -39,45 +38,29 @@ export function searchTask({ emit }) {
     time: string;
     time_2: string;
   }) {
-    sortedProducts.value = [...tasks.value];
-    sortedProducts.value = sortedProducts.value.filter(function (item) {
-      if (value.title && !value.time && !value.time_2) {
-        return (
-          item.customData.title
-            .toLowerCase()
-            .includes(value.title.toLowerCase()) ||
-          item.customData.text.toLowerCase().includes(value.title.toLowerCase())
-        );
+    sortedProducts.value = tasks.value.filter(function (item) {
+      let dateRange: boolean = true;
+      const fromDate: Date | undefined = time.value
+        ? new Date(time.value)
+        : undefined;
+      const toDate: Date | undefined = time_2.value
+        ? new Date(time_2.value)
+        : undefined;
+      const taskDate: Date = new Date(item.customData.time);
+      if (fromDate && toDate) {
+        dateRange = fromDate <= taskDate && taskDate <= toDate;
+      } else if (toDate) {
+        dateRange = taskDate <= toDate;
+      } else if (fromDate) {
+        dateRange = fromDate <= taskDate;
       }
-      if (value.time && !value.time_2 && !value.title) {
-        const y = new Date(value.time);
-        const x = new Date(item.customData.time);
-        return x >= y;
-      }
-      if (value.time_2 && !value.time && !value.title) {
-        const y = new Date(value.time_2);
-        const x = new Date(item.customData.time);
-        return (
-          (y.getFullYear() >= x.getFullYear() &&
-            y.getDate() >= x.getDate() &&
-            y.getMonth() >= x.getMonth()) ||
-          (y.getFullYear() >= x.getFullYear() &&
-            (y.getDate() > x.getDate() ||
-              y.getDate() < x.getDate() ||
-              y.getDate() == x.getDate()) &&
-            y.getMonth() > x.getMonth())
-        );
-      }
+      return (
+        item.customData.title
+          .toLowerCase()
+          .includes(value.title.toLowerCase()) && dateRange
+      );
     });
-    if (!value.title && !value.time && !value.time_2) {
-      sortedProducts.value = tasks.value;
-      // this.sortedProducts = [];
-    }
-    if (sortedProducts.value.length == 0) {
-      isExist.value = true;
-    } else {
-      isExist.value = false;
-    }
+    isExist.value = !sortedProducts.value.length;
   }
   return {
     // tasks,

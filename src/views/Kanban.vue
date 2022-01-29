@@ -23,7 +23,6 @@
         :task="task",
         v-on:click="showChange(task)"
       )
-    //- hr
 </template>
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";

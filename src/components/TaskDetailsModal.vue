@@ -70,9 +70,9 @@ import useVuelidate from "@vuelidate/core";
 export default defineComponent({
   name: "TaskDetailsModal",
   setup(props, { emit }) {
-    let WantEdit = ref(false);
-    let NotEdit = ref(true);
-    let NotEditTask = ref(true);
+    let WantEdit = ref<boolean>(false);
+    let NotEdit = ref<boolean>(true);
+    let NotEditTask = ref<boolean>(true);
     const state = reactive({
       title: "",
       description: "",
