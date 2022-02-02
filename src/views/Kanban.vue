@@ -21,7 +21,7 @@
         draggable="true",
         @dragstart="startDrag($event, task)",
         :task="task",
-        v-on:click="showChange(task)"
+        v-on:click="showChange(task, $event)"
       )
 </template>
 <script lang="ts">

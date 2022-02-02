@@ -11,6 +11,7 @@ export default defineComponent({
     const store = useStore();
     onMounted(() => {
       store.dispatch("tasksModule/SET_TASKS_TO_STATE");
+      store.dispatch("activityPageModule/SET_INFO_TO_STATE");
     });
   },
 });

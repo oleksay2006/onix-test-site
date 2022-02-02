@@ -21,7 +21,7 @@
             p.testClass(
               v-for="attr in attributes",
               :key="attr.customData.id",
-              v-on:click="showChange(attr)"
+              v-on:click="showChange(attr, $event)"
             ) {{ attr.customData.title }}
 </template>
 <script lang="ts">

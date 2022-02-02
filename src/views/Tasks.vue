@@ -15,14 +15,17 @@
     v-for="(task, index) in filteredProducts",
     :key="'task-' + index",
     :class="{ new_animation: task.customData.isNew }",
-    :load.once="removeAnimation(task)",
-    v-on:click="showChange(task)"
+    v-on:click="showChange(task, $event)"
   )
+    //- :load.once="removeAnimation(task)",
     .first-part-task
       h3.title(:ref="setItemRef") {{ task.customData.title }}
       p.text {{ task.customData.text }}
     p.time Выполнить до {{ task.customData.time }}
-    fa.trash-alt(icon="trash-alt", v-on:click="deleteTask(task.customData.id)")
+    fa.trash-alt.test(
+      icon="trash-alt",
+      v-on:click="deleteTask(task.customData.id)"
+    )
 </template>
 <script lang="ts">
 import { ref, defineComponent, onMounted, computed } from "vue";
@@ -65,13 +68,13 @@ export default defineComponent({
     function setSearchValue(data: taskInterface[]) {
       sortedProducts.value = data;
     }
-    function removeAnimation(task: taskInterface) {
-      if (task.customData.isNew == true) {
-        setTimeout(() => {
-          store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
-        }, 2000);
-      }
-    }
+    // function removeAnimation(task: taskInterface) {
+    //   if (task.customData.isNew == true) {
+    //     setTimeout(() => {
+    //       store.dispatch("tasksModule/REMOVE_ANIMATION", task.customData.id);
+    //     }, 2000);
+    //   }
+    // }
     function deleteTask(id: number) {
       store.dispatch("tasksModule/DELETE_TASK", id);
     }
@@ -88,7 +91,7 @@ export default defineComponent({
       sortedProducts,
       divs,
       setSearchValue,
-      removeAnimation,
+      // removeAnimation,
       deleteTask,
       Status,
       ...modalsInfo(),
