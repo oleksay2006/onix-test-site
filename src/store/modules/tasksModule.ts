@@ -1,92 +1,80 @@
 import { Module } from "vuex";
 import { taskInterface } from "@/interfaces/task.interface";
 import Status from "@/enums/StatusEnum";
+import { tasksApi } from "@/service/tasksApi";
 
 const store: Module<any, any> = {
   namespaced: true,
   state: {
-    tasks: [
-      {
-        customData: {
-          id: 0,
-          title: "Task 1",
-          text: "Go to the shop",
-          time: "2022-06-07",
-          isNew: false,
-          status: Status.inProgress,
-        },
-        dates: "2022-05-07",
-      },
-      {
-        customData: {
-          id: 1,
-          title: "Task 2",
-          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-          time: "2022-01-05",
-          isNew: false,
-          status: Status.inProgress,
-        },
-        dates: "2022-01-01",
-      },
-      {
-        customData: {
-          id: 2,
-          title: "Task 3",
-          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laborum non excepturi voluptates recusandae minima",
-          time: "2022-01-16",
-          isNew: false,
-          status: Status.toDo,
-        },
-        dates: "2022-01-12",
-      },
-    ] as taskInterface[],
+    tasks: [] as taskInterface[],
   },
   mutations: {
-    SET_NEW_TASK: (state, newCard) => {
-      state.tasks.push(newCard);
-      console.log(state.tasks);
-    },
-    DELETE_TASK: (state, id) => {
-      state.tasks = state.tasks.filter((t) => t.customData.id !== id);
-    },
-    CHANGE_STATUS: (state, taskData) => {
-      const task = state.tasks.find(
-        (task) => task.customData.id == taskData.id
-      );
-      task.customData.status = taskData.status;
-    },
-    CHANGE_TASK: (state, changedTask) => {
-      const task = state.tasks.find(
-        (task) => task.customData.id == changedTask.customData.id
-      );
-      task.customData.title = changedTask.customData.title;
-      task.customData.text = changedTask.customData.text;
-      task.customData.time = changedTask.customData.time;
-      task.customData.status = changedTask.customData.status;
-      // task.dates = changedTask.dates;
-    },
-    REMOVE_ANIMATION: (state, id) => {
-      const task = state.tasks.find((task) => task.customData.id == id);
-      task.customData.isNew = false;
+    SET_TASKS_TO_STATE: (state, response_data: taskInterface[]) => {
+      state.tasks = response_data;
     },
   },
   actions: {
-    CREATE_NEW_TASK({ commit }, newCard) {
-      commit("SET_NEW_TASK", newCard);
+    SET_TASKS_TO_STATE({ commit }) {
+      tasksApi
+        .getTasks()
+        .then(function (response) {
+          commit("SET_TASKS_TO_STATE", response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    DELETE_TASK({ commit }, id) {
-      console.log(id);
-      commit("DELETE_TASK", id);
+
+    CREATE_NEW_TASK({ dispatch }, newCard: taskInterface) {
+      tasksApi
+        .postTask(newCard)
+        .then(function () {
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    CHANGE_STATUS({ commit }, taskData) {
-      commit("CHANGE_STATUS", taskData);
+    DELETE_TASK({ dispatch }, id: number) {
+      tasksApi
+        .deleteTask(id)
+        .then(function () {
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    CHANGE_TASK({ commit }, changedTask) {
-      commit("CHANGE_TASK", changedTask);
+    CHANGE_STATUS({ dispatch }, taskData: { status: Status; id: number }) {
+      tasksApi
+        .changeStatus(taskData)
+        .then(function () {
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    REMOVE_ANIMATION({ commit }, id) {
-      commit("REMOVE_ANIMATION", id);
+    CHANGE_TASK({ dispatch }, changedTask: taskInterface) {
+      tasksApi
+        .updateTask(changedTask)
+        .then(function () {
+          dispatch("SET_TASKS_TO_STATE");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
+
+    // REMOVE_ANIMATION({ dispatch }, id: number) {
+    //   removeAnimation(id)
+    //     .then(function () {
+    //       dispatch("SET_TASKS_TO_STATE");
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // },
   },
 };
 export default store;

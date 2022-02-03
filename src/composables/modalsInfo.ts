@@ -20,10 +20,12 @@ export function modalsInfo() {
     isShowChange.value = false;
     isCalendar.value = true;
   };
-  function showChange(task: taskInterface) {
-    currentTask.value = task;
-    isCalendar.value = false;
-    isShowChange.value = true;
+  function showChange(task: taskInterface, event) {
+    if (event.target.tagName !== "path" && event.target.tagName !== "svg") {
+      currentTask.value = task;
+      isCalendar.value = false;
+      isShowChange.value = true;
+    }
   }
   function showNew() {
     isShow.value = true;

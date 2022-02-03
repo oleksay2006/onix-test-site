@@ -1,4 +1,5 @@
 import { Module } from "vuex";
+import { activityApi } from "@/service/activityApi";
 
 const store: Module<any, any> = {
   namespaced: true,
@@ -6,45 +7,34 @@ const store: Module<any, any> = {
     notifications: false as boolean,
     img_index: 0 as number,
     images: [
-      {
-        name: "Town",
-        source: "town.jpg",
-      },
-      {
-        name: "Beach",
-        source: "beach.jpg",
-      },
-      {
-        name: "Fiord",
-        source: "fiord.jpg",
-      },
-      {
-        name: "Seaside",
-        source: "beach-2.jpg",
-      },
     ] as Array<object>,
     messages: [
-      {
-        text: "Darika Samak mark as done Listing on Product Hunt so that we can reach as many potential users",
-      },
-      {
-        text: "Emilee Simchenko commented on Account for teams and personal in bottom style",
-      },
-      {
-        text: "Darika Samak uploaded 4 files on An option to search in current projects or in all projects",
-      },
-    ],
+    ] as Array<object>,
   },
   mutations: {
-    CHANGE_INDEX: (state, index) => {
+    CHANGE_INDEX: (state, index: number) => {
       state.img_index = index;
     },
     SHOW_NOTIFICATIONS: (state) => {
       state.notifications = true;
     },
+    SET_INFO_TO_STATE: (state, response) => {
+      state.messages = response.messages;
+      state.images = response.images;
+    },
   },
   actions: {
-    IMAGE_INDEX({ commit }, index) {
+    SET_INFO_TO_STATE({ commit }) {
+      activityApi
+        .getActivity()
+        .then(function (response) {
+          commit("SET_INFO_TO_STATE", response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    IMAGE_INDEX({ commit }, index: number) {
       commit("CHANGE_INDEX", index);
     },
     SHOW_NOTIFICATIONS({ commit }) {

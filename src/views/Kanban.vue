@@ -21,9 +21,8 @@
         draggable="true",
         @dragstart="startDrag($event, task)",
         :task="task",
-        v-on:click="showChange(task)"
+        v-on:click="showChange(task, $event)"
       )
-    //- hr
 </template>
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";

@@ -21,7 +21,7 @@
             p.testClass(
               v-for="attr in attributes",
               :key="attr.customData.id",
-              v-on:click="showChange(attr)"
+              v-on:click="showChange(attr, $event)"
             ) {{ attr.customData.title }}
 </template>
 <script lang="ts">
@@ -29,7 +29,6 @@ import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 import TaskDetailsModal from "@/components/TaskDetailsModal.vue";
 import { modalsInfo } from "@/composables/modalsInfo";
-// import { taskInterface } from "@/interfaces/task.interface";
 
 export default defineComponent({
   name: "Calendar",
@@ -37,7 +36,7 @@ export default defineComponent({
     TaskDetailsModal,
   },
   setup() {
-    const masks = {
+    const masks: object = {
       weekdays: "WWW",
     };
     const store = useStore();

@@ -67,7 +67,7 @@ export default defineComponent({
             title: state.title,
             text: state.description,
             time: state.time,
-            isNew: true,
+            isNew: false,
             status: Status.toDo,
           },
           dates: new Date(),

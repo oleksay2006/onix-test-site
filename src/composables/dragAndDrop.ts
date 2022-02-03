@@ -1,19 +1,20 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 import Status from "@/enums/StatusEnum";
+import { taskInterface } from "@/interfaces/task.interface";
 
 export function dragAndDrop() {
   const store = useStore();
   const tasks = computed(() => store.state.tasksModule.tasks);
 
-  const startDrag = (event, task) => {
+  const startDrag = (event, task: taskInterface) => {
     event.dataTransfer.dropEffect = "move";
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("taskStatus", task.customData.status);
     event.dataTransfer.setData("taskId", task.customData.id);
   };
 
-  const onDrop = (event, status) => {
+  const onDrop = (event, status: Status) => {
     const taskId = event.dataTransfer.getData("taskId");
     const taskStatus = event.dataTransfer.getData("taskStatus");
     const task = tasks.value.find(
