@@ -6,10 +6,8 @@ const store: Module<any, any> = {
   state: {
     notifications: false as boolean,
     img_index: 0 as number,
-    images: [
-    ] as Array<object>,
-    messages: [
-    ] as Array<object>,
+    images: [] as Array<object>,
+    messages: [] as Array<object>,
   },
   mutations: {
     CHANGE_INDEX: (state, index: number) => {
