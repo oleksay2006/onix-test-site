@@ -10,9 +10,9 @@ const config: Config.InitialOptions = {
   testEnvironment: "node",
   verbose: true,
   automock: true,
-  moduleFileExtensions: ["js", "jsx", "ts", "tsx", 'vue', "json", "node"],
+  moduleFileExtensions: ['vue', "js", "jsx", "ts", "tsx", "json", "node"],
   transform: {
-    ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    '.*\\.(vue)$': "<rootDir>/node_modules/@vue/vue3-jest"
   }
 }
 export default config
